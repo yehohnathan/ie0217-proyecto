@@ -3,7 +3,10 @@ Espacio destinado para la creación del proyecto de Estructuras Abstractas, la c
 
 
 # Investigación: 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4cdd727481cfa5f58f5c329cf73a3f21c80127bb
 ### ¿Qué es la tasa de interés y cómo se calcula?
 
 La tasa de interés (también llamada tipo de interés) es el precio que una persona o institución debe pagar por solicitar un préstamo. Es decir, es el costo asignado por prestar o pedir prestado una determinada suma de dinero por un tiempo estipulado. Por lo general, la tasa de interés se expresa como un porcentaje anual [[1]](https://www.ceupe.com/blog/tasa-de-interes.html).
