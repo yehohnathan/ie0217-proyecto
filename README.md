@@ -4,6 +4,47 @@ Espacio destinado para la creación del proyecto de Estructuras Abstractas, la c
 
 # Investigación: 
 
+# ie0217-proyecto
+Espacio destinado para la creación del proyecto de Estructuras Abstractas, la cual tiene como finalidad: la investigación, diseño e implementación de un sistema de gestión bancaria.
+
+
+### ¿Qué es la tasa de interés y cómo se calcula?
+
+La tasa de interés (también llamada tipo de interés) es el precio que una persona o institución debe pagar por solicitar un préstamo. Es decir, es el costo asignado por prestar o pedir prestado una determinada suma de dinero por un tiempo estipulado. Por lo general, la tasa de interés se expresa como un porcentaje anual [[1]](https://www.ceupe.com/blog/tasa-de-interes.html).
+
+Para calcular la tasa de interés, es necesario calcular primero el "interés", que es la cantidad extra que solicita la entidad financiera por utilizar el dinero. El interés se calcula de la siguiente forma [[1]](https://www.ceupe.com/blog/tasa-de-interes.html):
+
+    Interés = Valor_final – Capital
+
+Una vez conocido el interés, la tasa se puede calcular de la siguiente manera [[1]](https://www.ceupe.com/blog/tasa-de-interes.html):
+
+    Tasa_interés = Interés/(Capital*tiempo) 
+
+
+### ¿Que son los préstamos personales, prendarios e hipotecarios?
+
+- Prestamos personales: intereses más altos y plazos más cortos. El plazo de cuotas suele variar entre 12 y 60 meses, dependiendo del banco y del monto.
+- Prestamos prendarios: el banco necesita que se le ingrese un bien mueble del mismo valor al prestamo a solicitar. Usualmente el prestamo equivale entre un 60 a 90% del bien mueble. El plazo de cuotas suele variar entre 24 y 60 meses, dependiendo del banco y del valor del bien mueble.
+- Prestamos hipotecarios: similares a los presdarios, pero solicitan un bien inmueble. Se suele prestar un 80% si es para la compra de una casa, y un 60% si es para la remodelación de una casa. El plazo de cuotas suele variar entre 60 y 360 meses, dependiendo del banco y del valor del bien inmueble.
+
+    | Tipo de préstamo | Tasa de interés anual mínima | Tasa de interés anual máxima |
+    | ---------------- | ---------------------------- | ---------------------------- |
+    | Personal         | 8%                           | 40%                          |
+    | Prendario        | 15%                          | 30%                          |
+    | Hipotecario      | 8%                           | 12%                          |
+
+
+### ¿En qué consiste el certificado de Depósito a Plazo Fijo?
+
+Es un depósito que se pacta a un periodo de tiempo, el cual es acordado entre el cliente y el banco. La tasa de interés se establece en base al monto del depósito y el plazo. Este tipo de depósitos no permite retiros, ni incrementos de saldos y para poder disponer del dinero el cliente debe esperar hasta la fecha de vencimiento del depósito [[2]](https://www.baccredomatic.com/sites/default/files/2023-05/ni_preguntas_frecuentes_sobre_certificados_de_deposito_a_plazo.pdf).
+
+### Diferencia entre Certificado de Depósito y Cuentas de Ahorro.
+
+El CDP es un depósito pactado a un plazo y no se puede retirar el dinero hasta llegada la fecha de vencimiento del plazo pactado. No permite retiros, ni depósitos y paga una tasa de interés más alta. La cuenta ahorro tiene una tasa de interés más baja, se pueden hacer retiros y depósitos en el momento que cliente lo necesite y el cliente puede llevarse todo el dinero cuando él lo decida [[2]](https://www.baccredomatic.com/sites/default/files/2023-05/ni_preguntas_frecuentes_sobre_certificados_de_deposito_a_plazo.pdf).
+
+
+
+
 # Diseño:
 ## Modulos a utilizar:
 
