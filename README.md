@@ -37,7 +37,52 @@ Es un depósito que se pacta a un periodo de tiempo, el cual es acordado entre e
 
 El CDP es un depósito pactado a un plazo y no se puede retirar el dinero hasta llegada la fecha de vencimiento del plazo pactado. No permite retiros, ni depósitos y paga una tasa de interés más alta. La cuenta ahorro tiene una tasa de interés más baja, se pueden hacer retiros y depósitos en el momento que cliente lo necesite y el cliente puede llevarse todo el dinero cuando él lo decida [[2]](https://www.baccredomatic.com/sites/default/files/2023-05/ni_preguntas_frecuentes_sobre_certificados_de_deposito_a_plazo.pdf).
 
+Claro, un Certificado de Depósito a Plazo (CDP) es un instrumento financiero en el cual depositas una cantidad de dinero en una institución financiera a cambio de recibir un rendimiento (intereses) sobre ese dinero durante un período de tiempo específico, que puede variar desde unos pocos meses hasta varios años. Durante este período, el dinero generalmente no se puede retirar sin incurrir en penalidades, por lo que se considera una inversión de plazo fijo.
 
+Las fórmulas básicas para calcular el rendimiento y el valor futuro de un Certificado de Depósito a Plazo son las siguientes:
+
+**Formula para los intereses ganados**:
+
+    I = P × i × t
+
+Donde:
+
+I = Intereses es el monto de intereses ganados.
+
+P = Principal, es decir, la cantidad inicial depositada.
+
+i = Tasa es la tasa de interés mensual (o anual) expresada en decimales.
+
+t = Tiempo es el tiempo en meses o años dependiendo de cómo se exprese la tasa de interes.
+
+**Formula para el Valor futuro (monto total al vencimiento)**:
+
+    VF  = P + I
+
+Donde:
+
+VF es el valor futuro o el monto total al vencimiento del Certificado de Depósito a Plazo e I son los interes acumulados.
+
+Aun así, la forma en que se calculan los intereses dependiendo de la institución financiera y las políticas locales.
+
+### ¿Cómo calcular la cuota de un crédito?
+
+Para calcular la cuota fija mensual, se utiliza la siguiente operación matemática:
+
+    Cuota mensual = (P * i) / (1 - (1 + i) ^ (-n))
+
+Donde:
+
+•	P = Monto del préstamo
+
+•	i = Tasa de interés mensual
+
+•	n = Plazo del crédito en meses
+
+
+### Diferencia entre interés simple y compuesto
+
+El interés simple se calcula utilizando solamente el principal, ignorando el interés generado en los periodos de interés anteriores. En cambio, el interés compuesto se calcula sobre el principal más el monto total de interés acumulado en todos los periodos anteriores.
 
 
 # Diseño:
@@ -92,54 +137,3 @@ Para reutilizar código es factible utilizar una clase que contenga todo lo espe
 Los prestamos pueden variar en personales, prendarios e hipotecarios, pero todos comparten carácterísticas como el tipo de moneda, cantidad de cuotas, intereses, pagos, etc. Para poder facilitar esto se crea un clase que permita la creación de un objeto que representa el tipo de prestamo y la información del mismo para el cliente.
 
 El único inconveniente es que si bien los 3 prestamos mencionados, que son los que solicita el enunciado, comparten dichas características la forma de solicitarlos es distanta ya que un banco va a solicitar distintos tramites como solicitar un mueble o inmueble a cambio.
-
-### Diferencia entre Certificado de Depósito y Cuentas de Ahorro.
-
-El CDP es un depósito pactado a un plazo y no se puede retirar el dinero hasta llegada la fecha de vencimiento del plazo pactado. No permite retiros, ni depósitos y paga una tasa de interés más alta. La cuenta ahorro tiene una tasa de interés más baja, se pueden hacer retiros y depósitos en el momento que cliente lo necesite y el cliente puede llevarse todo el dinero cuando él lo decida [[2]](https://www.baccredomatic.com/sites/default/files/2023-05/ni_preguntas_frecuentes_sobre_certificados_de_deposito_a_plazo.pdf).
-
-Claro, un Certificado de Depósito a Plazo (CDP) es un instrumento financiero en el cual depositas una cantidad de dinero en una institución financiera a cambio de recibir un rendimiento (intereses) sobre ese dinero durante un período de tiempo específico, que puede variar desde unos pocos meses hasta varios años. Durante este período, el dinero generalmente no se puede retirar sin incurrir en penalidades, por lo que se considera una inversión de plazo fijo.
-
-Las fórmulas básicas para calcular el rendimiento y el valor futuro de un Certificado de Depósito a Plazo son las siguientes:
-
-**Formula para los intereses ganados**:
-
-    I = P × i × t
-
-Donde:
-
-I = Intereses es el monto de intereses ganados.
-
-P = Principal, es decir, la cantidad inicial depositada.
-
-i = Tasa es la tasa de interés mensual (o anual) expresada en decimales.
-
-t = Tiempo es el tiempo en meses o años dependiendo de cómo se exprese la tasa de interes.
-
-**Formula para el Valor futuro (monto total al vencimiento)**:
-
-    VF  = P + I
-
-Donde:
-
-VF es el valor futuro o el monto total al vencimiento del Certificado de Depósito a Plazo e I son los interes acumulados.
-
-Aun así, la forma en que se calculan los intereses dependiendo de la institución financiera y las políticas locales.
-
-### ¿Cómo calcular la cuota de un crédito?
-
-Para calcular la cuota fija mensual, se utiliza la siguiente operación matemática:
-
-    Cuota mensual = (P * i) / (1 - (1 + i) ^ (-n))
-
-Donde:
-
-•	P = Monto del préstamo
-
-•	i = Tasa de interés mensual
-
-•	n = Plazo del crédito en meses
-
-
-### Diferencia entre interés simple y compuesto
-
-El interés simple se calcula utilizando solamente el principal, ignorando el interés generado en los periodos de interés anteriores. En cambio, el interés compuesto se calcula sobre el principal más el monto total de interés acumulado en todos los periodos anteriores.
