@@ -41,14 +41,16 @@ El CDP es un depósito pactado a un plazo y no se puede retirar el dinero hasta 
 
 
 # Diseño:
-## Modulos a utilizar:
+## Posibles modulos a utilizar:
 
 ```cpp
-module <string>
-module <maps>
-module <vector>
-module <exception>
-module <limits>
+module <fstream>    // Para gestionar archivos
+module <string>     // Para crear variables que contengan cadenas de carácteres
+module <maps>       // Para poder almacenar almacenar objetos en claves de forma ordenada
+module <vector>     // Para guardar información de ciertos objetos
+module <stdexcept>  // Para hacer uso de las excepciones
+module <limits>     // Para borrar el contenido de "cin"
+module <iosteam>    // Funciones básicas de la STL
 ```
 ## Definición y justificación de las clases:
 
@@ -80,14 +82,11 @@ Para reutilizar código es factible utilizar una clase que contenga todo lo espe
 - `numeroCuenta`: identificador de la cuenta bancaria, este puede ser un dato tipo entero de la misma forma que el id del cliente.
 - `tipoMoneda`: para asignar si la cuenta es en dolares o colones, por lo que debería ser un string.
 - `monto`: aquí se debe almacenar la cantidad de dinero que tenga el cliente en esta cuenta, inicialmente debería comenzar en cero cuando es creada y debería ser un double debido a que el dinero puede tener decimales.
-- `certificadosPlazo`: para que se puedan guardar los certificado de pósito (CDP) de largo, mediano o pequeño plazo del cliente. Considerando que el cliente podría solicitar varios tipos de CDP y estos pueden variar en sus características (taza de interes) es necesario crear un vector que los almacene, además se debería crear una clase llama **CDP** para facilitar la creación de los certificados, los cuales pueden variar de tipo.
 
 #### Métodos:
 - `setTipoMoneda`: para que cuando se creé la cuenta, el usuario pueda decidir si es en dolares o colones.
 - `imprimirInfo`: aquí se mostraría el tipo de moneda, monto y su número de cuenta.
 - `depositar`, `retirar`, `transferir`: para poder ingresar, retirar o transferir dinero, modificando el atributo monto.
-- `agregarCDP`: para que el cliente creé el CDP dependiendo de las necesidades del mismo.
-
 
 ### class Prestamo:
 Los prestamos pueden variar en personales, prendarios e hipotecarios, pero todos comparten carácterísticas como el tipo de moneda, cantidad de cuotas, intereses, pagos, etc. Para poder facilitar esto se crea un clase que permita la creación de un objeto que representa el tipo de prestamo y la información del mismo para el cliente.
