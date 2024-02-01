@@ -99,7 +99,31 @@ module <iosteam>    // Funciones básicas de la STL
 ```
 ## Definición y justificación de las clases:
 
-### class Cliente:
+### class Banco
+La clase banco es para crear un objeto que sea capaz de almacenar la información de todos los posibles clientes y que a traves de ella se puedan realizar las operaciones esperadas en un banco como la gestión de prestamos, cuentas, certificados de plazo, etc. Por lo que se puede afirmar que esta clase sirve para tratar de emitar la estructura real de un banco y por ello la necesidad de su creación, ya que permite gestionar a cada cliente de una forma más sencilla y óptima.
+
+#### Atributos:
+- `clientes`: contener que almacena la información de los clientes, en este caso objetos de una clase llamada **Cliente**. Para ello se debería utilizar map para acceder a cada cliente de forma sencilla.
+- `transacciones`: almacena las transacciones realizadas por cada cliente, asignandole un identificador a cada una. Se trabajaría con strings y se debería usar un vector para guarda la información de cada transacción, con el fin de se pueda generar al final un reporte de las transacciones.
+- `ventanilla`: ventanilla sería un objeto de la clase **AtencionCliente** que serviría para agarrar información de uno o dos clientes y realizar gestiones en cuentas o prestamos.
+- `fecha`: almacena una fecha que servirá como referencia para solicitar reportes de tramites y requiran un lapso temporal.
+
+#### Métodos:
+- `mostrarMenu()`: le muestra las opciones que una persona puede hacer al ir al banco, como registrarse, consultar prestamos o realizar diversas transacciones.
+- `crearCliente()`: para crear un nuevo objeto de la clase Cliente, cuya información será guardada en el atributo clientes.
+- `atenderCliente()`: registra la información de uno o dos clientes y utiliza los métodos del objeto ventanilla para realizar distintos trámites.
+- `setFecha()`: para ingresar registrar la fecha.
+
+### class AtencionCliente
+Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco en especifico y no guardan información de nigun tipo porque solo sirve para que los clientes puedan cambiar el estado actual de su economía (prestamos, cuentas o CDP).
+
+#### Métodos:
+- `mostrarMenu()`: muestra el menú de atención al cliente, para gestionar cuentas o prestamos.
+- `gestionarCuentas()`: gestiona lo que quiere hacer un cliente con una cuenta. Se podrá crear una cuenta, depositar o retirnar dinero, etc.
+- `gestionarPrestamos()`: gestiona lo que quiere hacer un cliente con un prestamo, en donde se podrán crear un nuevo prestamo, pagar una cuota, etc.
+- `gestionarCDP()`: gestiona lo que quiere hacer un cliente con un certificado de plazo, solicitando su plazo de duración y monto inicial.
+  
+### class Cliente
 Si una persona desea registrarse o realizar alguna transacción en un banco, necesita de una serie de características que lo identifiquen ante el banco. Esto permite un manejo de los prestamos, dinero, cuentas de ahorros, transacciones y demás tramites seguros, claros y eficientes.
 
 #### Atributos:
@@ -118,7 +142,7 @@ Si una persona desea registrarse o realizar alguna transacción en un banco, nec
 - `retirarDinero`, `depositarDinero`, `transferirDinero`, `pagarPrestamo`: el cliente debería ser capaz de realizar las operaciones bancarias esperadas sobre sus cuentas y prestamos.
 
 
-### class CuentaBancaria:
+### class CuentaBancaria
 Al estar registrado un cliente a un banco, este debe tener la posibilidad de crear cuentas para poder almacenar su dinero. Esto es necesario si este ya recibe un salario, beca o simplemente desea mantener su dinero seguro con una identidad bancaria. En el enunciado se menciona que el cliente tiene la posibilidad de crear cuentas de ahorros, una en colones y otra en dolares.
 
 Para reutilizar código es factible utilizar una clase que contenga todo lo esperado de una cuenta para sus atributos y los métodos para realizar acciones sobre la cuenta. De esta forma no importa si la cuenta esta en dolares o colones, debido a que las operaciones son similares (contando el tipo de cambio de la moneda si se hace una transferencia de colones a dolares o viseversa.)
@@ -133,7 +157,7 @@ Para reutilizar código es factible utilizar una clase que contenga todo lo espe
 - `imprimirInfo`: aquí se mostraría el tipo de moneda, monto y su número de cuenta.
 - `depositar`, `retirar`, `transferir`: para poder ingresar, retirar o transferir dinero, modificando el atributo monto.
 
-### class Prestamo:
+### class Prestamo
 Los prestamos pueden variar en personales, prendarios e hipotecarios, pero todos comparten carácterísticas como el tipo de moneda, cantidad de cuotas, intereses, pagos, etc. Para poder facilitar esto se crea un clase que permita la creación de un objeto que representa el tipo de prestamo y la información del mismo para el cliente.
 
 El único inconveniente es que si bien los 3 prestamos mencionados, que son los que solicita el enunciado, comparten dichas características la forma de solicitarlos es distanta ya que un banco va a solicitar distintos tramites como solicitar un mueble o inmueble a cambio. Aunque en la reunicón con se nos comentó que no es necesario tener en cuenta esto y basta con el cambio de los interes dependiendo del tipo de prestamo.
@@ -156,7 +180,7 @@ El único inconveniente es que si bien los 3 prestamos mencionados, que son los 
 - `pagarCuota()`: para pagar la cuota, rebajando el numero de cuotas totales, aumentando las cuotas pagadas y cambiando los montos de deuda pagada, etc.
 - `generarReporteCuotas()`: genera un archivo .txt con información relevante de las cuotas (pagos) del prestamo.
 
-### class CDP:
+### class CDP
 Esto se puede considerar como el inverso de los prestamos (ahorro), en donde el cliente puede darle dinero al banco a cambio de recibir un interes (dinero) a su favor. El ciente tiene la posibilidad de solicitar varios certificados de plazo, que varian de corto, mediano a largo plazo y cada uno con un montó a ingresar por el cliente mensualmente y un beneficio.
 
 #### Atributos:
