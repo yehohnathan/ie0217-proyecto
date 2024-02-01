@@ -136,4 +136,38 @@ Para reutilizar código es factible utilizar una clase que contenga todo lo espe
 ### class Prestamo:
 Los prestamos pueden variar en personales, prendarios e hipotecarios, pero todos comparten carácterísticas como el tipo de moneda, cantidad de cuotas, intereses, pagos, etc. Para poder facilitar esto se crea un clase que permita la creación de un objeto que representa el tipo de prestamo y la información del mismo para el cliente.
 
-El único inconveniente es que si bien los 3 prestamos mencionados, que son los que solicita el enunciado, comparten dichas características la forma de solicitarlos es distanta ya que un banco va a solicitar distintos tramites como solicitar un mueble o inmueble a cambio.
+El único inconveniente es que si bien los 3 prestamos mencionados, que son los que solicita el enunciado, comparten dichas características la forma de solicitarlos es distanta ya que un banco va a solicitar distintos tramites como solicitar un mueble o inmueble a cambio. Aunque en la reunicón con se nos comentó que no es necesario tener en cuenta esto y basta con el cambio de los interes dependiendo del tipo de prestamo.
+
+#### Atributos
+- `idPrestamo`: para que el prestamo pueda tener una identificación, esto es util cuando un tercero desea paghar una cuota. Lo que se podría utilizar como id es el id del cliente segundo de un **n** que representa el número de prestamo solicitado por el cliente.
+- `tipoMoneda`: indicador para saber si el prestamo es en dolares o colones.
+- `montoTotal`: indica el monto máximo
+- `cuotasTotal`: indica la cantidad de cuotas totales que debe pagar el cliente, estas pueden ir disminuyendo conforme se paguen las cuotas.
+- `tasaInteres`: taza de interes del prestamo, variable que varia dependiendo del tipo de prestamo que haya solicitado el cliente.
+- `costoCuota`: número de cuotas pagadas por el cliente/
+- `cuotasPagadas`: expresa la cantidad de cuotas pagadas por el cliente.
+- `interesesPagados`: monto monetario que representa la cantidad de interes que ha ido pagando el cliente, esto es aparte al pago de la deuda como tal.
+- `deudaPagada`: valor real del prestamo pagado por el cliente.
+- `infoCuotas`: en un contener de toda la información de las cuotas pagadas por el cliente, inclutendo el pago de la deuda, el pago de lso intereses y número de cuota. Este podría ser un contener, ya que es necesario almacenar varios tipos de informació y en diferentes meses.
+
+#### Métodos:
+- `setDatos()`: para colocar los datos de la deuda como los intereses, monto total, tipo de moneda, etc.
+- `imprimirInfo()`: para poder imprimir información de la deuda al cliente, en este caso la cantidad de cuotas que tendrá que pagar, el montó solicitado, valor de los intereses, etc.
+- `pagarCuota()`: para pagar la cuota, rebajando el numero de cuotas totales, aumentando las cuotas pagadas y cambiando los montos de deuda pagada, etc.
+- `generarReporteCuotas()`: genera un archivo .txt con información relevante de las cuotas (pagos) del prestamo.
+
+### class CDP:
+Esto se puede considerar como el inverso de los prestamos (ahorro), en donde el cliente puede darle dinero al banco a cambio de recibir un interes (dinero) a su favor. El ciente tiene la posibilidad de solicitar varios certificados de plazo, que varian de corto, mediano a largo plazo y cada uno con un montó a ingresar por el cliente mensualmente y un beneficio.
+
+#### Atributos:
+- `tipoMoneda`: ingresar el tipo de moneda.
+- `dineroCDP`: cantidad que se va a ingresar al banco mensualmente.
+- `fechaCreacion`: para ingresar la fecha de creación del CDP, la cual esta relacionada con la fecha que solicita el banco antes de realizar cualquier transacción.
+- `fechaExpira`: fecha de expiración del certificado, variable dependiendo del plazo del mismo.
+- `plazoMeses`: cantidad de meses que depende del plazo del certificado.
+- `tasaInteres`: taza de interes, que varia dependiendo del CDP, y son de benefició al cliente.
+- `informacion`: muestra la información sobre la fecha de creación y expiración del CDP, además de sus intereses.
+
+#### Métodos: 
+- `setDatos()`: para ingresar los datos del CDP.
+- `mostrarDatosCDP()`: para mostrar información de las posibles ganancias a causa de los interes del CDP que va a tener el cliente.
