@@ -37,7 +37,7 @@ Es un depósito que se pacta a un periodo de tiempo, el cual es acordado entre e
 
 El CDP es un depósito pactado a un plazo y no se puede retirar el dinero hasta llegada la fecha de vencimiento del plazo pactado. No permite retiros, ni depósitos y paga una tasa de interés más alta. La cuenta ahorro tiene una tasa de interés más baja, se pueden hacer retiros y depósitos en el momento que cliente lo necesite y el cliente puede llevarse todo el dinero cuando él lo decida [[2]](https://www.baccredomatic.com/sites/default/files/2023-05/ni_preguntas_frecuentes_sobre_certificados_de_deposito_a_plazo.pdf).
 
-Claro, un Certificado de Depósito a Plazo (CDP) es un instrumento financiero en el cual depositas una cantidad de dinero en una institución financiera a cambio de recibir un rendimiento (intereses) sobre ese dinero durante un período de tiempo específico, que puede variar desde unos pocos meses hasta varios años. Durante este período, el dinero generalmente no se puede retirar sin incurrir en penalidades, por lo que se considera una inversión de plazo fijo.
+Un Certificado de Depósito a Plazo (CDP) es un instrumento financiero en el cual depositas una cantidad de dinero en una institución financiera a cambio de recibir un rendimiento (intereses) sobre ese dinero durante un período de tiempo específico, que puede variar desde unos pocos meses hasta varios años. Durante este período, el dinero generalmente no se puede retirar sin incurrir en penalidades, por lo que se considera una inversión de plazo fijo.
 
 Las fórmulas básicas para calcular el rendimiento y el valor futuro de un Certificado de Depósito a Plazo son las siguientes:
 
@@ -47,13 +47,13 @@ Las fórmulas básicas para calcular el rendimiento y el valor futuro de un Cert
 
 Donde:
 
-I = Intereses es el monto de intereses ganados.
+I: Intereses es el monto de intereses ganados.
 
-P = Principal, es decir, la cantidad inicial depositada.
+P: Principal, es decir, la cantidad inicial depositada.
 
-i = Tasa es la tasa de interés mensual (o anual) expresada en decimales.
+i: Tasa es la tasa de interés mensual (o anual) expresada en decimales.
 
-t = Tiempo es el tiempo en meses o años dependiendo de cómo se exprese la tasa de interes.
+t: Tiempo es el tiempo en meses o años dependiendo de cómo se exprese la tasa de interes.
 
 **Formula para el Valor futuro (monto total al vencimiento)**:
 
