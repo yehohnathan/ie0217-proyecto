@@ -85,6 +85,23 @@ Donde:
 El interés simple se calcula utilizando solamente el principal, ignorando el interés generado en los periodos de interés anteriores. En cambio, el interés compuesto se calcula sobre el principal más el monto total de interés acumulado en todos los periodos anteriores.
 
 
+### ¿Qué es la amortización y cómo se calcula?
+
+En economía, el término amortización hace referencia a la reducción del valor de un activo o un pasivo con el paso del tiempo. La amortización es, por tanto, una forma de cuantificar la pérdida de valor de un bien o de una deuda [[3]](https://www.bancosantander.es/glosario/amortizacion). La amortización se puede calcular de la siguiente forma:
+
+    R = Ci/(1-(1+i)^-n)
+
+Donde:
+
+R: Cuota de amortización constante.
+
+C: Monto principal o capital del préstamo.
+
+i: Tasa de interés periódica (expresada de manera decimal).
+
+n: Número total de periodos o pagos.
+
+
 # Diseño:
 ## Posibles modulos a utilizar:
 
@@ -197,7 +214,7 @@ Esto se puede considerar como el inverso de los prestamos (ahorro), en donde el 
 - `mostrarDatosCDP()`: para mostrar información de las posibles ganancias a causa de los interes del CDP que va a tener el cliente.
 
 
-## Cronograma de actividades
+## Cronograma de actividades:
 
 La siguiente tabla corresponde al cronograma de actividades a realizar.
 
