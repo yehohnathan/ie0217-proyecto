@@ -195,3 +195,36 @@ Esto se puede considerar como el inverso de los prestamos (ahorro), en donde el 
 #### Métodos: 
 - `setDatos()`: para ingresar los datos del CDP.
 - `mostrarDatosCDP()`: para mostrar información de las posibles ganancias a causa de los interes del CDP que va a tener el cliente.
+
+
+## Cronograma de actividades
+
+La siguiente tabla corresponde al cronograma de actividades a realizar.
+
+| Clases a diseñar    | Métodos de Clases             | 2/2/2024 | 3/2/2024 | 4/2/2024 | 5/2/2024 | 6/2/2024 | 7/2/2024 | 8/2/2024 |
+|---------------------|-------------------------------|----------|----------|----------|----------|----------|----------|----------|
+| Banco               | mostrarMenú                   |          |          |    X     |          |          |          | David    |
+|                     | crearCliente                  |          |          |    X     |          |          |          | David    |
+|                     | atenderCliente                |          |          |    X     |          |          | Yeoh     |          |
+|                     | setFecha                      |          |          |          |    X     |          | Yeoh     |          |
+| AtencionCliente     | mostrarMenú                   |          |          |          |    X     |          | Yeoh     |          |
+|                     | gestionarCuentas              |          |          |          |    X     |          | Yeoh     |          |
+|                     | gestionarPrestamo             |          |          |          |          | Danny    |          |          |
+|                     | gestionarCDP                  |          |          |          |          | Danny    |          |          |
+| Cliente             | agregarCuentas                |    X     |          |          |          | David    |          |          |
+|                     | mostrarCuentas                |    X     |          |          |          | David    |          |          |
+|                     | agregarPrestamo               |    X     |          |          |          | David    |          |          |
+|                     | mostrarPrestamos              |    X     |          |          |          | David    |          |          |
+|                     | SolicitarPrestamos            |          |          |          |          | Danny    |          |          |
+|                     | SolicitarInformeCuentas       |          |          |          |          | Danny    |          |          |
+|                     | solicitarCDP                  |          |          |          |          | Danny    |          |          |
+|                     | accionesDinero                |          |          |          |          | Danny    |          |          |
+| CuentaBancaria      | setTipoMoneda                 |          |          |          |    X     |          | Yeoh     |          |
+|                     | imprimirInfo                  |          |          |          |    X     |          | Yeoh     |          |
+|                     | depositar, retirar, transferir|          |          |          |          | Danny    |          |          |
+| Prestamo            | setDatos                      |    X     |          |          |          |          | David    |          |
+|                     | imprimirInfo                  |    X     |          |          |          |          | David    |          |
+|                     | pagarCuota                    |          |          |          |          |          | Danny    |          |
+|                     | generarReporteCuotas          |          |          |          |          |          | Danny    |          |
+| CDP                 | setDatos                      |          |          |    X     |          |          |          | David    |
+|                     | mostrarDatosCDP               |          |          |          |    X     |          | Yeoh     |          |
