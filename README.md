@@ -220,28 +220,28 @@ La siguiente tabla corresponde al cronograma de actividades a realizar.
 
 | Clases a diseñar    | Métodos de Clases             | 2/2/2024 | 3/2/2024 | 4/2/2024 | 5/2/2024 | 6/2/2024 | 7/2/2024 | 8/2/2024 |
 |---------------------|-------------------------------|----------|----------|----------|----------|----------|----------|----------|
-| Banco               | mostrarMenú                   |          |          |    X     |          |          |          | David    |
-|                     | crearCliente                  |          |          |    X     |          |          |          | David    |
-|                     | atenderCliente                |          |          |    X     |          |          | Yeoh     |          |
-|                     | setFecha                      |          |          |          |    X     |          | Yeoh     |          |
-| AtencionCliente     | mostrarMenú                   |          |          |          |    X     |          | Yeoh     |          |
-|                     | gestionarCuentas              |          |          |          |    X     |          | Yeoh     |          |
-|                     | gestionarPrestamo             |          |          |          |          | Danny    |          |          |
-|                     | gestionarCDP                  |          |          |          |          | Danny    |          |          |
-| Cliente             | agregarCuentas                |    X     |          |          |          | David    |          |          |
-|                     | mostrarCuentas                |    X     |          |          |          | David    |          |          |
-|                     | agregarPrestamo               |    X     |          |          |          | David    |          |          |
-|                     | mostrarPrestamos              |    X     |          |          |          | David    |          |          |
+| Banco               | mostrarMenú                   |          |          |          |          |          |          | David    |
+|                     | crearCliente                  |          |          |          |          |          |          | David    |
+|                     | atenderCliente                |          |          |          |          |          |          | Yeoh     |
+|                     | setFecha                      |          |          |          |          |          |          | Yeoh     |
+| AtencionCliente     | mostrarMenú                   |          |          |          |          |          | Yeoh     |          |
+|                     | gestionarCuentas              |          |          |          |          |          | Yeoh     |          |
+|                     | gestionarPrestamo             |          |          |          |          |          | Danny    |          |
+|                     | gestionarCDP                  |          |          |          |          |          | Danny    |          |
+| Cliente             | agregarCuentas                |          |          |          |          | David    |          |          |
+|                     | mostrarCuentas                |          |          |          |          | David    |          |          |
+|                     | agregarPrestamo               |          |          |          |          | David    |          |          |
+|                     | mostrarPrestamos              |          |          |          |          | David    |          |          |
 |                     | SolicitarPrestamos            |          |          |          |          | Danny    |          |          |
 |                     | SolicitarInformeCuentas       |          |          |          |          | Danny    |          |          |
 |                     | solicitarCDP                  |          |          |          |          | Danny    |          |          |
 |                     | accionesDinero                |          |          |          |          | Danny    |          |          |
-| CuentaBancaria      | setTipoMoneda                 |          |          |          |    X     |          | Yeoh     |          |
-|                     | imprimirInfo                  |          |          |          |    X     |          | Yeoh     |          |
-|                     | depositar, retirar, transferir|          |          |          |          | Danny    |          |          |
-| Prestamo            | setDatos                      |    X     |          |          |          |          | David    |          |
-|                     | imprimirInfo                  |    X     |          |          |          |          | David    |          |
-|                     | pagarCuota                    |          |          |          |          |          | Danny    |          |
-|                     | generarReporteCuotas          |          |          |          |          |          | Danny    |          |
-| CDP                 | setDatos                      |          |          |    X     |          |          |          | David    |
-|                     | mostrarDatosCDP               |          |          |          |    X     |          | Yeoh     |          |
+| CuentaBancaria      | setTipoMoneda                 |          |          |  Yeoh    |          |          |          |          |
+|                     | imprimirInfo                  |          |          |  Yeoh    |          |          |          |          |
+|                     | depositar, retirar, transferir|          |          |  Danny   |          |          |          |          |
+| Prestamo            | setDatos                      |          |  David   |          |          |          |          |          |
+|                     | imprimirInfo                  |          |  David   |          |          |          |          |          |
+|                     | pagarCuota                    |          |  Danny   |          |          |          |          |          |
+|                     | generarReporteCuotas          |          |  Danny   |          |          |          |          |          |
+| CDP                 | setDatos                      |          |          |          |  David   |          |          |          |
+|                     | mostrarDatosCDP               |          |          |          |  Yeoh    |          |          |          |
