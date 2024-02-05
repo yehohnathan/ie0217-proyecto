@@ -53,6 +53,8 @@ class CuentaBancaria {
 
         /**
          * @brief Permite trasladar dinero a cuenta destino, restandole valor a dineroAhorros.
+         * 
+         * @param cuentaDestino Cuenta a la que se va a transferir el dinero
          */
         void transferir(CuentaBancaria& cuentaDestino);
 };
