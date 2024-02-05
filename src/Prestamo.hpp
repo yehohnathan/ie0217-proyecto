@@ -2,7 +2,7 @@
  * @file Prestamo.hpp
  * @author David Madrigal, Danny Solórzano, Yehohnathan Miranda
  * @version 0.1
- * @date 2024-02-03
+ * @date 2024-02-04
  * @copyright Copyright (c) 2024
  * @brief Archivo que incluye los atributos y métodos de la clase Prestamo.
  */
@@ -10,7 +10,11 @@
 #ifndef PRESTAMO_HPP
 #define PRESTAMO_HPP
 
-#include "LecturaDatos.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <math.h>
+using namespace std;
 
 /**
 * @brief Clase que permite gestionar los préstamos de los usuarios.
