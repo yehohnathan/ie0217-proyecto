@@ -24,7 +24,7 @@ void CDP::setDatos(int fechaCreacion_p[], string tipoMoneda_P, int plazoMeses_p,
 }
 
 
-/*void CDP::actualizarCDP(int fecha[]){
+void CDP::actualizarCDP(int fecha[]){
     int tiempoMeses = tiempoMeses = (fecha[2] - fechaCreacion[2])*12 + (fecha[1] - fechaCreacion[1]);
     if(fecha[0] < fechaCreacion[0]){
         tiempoMeses -= 1;
@@ -35,4 +35,3 @@ void CDP::setDatos(int fechaCreacion_p[], string tipoMoneda_P, int plazoMeses_p,
     if(tiempoMeses > plazoMeses){
         estado = "vencido";
     }
-}*/
