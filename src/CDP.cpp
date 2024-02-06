@@ -23,9 +23,20 @@ void CDP::setDatos(int fechaCreacion_p[], string tipoMoneda_P, int plazoMeses_p,
     + to_string(fechaExpira[0]) + "/" + to_string(fechaExpira[1]) + "/" + to_string(fechaExpira[2]);
 }
 
+// Muestra datos simples como dineroCDP, tipo de moneda y taza de intereses.
+void CDP::mostrarDatosCDP(){
+    cout << "\nFecha de creación: " << fechaCreacion[0] << "/" << fechaCreacion[1] << "/" << fechaCreacion[2];
+    cout << "\nTasa de interes mensual: " << tasaInteres;
+    cout << "\nTipo de moneda: " << tipoMoneda;
+    cout << "\nPlazo de meses: " << plazoMeses;
+}
 
+// Actualiza la linea temporal del CDP para saber si ya llegó a su vencimiento //< Esto esto esta a prueba
+/*
 void CDP::actualizarCDP(int fecha[]){
+    // Ajusta la hora ingresada en un formato de meses y lo iguala a una variable
     int tiempoMeses = tiempoMeses = (fecha[2] - fechaCreacion[2])*12 + (fecha[1] - fechaCreacion[1]);
+    // Luego se va actualizando las fechas 
     if(fecha[0] < fechaCreacion[0]){
         tiempoMeses -= 1;
     }
@@ -35,3 +46,5 @@ void CDP::actualizarCDP(int fecha[]){
     if(tiempoMeses > plazoMeses){
         estado = "vencido";
     }
+}
+*/
