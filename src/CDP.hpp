@@ -25,7 +25,7 @@ using namespace std;
 class CDP {
     public:
         string tipoMoneda;      //< Tipo de moneda (dolares o colones) del CDP
-        double dineroCDP;       //< Dinero (cuota) mensual que debe ingresar el cliente a su CDP
+        double dineroCDP;       //< Dinero (suma de cuotas) que tiene el cliente en su CDP
         int fechaCreacion[3];   //< Esta es la fecha que se introduce al inicio del programa, es la fecha de inicio.
         int fechaExpira[3];     //< Fecha de expiración del CDP, depende si es de pequeño, mediado o largo plazo
         int plazoMeses;         //< Define si el plazo es corto, mediado o largo  
@@ -35,6 +35,12 @@ class CDP {
         
         /**
          * @brief Establece las características del CDP como tipo de moneda, plazos, intereses y dinero.
+         * 
+         * @param fechaCreacion_p   Fecha de inicio del CDP
+         * @param tipoMoneda_P      Moneda del CDP (dolares y colones)  
+         * @param plazoMeses_p      Plazo de meses del CDP (corto, mediano y largo)
+         * @param dineroCDP         Dinero del CDP
+         * @param tasaInteres       Tasa de interes del CDP
          */
         void setDatos(int fechaCreacion_p[], string tipoMoneda_P, int plazoMeses_p, double dineroCDP, double tasaInteres);
 
@@ -44,9 +50,11 @@ class CDP {
         void mostrarDatosCDP();
 
         /**
-         * @brief Actualiza la linea temporal del CDP para saber si ya llegó a su vencimiento //< Esto esta a prueba
+         * @brief Actualiza la linea temporal del CDP para saber si ya llegó a su vencimiento
+         * 
+         * @param fecha     Atributo para calcular la fecha actual del CDP
          */
-        void actualizarCDP(int fecha[]);
+        // void actualizarCDP(int fecha[]); //< Esto esta a prueba
 };
 
 #endif // CDP_HPP
