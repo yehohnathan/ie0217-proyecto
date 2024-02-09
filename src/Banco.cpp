@@ -1,50 +1,79 @@
+#include "Banco.hpp"
+
+// Método encargado de crear un cliente y agragarlo al "sistema"
 void Banco::crearCliente(){
+    // Inicializa una variable de tipo string que contendra el nombre
     string nombre;
+    // Imprime un mensaje en consola
     cout << "Ingrese su nombre: ";
+    // Asigna el dato ingresado a la variable nombre
     cin >> nombre;
+    // Inicializa una variable de tipo int que contenfra el id
     int id;
+    // Llama a la función leer entero para determinar si es un dato válido
     leerEntero(id, "Ingrese su id: ");
+    // Comrpueba si el ID esta dentro del rango
     if(id > 999999999){
+        // En caso de que no este, imprime una pequeña abvertencia
         cout << "El id debe ser un numero menor a 999999999." << endl;
         return;
     }
+    // Comprueba si el id ingresado no estaba ya registrado en el contenedor
     if(clientes.find(id) != clientes.end()){
+        // En caso de que este, imprime una pequeña abvertencia
         cout << "El id ingresado ya existe en el registro." << endl;
         return;
     }
+    // Instancia un objeto de tipo cliente
     Cliente cliente;
+    // llama al método establecer Datos
     cliente.setDatos(nombre,id);
+    // Guarda la información del cliente en la posición 'id' del contenedor
     clientes[id] = cliente;
     cout << "Se ha registrado correctamente!" << endl;
+    // Guarda información para las futuras transacciones
     string transaccion =  to_string(fecha[0]) + "/" + to_string(fecha[1]) + "/" + to_string(fecha[2]) + ","
     + nombre + "," + to_string(id) + "," + "se registro en el sistema";
+    // La ingresa al contenedor con la información de las transacciones
     transacciones.push_back(transaccion);
 }
 
+// Método encargado de mostrar el menú de opciones
 void Banco::mostrarMenu(){
+    // Llamado al método para solicitar la fecha del sistema
     setFecha();
+    // inicializa la variable que contendra la opción elegida
     int opcion = 0;
+    // itera por la opción elegida por el usuario
     while(opcion != 4){
+        // imprime un menú de opciones
         cout << "\n---Menu de opciones---" << endl;
         cout << "1. Atencion al Cliente." << endl;
         cout << "2. Informacion de Prestamos." << endl;
         cout << "3. Registrarse." << endl;
         cout << "4. Salir." << endl;
+        // Válida la opción ingresada
         leerEntero(opcion, "Ingrese una opcion: ");
+        // Evalua cual caso fue el solicitado
         switch (opcion){
         case 1:
+            // Llama a atender cliente
             atenderCliente();
             break;
         case 2:
+            // Llama a mostrar información
             informante.mostrarMenu();
             break;
         case 3:
+            // Llama a crear cliente
             crearCliente();
             break;
         case 4:
+            // Finaliza el programa
             cout << "Gracias por utilizar nuestro Banco." << endl;
             break;
         default:
+            // Mensaje de error
             cout << "La opcion ingresada no es valida." << endl;
             break;
         }

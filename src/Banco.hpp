@@ -18,7 +18,8 @@
 * La clase Banco es la encargada de llevar el control del programa.
 * Cuenta con atributos que son contenederos con información relacionada
 * con los clientes y todas las transacciones que estos realizan. Sus
-* 
+* métodos buscan gestionar todo la información que se esta procesando
+* en el momento así como llevar un control de la misma.
 */
 class Banco {
     public:
@@ -26,6 +27,7 @@ class Banco {
         vector <string> transacciones;  //< Contenedor con las transacciones
         AtencionCliente ventanilla;     //< Objeto ventanilla
         int fecha[3];   
+
         /**
          * @brief Método que divide las lineas con separador
          * 
@@ -33,47 +35,55 @@ class Banco {
          * @param separador
          *
          */                
-        vector <string> dividir(string linea, string separador);
+        // vector <string> dividir(string linea, string separador);
+
         /**
-         * @brief Método que establece la fecha
-         * 
+         * @brief Método que establece la fecha inicial del sistema
          */   
         void setFecha();
+        
         /**
-         * @brief Método que la información de los clientes
+         * @brief Método que lee la información de los clientes
          * 
          */   
-        void leerInfoClientes();
-                /**
-         * @brief Método que lee las transacciones extra
+        // void leerInfoClientes();
+
+        /**
+         * @brief Método que lee las transacciones realizadas
          * 
          */   
-        void leerTransacciones();
+        // void leerTransacciones();
+
         /**
          * @brief Método que actualiza la información de los clientes
          * 
          */   
-        void actualizarInfoClientes();
+        // void actualizarInfoClientes();
+
         /**
          * @brief Método que crea un cliente
          * 
          */          
         void crearCliente();
+
         /**
          * @brief Método utilizado para antender a un cliente
          * 
          */            
         void atenderCliente();
+
         /**
          * @brief Método utilizado para mostrar un menú con la información
          * 
          */    
         void mostrarMenu();
+
         /**
          * @brief Método que actualiza las transacciones
          * 
          */    
-        void actualizarTransacciones();
+
+        // void actualizarTransacciones();
 };
 
 #endif // BANCO_HPP
