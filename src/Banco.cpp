@@ -1,28 +1,3 @@
-void Banco::actualizarTransacciones(){
-    string nombreArchivo = "registro_transacciones.txt";
-    ofstream archivo(nombreArchivo, ios::out | ios::trunc);
-    archivo << "Registro de transacciones realizadas por los usuarios" << endl;
-    archivo << endl;
-    archivo << "fecha,nombre,id,descripcion" << endl;
-    for (auto& transaccion : transacciones) {
-        archivo << transaccion << endl;
-    }
-    archivo.close();
-    cout << "Se actualizo el archivo de log: " << nombreArchivo << endl;
-    cout << endl;
-}
-
-void Banco::atenderCliente(){
-    int idCliente;
-    leerEntero(idCliente, "Ingrese su id: ");
-    auto it_cliente = clientes.find(idCliente);
-    if(it_cliente == clientes.end()){
-        cout << "El id ingresado no existe en el registro." << endl;
-        return;
-    }
-    ventanilla.mostrarMenu(fecha, it_cliente->second, clientes, transacciones);
-}
-
 void Banco::crearCliente(){
     string nombre;
     cout << "Ingrese su nombre: ";
