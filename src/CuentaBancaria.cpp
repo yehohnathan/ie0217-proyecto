@@ -2,12 +2,15 @@
 #include "CuentaBancaria.hpp"
 
 // Método que solo se utiliza una única vez para la creación de una cuenta bancaria
-void CuentaBancaria::setDatos(string tipoMoneda_p){
+void CuentaBancaria::setDatos(int idPropietario_p, int numeroCuenta_p, string tipoMoneda_p, double dineroAhorros_p){
     // El usuario selecciona el tipo de moneda de la cuenta, modificando el atributo
     // público
     tipoMoneda = tipoMoneda_p;
-    // El saldo de la cuenta inicia siendo 0
-    dineroAhorros = 0;
+    // El saldo de la cuenta, que puede ser lo que el cliente deseé
+    dineroAhorros = dineroAhorros_p;
+    // Identificadores de la cuenta y el cliente inicializados
+    idPropietario = idPropietario_p;
+    numeroCuenta = numeroCuenta_p;
 }
 
 // Este método muestra la información de numeroCuenta (escogido en el momento que se va
@@ -22,9 +25,9 @@ void CuentaBancaria::imprimirInfo(){
 void CuentaBancaria::depositar(){
     // Se define una variable que guardará el monto a depositar
     double montoDepositar;
-    // Se recibe del usuario el monto a depositar
-    cout << "Ingrese el monto que desea depositar: ";
-    cin >> montoDepositar;
+    // Se recibe del usuario el monto a depositar y verifica el dato ingresado 
+    // a partir de un método de LeerDatos
+    leerDouble(montoDepositar, "Ingrese el monto que desea depositar: ");
     // Se agrega esa cantidad al dinero de ahorros de la cuenta
     dineroAhorros += montoDepositar;
 }
@@ -33,9 +36,9 @@ void CuentaBancaria::depositar(){
 void CuentaBancaria::retirar(){
     // Se define una variable que guardará el monto a retirar
     double montoRetirar;
-    // Se recibe del usuario el monto a retirar
-    cout << "Ingrese el monto que desea retirar: ";
-    cin >> montoRetirar;
+    // Se recibe del usuario el monto a retirar y verifica el dato ingresado 
+    // a partir de un método de LeerDatos
+    leerDouble(montoRetirar, "Ingrese el monto que desea retirar: ");
     // Se revisa si el monto a retirar es mayor que el dinero que hay en la cuenta
     if(montoRetirar > dineroAhorros){
         // En caso de que sea mayor se imprime un mensaje que indica que no hay fondos suficientes
@@ -52,9 +55,9 @@ void CuentaBancaria::retirar(){
 void CuentaBancaria::transferir(CuentaBancaria& cuentaDestino){
     // Se define una variable que guardará el monto a transferir
     double montoTransferir;
-    // Se recibe del usuario el monto a transferir
-    cout << "Ingrese el monto que desea transferir: ";
-    cin >> montoTransferir;
+    // Se recibe del usuario el monto a transferir y verifica el dato ingresado 
+    // a partir de un método de LeerDatos
+    leerDouble(montoTransferir, "Ingrese el monto que desea transferir: ");
     // Se revisa si el monto a transferir es mayor que el dinero que hay en la cuenta de salida
     if(montoTransferir > dineroAhorros){
         // En caso de que sea mayor se imprime un mensaje que indica que no hay fondos suficientes
