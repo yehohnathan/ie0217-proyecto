@@ -15,6 +15,10 @@
 #include <string>
 using namespace std;
 
+// Librería fundamental que permite la verificación de todos los datos ingresados por el usuario
+// Se espera el git push que la instancie por Danny
+// #include "LecturaDatos.hpp"
+
 /**
 * @brief Clase encargada de gestionar las cuentas de ahorros del cliente.
 * 
@@ -26,15 +30,19 @@ using namespace std;
 class CuentaBancaria {
     public:
         int numeroCuenta;       //< Identificador de la cuenta bancaria
+        int idPropietario;      //< Identificador del prestamo según el cliente
         string tipoMoneda;      //< Tipo de moneda (dolares o colones) de la cuenta
         double dineroAhorros;   //< Saldo disponible del cliente en la cuenta
         
         /**
         * @brief Establece el tipo de moneda al momento de crear la cuenta de ahorros.
         *
+        * @param idPropietario_p Identificador del cliente, dueño de la cuenta
+        * @param numeroCuenta_p Identificador de la cuenta, a partir del idPropietario
         * @param tipoMoneda_p Tipo de moneda (dolares o colones) de la cuenta
+        * @param dineroAhorros_p Cantidad de dinero que tiene la cuenta (inicialmente)
         */
-        void setDatos(string tipoMoneda_p);
+        void setDatos(int idPropietario_p, int numeroCuenta_p, string tipoMoneda_p, double dineroAhorros_p);
 
         /**
          * @brief Muestra el número de cuenta, moneda y saldo disponible de la cuenta.
