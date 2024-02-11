@@ -32,6 +32,8 @@ class CDP {
         string tipo;            //< Especifica el tipo de CDP que solicito el cliente
         string tipoMoneda;      //< Tipo de moneda (dolares o colones) del CDP
         double dineroCDP;       //< Dinero (suma de cuotas) que tiene el cliente en su CDP
+        double dineroGenerado;  //< Dinero generado (monto según cuotas mensuales) por el CDP para el cliente
+        double dineroTotal;     //< Dinero total que ha logrado el cliente mediante el CDP
 
         int fechaCreacion[3];   //< Esta es la fecha que se introduce al inicio del programa, es la fecha de inicio.
         int fechaExpira[3];     //< Fecha de expiración del CDP, depende si es de pequeño, mediado o largo plazo

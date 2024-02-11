@@ -24,6 +24,10 @@ void CDP::setDatos(int idPropietario_p, int numeroCDP_p, string tipoMoneda_p, do
 
     // Se indica el estado del CDP
     estado = "vigente";     // En la fecha de creación este va a estar siempre vigente
+    // Se inicializa el dineroGenerado por el CDP
+    dineroGenerado = 0;
+    // Se actualiza el dinero total que ha logrado el cliente mediante el CDP
+    dineroTotal = dineroCDP;
 }
 
 // Actualiza la linea temporal del CDP para saber si ya llegó a su vencimiento //< Esto esto esta a prueba
@@ -39,5 +43,8 @@ void CDP::actualizarCDP(int fecha[]){
         // meses del CDP se actualiza el estado
         estado = "vencido";
     }
-
+    // Dinero generado por el CDP según totas las cuotas mensuales
+    dineroGenerado = dineroCDP*tasaInteres*tiempoMeses;
+    // Se actualiza el dineroTotal generado por el usuario
+    dineroTotal = dineroGenerado + dineroCDP;
 }
