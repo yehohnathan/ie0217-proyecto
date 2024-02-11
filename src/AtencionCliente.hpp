@@ -27,8 +27,12 @@ class AtencionCliente {
         * @param cliente Referencia al cliente que se está atendiendo en ese momento.
         * @param clientes Referencia al contenedor con todos los clientes de la entidad bancaria.
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param cuentasBanco
+        * @param prestamosBanco
+        * @param certificadosBanco 
         */
-        void mostrarMenu(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones);
+        void mostrarMenu(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones,
+                            map <int, CuentaBancaria>& cuentasBanco, map <int, Prestamo>& prestamosBanco, map <int, CDP>& certificadosBanco);
 
         /**
         * @brief Permite gestionar las acciones relacionadas con las cuentas bancarias.
@@ -37,8 +41,9 @@ class AtencionCliente {
         * @param cliente Referencia al cliente que se está atendiendo en ese momento.
         * @param clientes Referencia al contenedor con todos los clientes de la entidad bancaria.
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param cuentasBanco
         */
-        void gestionarCuentas(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones);
+        void gestionarCuentas(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones, map <int, CuentaBancaria>& cuentasBanco);
 
         /**
         * @brief Permite gestionar las acciones relacionadas con los préstamos.
@@ -47,8 +52,11 @@ class AtencionCliente {
         * @param cliente Referencia al cliente que se está atendiendo en ese momento.
         * @param clientes Referencia al contenedor con todos los clientes de la entidad bancaria.
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param prestamosBanco
         */
-        void gestionarPrestamos(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones);
+        void gestionarPrestamos(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones, map <int, Prestamo>& prestamosBanco);
+
+        void gestionarCertificados(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones, map <int, CDP>& certificadosBanco);
 };
 
 #endif // ATENCIONCLIENTE_HPP
