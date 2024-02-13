@@ -1,15 +1,18 @@
 #include "Cliente.hpp"
-
 // Constantes de los prestamos
-// Préstamo personal
-const int CUOTASPERSONAL = 12;
-const int CUOTASPRENDARIO = 13;
-// Préstamo hipotecario
-const int CUOTASHIPOTECARIO = 14;
-const double INTERESPERSONAL = 1.2;
-// Préstamo prendario
-const double INTERESPRENDARIO = 1.3;
-const double INTERESHIPOTECARIO = 1.4;
+#include "Constantes.hpp"
+
+// ---------------------------Métodos para setear datos, registrar transacciones y generar información --------------------------------- //
+
+// Establecer datos e información del cliente
+void Cliente::setDatos(int id_p, string nombre_p){
+    id = id_p;              //< ID de la persona
+    nombre = nombre_p;      //< Nombre de la persona
+    cantidadCuentas = 0;    //< Número de cuentas
+    cantidadPrestamos = 0;  //< Número de prestamos
+    cantidadCDP = 0;        //< Cantidad de CDP
+}
+
 
 // Método para registrar una transacción
 void Cliente::registrarTransaccion(int fecha[], vector <string>& transacciones, string nombre, int id, string descripcion){
