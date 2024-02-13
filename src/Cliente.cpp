@@ -65,6 +65,30 @@ vector <string> Cliente::generarInfo(map <int, CuentaBancaria>& cuentasBanco, ma
 
 // ------------------------------------------Métodos de cuentas bancarias------------------------------------------ //
 
+// Método encargado de agregar la cuenta del cliente
+void Cliente::agregarCuenta(int fecha[], vector <string>& transacciones, map <int, CuentaBancaria>& cuentasBanco){
+    // Si la cantidad de cuentas es equivalente a dos
+    if(cantidadCuentas == 2){
+        cout << "Ya tiene 2 cuentas, no puede agregar mas." << endl;
+        return;
+    }
+    string tipoMoneda;          //< Se declara el tipo moneda como un string
+    leerMoneda(tipoMoneda);     //< Se lee tipo de moneda
+    CuentaBancaria cuenta;      //< Se declara una cuenta bancaria
+    // Convierte la información a entero
+    int numeroCuenta = stoi(to_string(id) + to_string(cantidadCuentas + 1));
+    // Lllama al metodo establecer datos de cuenta
+    cuenta.setDatos(id, numeroCuenta, tipoMoneda, 0);
+    // Guarda dentro del contenedor de cuentasBanco la nueva cuenta
+    cuentasBanco[numeroCuenta] = cuenta;
+    // Aumenta la cantidad de cuentas
+    cantidadCuentas += 1;
+    // Regitra la transacción
+    registrarTransaccion(fecha, transacciones, "agrego la cuenta numero " + to_string(cuenta.numeroCuenta) + " a su nombre");
+}
+
+
+
 // Método para solicitar el informe de préstamos
 void Cliente::solicitarInformePrestamos(int fecha[], vector <string>& transacciones){
     // Si el cliente no tiene préstamos asociados
