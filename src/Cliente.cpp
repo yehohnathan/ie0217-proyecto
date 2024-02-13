@@ -240,50 +240,16 @@ void Cliente::transferirDinero(int fecha[], vector <string>& transacciones, map 
     }
 }
 
-
-// Método para solicitar el informe de préstamos
-void Cliente::solicitarInformePrestamos(int fecha[], vector <string>& transacciones){
-    // Si el cliente no tiene préstamos asociados
-    if(prestamos.size() == 0){
-        // Se imprime un mensaje de que no hay préstamos para mostrar
-        cout << "No tiene prestamos registrados a su nombre." << endl;
-        // Se termina la ejecución del método
-        return;
+// Muentra la información de la cuenta
+void Cliente::mostrarCuentas(map <int, CuentaBancaria>& cuentasBanco){
+    // Itera por la cuenta
+    for(auto& par : cuentasBanco){
+        // Si coincide
+        if(par.second.idPropietario == id){
+            // Imprime la información
+            par.second.imprimirInfo();
+        }
     }
-    // Se define el nombre del archivo
-    string nombreArchivo = "informe_prestamos.txt";
-    // Se abre el archivo y si no existe lo crea
-    ofstream archivo(nombreArchivo, ios::out | ios::trunc);
-    // Se escribe un encabezado para el archivo
-    archivo << "informe de prestamos solicitado por el usuario" << endl;
-    archivo << endl;
-    // Se escriben los datos del cliente
-    archivo << "datos del cliente" << endl;
-    archivo << "nombre,id" << endl;
-    archivo << nombre + "," + to_string(id) << endl;
-    // Se escribe un encabezado para los préstamos
-    archivo << "prestamos registrados" << endl;
-    // Se recorre el contenedor de los préstamos
-    for(auto& par : prestamos){
-        // Se agrega un encabezado para indicar el significado de los datos del reporte
-        archivo << "numero de prestamo,tipo de moneda,monto total,cantidad cuotas,tasa interes" << endl;
-        // Para cada préstamo se escribe toda la información del préstamo
-        archivo << to_string(par.second.numeroPrestamo) + "," + par.second.tipoMoneda + "," + to_string(par.second.montoTotal) 
-        + "," + to_string(par.second.cuotasTotal) + "," + to_string(par.second.tasaInteres) << endl;
-        // Se obtiene el reporte de cuotas del préstamo con el método de la clase Prestamo
-        vector <string> reporte = par.second.generarReporteCuotas();
-        // Para cada línea del reporte de cuotas
-        for (string linea : reporte){
-            // Se escribe la línea en el archivo
-            archivo << linea << endl;
-        }   
-    }
-    // Se cierra el archivo
-    archivo.close();
-    // Se imprime un mensaje de que se generó correctamente el archivo
-    cout << "Se genero el archivo: " << nombreArchivo << endl;
-    // Se registra la transacción con la descripción adecuada
-    registrarTransaccion(fecha, transacciones, nombre, id, "solicito un informe de sus prestamos");
 }
 
 // Método para solicitar un informe de cuentas
@@ -330,269 +296,66 @@ void Cliente::solicitarInformeCuentas(int fecha[], vector <string>& transaccione
     registrarTransaccion(fecha, transacciones, nombre, id, "solicito un informe de sus cuentas"); 
 }
 
-void Cliente::mostrarCuentas(){
-    for(auto& par : cuentas){
-        par.second.imprimirInfo();
-    }
-}
+// ------------------------------------------Métodos de préstamos------------------------------------------ //
 
-void Cliente::mostrarPrestamos(){
-    for(auto& par : prestamos){
-        par.second.imprimirInfo();
-    }
-}
-
-// Método para retirar dinero de una de las cuentas
-void Cliente::retirarDinero(int fecha[], vector <string>& transacciones){
-    // Si el cliente no tiene cuentas asociadas
-    if(cuentas.size() == 0){
-        // Se imprime un mensaje de que no hay cuentas registradas
-        cout << "No tiene cuentas registradas a su nombre." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se imprimen todas las cuentas del usuario
-    cout << "\n---Estas son sus cuentas---" << endl;
-    mostrarCuentas();
-    // Se lee del usuario el número de la cuenta de la que desea retirar
-    int numeroCuenta;
-    cout << "Ingrese el numero de la cuenta de la que desea retirar: ";
-    cin >> numeroCuenta;
-    // Se encuentra esta cuenta en el contenedor de las cuentas
-    auto it_cuenta = cuentas.find(numeroCuenta);
-    // Si no se encontró la cuenta
-    if(it_cuenta == cuentas.end()){
-        // Se imprime un mensaje que indica que la cuenta no se encontró
-        cout << "El numero de cuenta ingresado no es valido." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se obtiene el dinero de la cuenta antes del retiro 
-    double dineroAntes = it_cuenta->second.dineroAhorros;
-    // Se intenta retirar dinero de la cuenta con el método de la clase CuentaBancaria
-    it_cuenta->second.retirar();
-    // Se obtiene el dinero después del retiro
-    double dineroAhora = it_cuenta->second.dineroAhorros;
-    // Si el dinero es menor al que había antes es porque el retiro se realizó con éxito
-    if(dineroAntes > dineroAhora){
-        // Se registra la transacción con un mensaje adecuado
-        registrarTransaccion(fecha, transacciones, nombre, id, "retiro dinero de una de sus cuentas");
-    }
-}
-
-// Método para solicitar un CDP
-void Cliente::solicitarCDP(int fechaCreacion[], vector <string>& transacciones){
-    // Si el cliente no tiene cuentas registradas
-    if(cuentas.size() == 0){
-        // Se imprime un mensaje de que no hay cuentas a su nombre
-        cout << "No tiene cuentas registradas a su nombre." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se imprimen las cuentas del usuario
-    cout << "\n---Estas son sus cuentas---" << endl;
-    mostrarCuentas();
-    // Se lee del usuario el número de la cuenta en la que desea solicitar el CDP
-    int numeroCuenta;
-    cout << "Ingrese el numero de la cuenta en la que desea solicitar el certificado: ";
-    cin >> numeroCuenta;
-    // Se busca la cuenta en el contenedor de las cuentas
-    auto it_cuenta = cuentas.find(numeroCuenta);
-    // Si no se encuentra
-    if(it_cuenta == cuentas.end()){
-        // Se imprime un mensaje de error
-        cout << "El numero de cuenta ingresado no es valido." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Si el usuario ya tiene un certificado de depósito a plazo
-    if(it_cuenta->second.depositosPlazo.size() == 1){
-        // Se indica un mensaje de error
-        cout << "Ya tiene un Certificado de Deposito a Plazo." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se intenta agregar el CDP a la cuenta con el método de la clase CuentaBancaria
-    it_cuenta->second.agregarCDP(fechaCreacion);
-    // Si la cantidad de CDPs asociados es mayor significa que se agregó con éxito
-    if(it_cuenta->second.depositosPlazo.size() == 1){
-        // Se registra la transacción con la descripción adecuada
-        registrarTransaccion(fechaCreacion, transacciones, nombre, id, "solicito un CDP en una de sus cuentas");
-    }
-}
-
-// Método para depositar dinero a una cuenta 
-void Cliente::depositarDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes){
-    // Se pregunta si el depósito va dirigido a sí mismo o a alguien más
-    cout << "Hacia quien va dirigido el deposito?: " << endl;
-    cout << "1. A mi persona." << endl;
-    cout << "2. A otra persona." << endl;
-    // Se lee la opción ingresada por el usuario
-    int opcion;
-    cout << "Ingrese una opcion: ";
-    cin >> opcion;
-    // Si el depósito es para sí mismo
-    if(opcion == 1){
-        // Se revisa si el usuario no tiene cuentas asociadas
-        if(cuentas.size() == 0){
-            // En caso de que no se imprime un mensaje de error
-            cout << "No tiene cuentas registradas a su nombre." << endl;
-            // Se detiene la ejecución del método
+void Cliente::agregarPrestamo(int fecha[], vector <string>& transacciones, map <int, Prestamo>& prestamosBanco){
+    int cuotasTotal;
+    double tasaInteres;
+    string tipo;
+    int opcion = 0;
+    while(1){
+        cout << "\n---Opciones de prestamos---" << endl;
+        cout << "1. Prestamo personal" << endl;
+        cout << "2. Prestamo prendario." << endl;
+        cout << "3. Prestamo hipotecario." << endl;
+        cout << "4. Regresar." << endl;
+        leerEntero(opcion, "Ingrese un opcion: ");
+        if(opcion == 1){
+            cout << "\n---Prestamo personal---" << endl;
+            cout << "Cantidad total de cuotas: " << CUOTASPERSONAL << endl;
+            cout << "Tasa de interes: " << INTERESPERSONAL << endl;
+            tipo = "personal";
+            cuotasTotal = CUOTASPERSONAL;
+            tasaInteres = INTERESPERSONAL;
+            break;
+        }
+        else if(opcion == 2){
+            cout << "\n---Prestamo prendario---" << endl;
+            cout << "Cantidad total de cuotas: " << CUOTASPRENDARIO << endl;
+            cout << "Tasa de interes: " << INTERESPRENDARIO << endl;
+            tipo = "prendario";
+            cuotasTotal = CUOTASPRENDARIO;
+            tasaInteres = INTERESPRENDARIO;
+            break;
+        }
+        else if(opcion == 3){
+            cout << "\n---Prestamo hipotecario---" << endl;
+            cout << "Cantidad total de cuotas: " << CUOTASHIPOTECARIO << endl;
+            cout << "Tasa de interes: " << INTERESHIPOTECARIO << endl;
+            tipo = "hipotecario";
+            cuotasTotal = CUOTASHIPOTECARIO;
+            tasaInteres = INTERESHIPOTECARIO;
+            break;
+        }
+        else if(opcion == 4){
+            cout << "\nRegresando..." << endl;
             return;
         }
-        // Se imprimen las cuentas del usuario
-        cout << "\n---Estas son sus cuentas---" << endl;
-        mostrarCuentas();
-        // Se lee del usuario el numero de la cuenta a la que desea depositar
-        int numeroCuentaDestino;
-        cout << "Ingrese el numero de cuenta a la que desea depositar: ";
-        cin >> numeroCuentaDestino;
-        // Se busca la cuenta en el contenedor de las cuentas
-        auto it_cuentaDestino = cuentas.find(numeroCuentaDestino);
-        // Si no se encuentra
-        if(it_cuentaDestino == cuentas.end()){
-            // Se imprime un mensaje de error
-            cout << "El numero de cuenta ingresado no es valido." << endl;
-            // Se detiene la ejecución del método
-            return;
+        else{
+            cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
         }
-        // Se realiza el depósito 
-        it_cuentaDestino->second.depositar();   
-        // Se registra la transacción con la descripción adecuada
-        registrarTransaccion(fecha, transacciones, nombre, id, "deposito dinero a una cuenta propia");
-    }
-    // Si el depósito es para alguien más
-    else if(opcion == 2){
-        // Se lee el id del cliente al que se desea depositar
-        int idDestino;
-        cout << "Ingrese el id de la persona a la que desea depositar: ";
-        cin >> idDestino;
-        // Se busca el cliente en el contenedor con los clientes
-        auto it_clienteDestino = clientes.find(idDestino);
-        // Si no se encuentra
-        if(it_clienteDestino == clientes.end()){
-            // Se imprime un mensaje de error
-            cout << "El id ingresado no existe en el registro." << endl;
-            // Se detiene la ejecución del método
-            return;
-        }
-        // Si el cliente destino no tiene cuentas asociadas
-        if(it_clienteDestino->second.cuentas.size() == 0){
-            // Se imprime un mensaje de error
-            cout << "El usuario ingresado no tiene cuentas registradas." << endl;
-            // Se detiene la ejecución del método
-            return;
-        }
-        // Se imprimen las cuentas del cliente destino
-        cout << "\n---Cuentas del cliente destino---" << endl;
-        it_clienteDestino->second.mostrarCuentas();
-        // Se lee el número de cuenta del cliente destino a la que se desea depositar
-        int numeroCuentaDestino;
-        cout << "Ingrese el numero de cuenta a la que desea depositar: ";
-        cin >> numeroCuentaDestino;
-        // Se busca la cuenta en el contenedor con las cuentas del cliente destino
-        auto it_cuentaDestino = it_clienteDestino->second.cuentas.find(numeroCuentaDestino);
-        // Si no se encuentra
-        if(it_cuentaDestino == it_clienteDestino->second.cuentas.end()){
-            // Se imprime un mensaje de error 
-            cout << "El numero de cuenta ingresado no es valido." << endl;
-            // Se detiene la ejecución del método
-            return;
-        }
-        // Se realiza el depósito
-        it_cuentaDestino->second.depositar();   
-        // Se registra la transacción con la descripción correcta
-        registrarTransaccion(fecha, transacciones, nombre, id, "deposito dinero a una cuenta de otra persona");
-    }
-    // En caso de que se ingrese una opción no válida
-    else{
-        // Se imprime un mensaje de error
-        cout << "La opcion ingresada no es valida." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-}
-
-// Método para transferir dinero entre cuentas
-void Cliente::transferirDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes){
-    // Si el cliente no tiene cuentas asociadas
-    if(cuentas.size() == 0){
-        // Se imprime un mensaje de error
-        cout << "No tiene cuentas registradas a su nombre." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se imprimen las cuentas del cliente
-    cout << "\n---Estas son sus cuentas---" << endl;
-    mostrarCuentas();
-    // Se lee el número de cuenta de la que sale el dinero
-    int numeroCuentaSalida;
-    cout << "Ingrese el numero de cuenta desde la que desea transferir: ";
-    cin >> numeroCuentaSalida;
-    // Se busca la cuenta en el contenedor con las cuentas
-    auto it_cuentaSalida = cuentas.find(numeroCuentaSalida);
-    // Si no se encuentra 
-    if(it_cuentaSalida == cuentas.end()){
-        // Se imprime un mensaje de error
-        cout << "El numero de cuenta ingresado no es valido." << endl;
-        // Se detiene la ejecución del método
-        return;
     }
 
-    // Se lee el id del cliente que tiene la cuenta que recibe el dinero
-    int idDestino;
-    cout << "Ingrese el id de la persona a la que desea transferir: ";
-    cin >> idDestino;
-    // Se busca el cliente en el contenedor con los clientes
-    auto it_clienteDestino = clientes.find(idDestino);
-    // Si no se encuentra
-    if(it_clienteDestino == clientes.end()){
-        // Se imprime un mensaje de error
-        cout << "El id ingresado no existe en el registro." << endl;
-        // Se detiene la ejecución del método 
-        return;
-    }
-    // Si el cliente destino no tiene cuentas registradas
-    if(it_clienteDestino->second.cuentas.size() == 0){
-        // Se imprime un mensaje de error
-        cout << "El usuario ingresado no tiene cuentas registradas." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se muestran las cuentas del cliente destino
-    cout << "\n---Cuentas del cliente destino---" << endl;
-    it_clienteDestino->second.mostrarCuentas();
-    // Se lee el número de cuenta a la que se va a transferir el dinero
-    int numeroCuentaDestino;
-    cout << "Ingrese el numero de cuenta a la cuenta que desea transferir: ";
-    cin >> numeroCuentaDestino;
-    // Se busca en el contenedor con las cuentas
-    auto it_cuentaDestino = it_clienteDestino->second.cuentas.find(numeroCuentaDestino);
-    // Si no se encuentra
-    if(it_cuentaDestino == it_clienteDestino->second.cuentas.end()){
-        // Se imprime un mensaje de error
-        cout << "El numero de cuenta ingresado no es valido." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Si las cuentas no tienen el mismo tipo de moneda
-    if(it_cuentaDestino->second.tipoMoneda != it_cuentaSalida->second.tipoMoneda){
-        // Se imprime un mensaje de error
-        cout << "Las cuentas deben ser del mismo tipo de moneda." << endl;
-        // Se detiene la ejecución del método
-        return;
-    }
-    // Se obtiene el dinero antes de la transferencia
-    double dineroAntes = it_cuentaSalida->second.dineroAhorros;
-    // Se realiza la trasnferencia con el método de la clase CuentaBancaria
-    it_cuentaSalida->second.transferir(it_cuentaDestino->second);
-    // Se obtiene el dinero después de la transferencia
-    double dineroAhora = it_cuentaSalida->second.dineroAhorros;
-    // Si el dinero es menor es porque la transferencia se realizó con éxito
-    if(dineroAntes > dineroAhora){
-        // Se registra la transacción con el mensaje adecuado
-        registrarTransaccion(fecha, transacciones, nombre, id, "transfirio dinero a una cuenta de otra persona");
-    }
+    string tipoMoneda;
+    leerMoneda(tipoMoneda);
+    double montoTotal;
+    leerDouble(montoTotal, "Ingrese el monto total del prestamo: ");
+    Prestamo prestamo;
+    int numeroPrestamo = stoi(to_string(id) + to_string(cantidadPrestamos + 1));
+    prestamo.setDatos(id, numeroPrestamo, tipoMoneda, montoTotal, cuotasTotal, tasaInteres, 0,tipo);
+    prestamosBanco[numeroPrestamo] = prestamo;
+    cantidadPrestamos += 1;
+    registrarTransaccion(fecha, transacciones, "agrego el prestamo numero " + to_string(prestamo.numeroPrestamo) + " a su nombre");
 }
 
 // Método para pagar una cuota de un préstamo
@@ -685,4 +448,154 @@ void Cliente::pagarPrestamo(int fecha[], vector <string>& transacciones, map <in
         // Se detiene la ejecución del programa
         return;
     }
+}
+
+void Cliente::mostrarPrestamos(){
+    for(auto& par : prestamos){
+        par.second.imprimirInfo();
+    }
+}
+
+// Método para solicitar el informe de préstamos
+void Cliente::solicitarInformePrestamos(int fecha[], vector <string>& transacciones, map <int, Prestamo>& prestamosBanco){
+    // Si el cliente no tiene préstamos asociados
+    if(cantidadPrestamos == 0){
+        // Se imprime un mensaje de que no hay préstamos para mostrar
+        cout << "No tiene prestamos registrados a su nombre." << endl;
+        // Se termina la ejecución del método
+        return;
+    }
+    // Se define el nombre del archivo
+    string nombreArchivo = "informe_prestamos.txt";
+    // Se abre el archivo y si no existe lo crea
+    ofstream archivo(nombreArchivo, ios::out | ios::trunc);
+    // Se escribe un encabezado para el archivo
+    archivo << "Informe de prestamos solicitado por el cliente" << endl;
+    archivo << endl;
+    // Se escriben los datos del cliente
+    archivo << "----------------------------Datos del cliente----------------------------" << endl;
+    archivo << "id,nombre" << endl;
+    archivo << to_string(id) + "," + nombre << endl;
+    // Se escribe un encabezado para los préstamos
+    archivo << "----------------------------Prestamos registrados----------------------------" << endl;
+    // Se recorre el contenedor de los préstamos
+    for(auto& par : prestamosBanco){
+        // En cazp de que el id coincida
+        if(par.second.idPropietario == id){
+            archivo << "----------------------------Prestamo numero " + to_string(par.second.numeroPrestamo) + "----------------------------" << endl;
+            // Se agrega un encabezado para indicar el significado de los datos del reporte
+            archivo << "numero de prestamo,tipo,tipo de moneda,monto total,cantidad cuotas,tasa interes,cuotas pagadas,intereses pagados,deuda pagada" << endl;
+            // Para cada préstamo se escribe toda la información del préstamo
+            archivo << to_string(par.second.numeroPrestamo) + "," + par.second.tipo + "," + par.second.tipoMoneda + "," + to_string(par.second.montoTotal) + "," 
+            + to_string(par.second.cuotasTotal) + "," + to_string(par.second.tasaInteres) + "," + to_string(par.second.cuotasPagadas) + ","
+            + to_string(par.second.interesesPagados) + "," + to_string(par.second.deudaPagada) << endl;
+            // Se obtiene el reporte de cuotas del préstamo con el método de la clase Prestamo
+            vector <string> reporte = par.second.generarInfoCuotas();
+            // Para cada línea del reporte de cuotas
+            for (string linea : reporte){
+                // Se escribe la línea en el archivo
+                archivo << linea << endl;
+            }   
+        }
+        archivo << endl;
+    }
+    // Se cierra el archivo
+    archivo.close();
+    // Se imprime un mensaje de que se generó correctamente el archivo
+    cout << "\nSe genero el archivo: " << nombreArchivo << endl;
+    // Se registra la transacción con la descripción adecuada
+    registrarTransaccion(fecha, transacciones, "solicito un informe de sus prestamos");
+}
+
+
+// ------------------------------------------Métodos de certificados a plazo------------------------------------------ //
+
+void Cliente::agregarCDP(int fecha[], vector <string>& transacciones, map <int, CDP>& certificadosBanco){
+    int plazoMeses;
+    double tasaInteres;
+    string tipo;
+    int opcion = 0;
+    while(1){
+        cout << "\n---Opciones de Certificados de Deposito a Plazo---" << endl;
+        cout << "1. Certificado a corto plazo." << endl;
+        cout << "2. Certificado a mediano plazo." << endl;
+        cout << "3. Certificado a largo plazo." << endl;
+        cout << "4. Regresar." << endl;
+        leerEntero(opcion, "Ingrese un opcion: ");
+        if(opcion == 1){
+            cout << "\n---Certificado a corto plazo---" << endl;
+            cout << "Plazo en meses: " << PLAZOCORTO << endl;
+            cout << "Tasa de interes: " << INTERESCORTO << endl;
+            tipo = "corto";
+            plazoMeses = PLAZOCORTO;
+            tasaInteres = INTERESCORTO;
+            break;
+        }
+        else if(opcion == 2){
+            cout << "\n---Certificado a mediano plazo---" << endl;
+            cout << "Plazo en meses: " << PLAZOMEDIANO << endl;
+            cout << "Tasa de interes: " << INTERESMEDIANO << endl;
+            tipo = "mediano";
+            plazoMeses = PLAZOMEDIANO;
+            tasaInteres = INTERESMEDIANO;
+            break;
+        }
+        else if(opcion == 3){
+            cout << "\n---Certificado a largo plazo---" << endl;
+            cout << "Plazo en meses: " << PLAZOSLARGO << endl;
+            cout << "Tasa de interes: " << INTERESLARGO << endl;
+            tipo = "largo";
+            plazoMeses = PLAZOSLARGO;
+            tasaInteres = INTERESLARGO;
+            break;
+        }
+        else if(opcion == 4){
+            cout << "\nRegresando..." << endl; 
+            return;
+        }
+        else{
+            cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
+        }
+    }
+    string tipoMoneda;
+    leerMoneda(tipoMoneda);
+    double dineroCDP;
+    leerDouble(dineroCDP, "Ingrese el dinero que desea invertir en el certificado: ");
+    CDP certificadoPlazo;
+    int numeroCDP = stoi(to_string(id) + to_string(cantidadCDP + 1));
+    certificadoPlazo.setDatos(id, numeroCDP, tipoMoneda, dineroCDP, fecha, plazoMeses, tasaInteres,tipo);
+    certificadosBanco[numeroCDP] = certificadoPlazo;
+    cantidadCDP +=1;
+    registrarTransaccion(fecha, transacciones, "agrego el certificado a plazo numero " + to_string(certificadoPlazo.numeroCDP) + " a su nombre");
+}
+
+void Cliente::solicitarInformeCDP(int fecha[], vector <string>& transacciones, map <int, CDP>& certificadosBanco){
+    if(cantidadCDP == 0){
+        cout << "No tiene certificados a plazo registrados a su nombre." << endl;
+        return;
+    }
+    string nombreArchivo = "informe_certificados_plazo.txt";
+    ofstream archivo(nombreArchivo, ios::out | ios::trunc);
+    archivo << "Informe de certificados a plazo solicitado por el cliente" << endl;
+    archivo << endl;
+    archivo << "----------------------------Datos del cliente----------------------------" << endl;
+    archivo << "id,nombre" << endl;
+    archivo << to_string(id) + "," + nombre << endl;
+    archivo << "----------------------------Certificados registrados----------------------------" << endl;
+    for(auto& par : certificadosBanco){
+        if(par.second.idPropietario == id){
+            archivo << "----------------------------Certificados numero " + to_string(par.second.numeroCDP) + "----------------------------" << endl;
+            archivo << "numero de certificado,tipo,tipo de moneda,dinero invertido,dinero generado,dinero total,plazo en meses,tasa interes,fecha de creacion,fecha expiracion,estado" << endl;
+            archivo << to_string(par.second.numeroCDP) + "," + par.second.tipo + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroCDP)
+            + "," + to_string(par.second.dineroGenerado) + "," + to_string(par.second.dineroTotal) 
+            + "," + to_string(par.second.plazoMeses) + "," + to_string(par.second.tasaInteres) + ","
+            + to_string(par.second.fechaCreacion[0]) + "/" + to_string(par.second.fechaCreacion[1]) + "/" + to_string(par.second.fechaCreacion[2]) + ","
+            + to_string(par.second.fechaExpira[0]) + "/" + to_string(par.second.fechaExpira[1]) + "/" + to_string(par.second.fechaExpira[2]) + ","
+            + par.second.estado << endl;
+        }
+        archivo << endl;
+    }
+    archivo.close();
+    cout << "\nSe genero el archivo: " << nombreArchivo << endl;
+    registrarTransaccion(fecha, transacciones, "solicito un informe de sus certificados a plazo");
 }
