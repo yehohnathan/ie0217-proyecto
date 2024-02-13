@@ -123,6 +123,123 @@ void Cliente::retirarDinero(int fecha[], vector <string>& transacciones, map <in
     }
 }
 
+// Método para depositar dinero a una cuenta 
+void Cliente::depositarDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes, map <int, CuentaBancaria>& cuentasBanco){
+    // Se pregunta si el depósito va dirigido a sí mismo o a alguien más
+    cout << "\n---Opciones de deposito---" << endl;
+    cout << "1. A una cuenta propia." << endl;
+    cout << "2. A una cuenta de otra persona." << endl;
+    // Se lee la opción ingresada por el usuario
+    int opcion;
+    // se llama al método que válida
+    leerEntero(opcion, "Ingrese una opcion: ");
+    // Si el depósito es para sí mismo
+    if(opcion == 1){
+        // Se revisa si el usuario no tiene cuentas asociadas
+        if(cantidadCuentas == 0){
+            // En caso de que no se imprime un mensaje de error
+            cout << "No tiene cuentas registradas a su nombre." << endl;
+            // Se detiene la ejecución del método
+            return;
+        }
+        // Se imprimen las cuentas del usuario
+        cout << "\n---Estas son sus cuentas---" << endl;
+        // Muestra las cuentas
+        mostrarCuentas(cuentasBanco);
+        // Se lee del usuario el numero de la cuenta a la que desea depositar
+        int numeroCuentaDestino;
+        leerEntero(numeroCuentaDestino, "Ingrese el numero de cuenta a la que desea depositar: ");
+        // Se busca la cuenta en el contenedor de las cuentas       
+        auto it_cuentaDestino = cuentasBanco.find(numeroCuentaDestino);
+        // Si no se encuentra
+        if(it_cuentaDestino == cuentasBanco.end() || it_cuentaDestino->second.idPropietario != id){
+            // Se imprime un mensaje de error
+            cout << "El numero de cuenta ingresado no esta registrado a su nombre." << endl;
+            // Se detiene la ejecución del método
+            return;
+        }
+        // Se realiza el depósito
+        it_cuentaDestino->second.depositar();   
+        // Se registra la transacción con la descripción adecuada
+        registrarTransaccion(fecha, transacciones, "deposito dinero en la cuenta propia numero " + to_string(numeroCuentaDestino));
+    }
+    // Si el depósito es para alguien más
+    else if(opcion == 2){
+        // Se lee el id del cliente al que se desea depositar
+        int numeroCuentaDestino;
+        leerEntero(numeroCuentaDestino, "Ingrese el numero de cuenta a la que desea depositar: ");
+        // Se busca el cliente en el contenedor con los clientes
+        auto it_cuentaDestino = cuentasBanco.find(numeroCuentaDestino);
+        // Si no se encuentra
+        if(it_cuentaDestino == cuentasBanco.end()){
+            // Se imprime un mensaje de error
+            cout << "El numero de cuenta ingresado no existe en el registro." << endl;
+            // Se detiene la ejecución del método
+            return;
+        }
+        // Se realiza el depósito
+        it_cuentaDestino->second.depositar();   
+        // Se registra la transacción con la descripción correcta
+        registrarTransaccion(fecha, transacciones, "deposito dinero en la cuenta numero " + to_string(numeroCuentaDestino));
+    }
+    // En caso de que se ingrese una opción no válida
+    else{
+        // Se imprime un mensaje de error
+        cout << "La opcion ingresada no es valida." << endl;
+        // Se detiene la ejecución del método
+        return;
+    }
+}
+
+// Método para transferir dinero entre cuentas
+void Cliente::transferirDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes, map <int, CuentaBancaria>& cuentasBanco){
+    // Si el cliente no tiene cuentas asociadas
+    if(cantidadCuentas == 0){
+        // Se imprime un mensaje de error
+        cout << "No tiene cuentas registradas a su nombre." << endl;
+        // Se detiene la ejecución del método
+        return;
+    }
+    // Se imprimen las cuentas del cliente
+    cout << "\n---Estas son sus cuentas---" << endl;
+    mostrarCuentas(cuentasBanco);
+    // Se lee el número de cuenta de la que sale el dinero
+    int numeroCuentaSalida;
+    leerEntero(numeroCuentaSalida, "Ingrese el numero de cuenta desde la que desea transferir: ");
+    // Se busca la cuenta en el contenedor con las cuentas
+    auto it_cuentaSalida = cuentasBanco.find(numeroCuentaSalida);
+    // Si no se encuentra 
+    if(it_cuentaSalida == cuentasBanco.end()){
+        // Se imprime un mensaje de error
+        cout << "El numero de cuenta ingresado no esta registrado a su nombre." << endl;
+        // Se detiene la ejecución del método
+        return;
+    }
+    // Se lee el id del cliente que tiene la cuenta que recibe el dinero
+    int numeroCuentaDestino;
+    leerEntero(numeroCuentaDestino, "Ingrese el numero de cuenta a la cuenta que desea transferir: ");
+    // Se busca el cliente en el contenedor con los clientes
+    auto it_cuentaDestino = cuentasBanco.find(numeroCuentaDestino);
+    // Si no se encuentra
+    if(it_cuentaDestino == cuentasBanco.end()){
+        // Se imprime un mensaje de error
+        cout << "El numero de cuenta ingresado no existe en el registro." << endl;
+        // Se detiene la ejecución del método 
+        return;
+    }
+    // Se obtiene el dinero antes de la transferencia
+    double dineroAntes = it_cuentaSalida->second.dineroAhorros;
+    // Se realiza la trasnferencia con el método de la clase CuentaBancaria
+    it_cuentaSalida->second.transferir(it_cuentaDestino->second);
+    // Se obtiene el dinero después de la transferencia
+    double dineroAhora = it_cuentaSalida->second.dineroAhorros;
+    // Si el dinero es menor es porque la transferencia se realizó con éxito
+    if(dineroAntes > dineroAhora){
+        // Se registra la transacción con el mensaje adecuado
+        registrarTransaccion(fecha, transacciones, "transfirio dinero de la cuenta propia numero " + to_string(numeroCuentaSalida) + " a la cuenta numero " + to_string(numeroCuentaDestino));
+    }
+}
+
 
 // Método para solicitar el informe de préstamos
 void Cliente::solicitarInformePrestamos(int fecha[], vector <string>& transacciones){
