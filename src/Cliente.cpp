@@ -27,13 +27,43 @@ void Cliente::registrarTransaccion(int fecha[], vector <string>& transacciones, 
     cout << "Transaccion exitosa!" << endl;
 }
 
-// Método para establecer los datos del cliente
-void Cliente::setDatos(string nombre_p, int id_p){
-    // Se establece el nombre
-    nombre = nombre_p;
-    // Se establece el id
-    id = id_p;
+// Método para generar información del cliente
+vector <string> Cliente::generarInfo(map <int, CuentaBancaria>& cuentasBanco, map <int, Prestamo>& prestamosBanco, map <int, CDP>& certificadosBanco){
+    // Se declara un vector string que contendrá la información
+    vector <string> informacion;
+    // Se guarda dentro los datos personales
+    informacion.push_back("datos," + to_string(id) + "," + nombre);
+    // Itera por las cuentas bancarias del cliente
+    for(auto& par : cuentasBanco){
+        // Si el id del propietario coincide
+        if(par.second.idPropietario == id){
+            // Guarda información de la cuenta
+            informacion.push_back("cuenta," + to_string(id) + "," + to_string(par.second.numeroCuenta) + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroAhorros));
+        }
+    }
+    // Itera por los prestamos bancarios del cliente
+    for(auto& par : prestamosBanco){
+        // Itera por los prestamos bancarios del cliente
+        if(par.second.idPropietario == id){
+            // Guarda información del prestamo
+            informacion.push_back("prestamo," + to_string(id) + "," + to_string(par.second.numeroPrestamo) + "," + par.second.tipo + "," + par.second.tipoMoneda + "," + to_string(par.second.montoTotal) 
+            + "," + to_string(par.second.cuotasTotal) + "," + to_string(par.second.tasaInteres) + "," + to_string(par.second.cuotasPagadas));
+        } 
+    }
+    // Itera por los centificados bancarios del cliente
+    for(auto& par : certificadosBanco){
+        // Itera por los certificados bancarios del cliente
+        if(par.second.idPropietario == id){
+            // Guarda información del CDP
+            informacion.push_back("cdp," + to_string(id) + "," + to_string(par.second.numeroCDP) + "," + par.second.tipo + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroCDP) + ","
+            + to_string(par.second.fechaCreacion[0]) + "/" + to_string(par.second.fechaCreacion[1]) + "/" + to_string(par.second.fechaCreacion[2]) + ","
+            + to_string(par.second.plazoMeses) + "," + to_string(par.second.tasaInteres));
+        }
+    }
+    return informacion;
 }
+
+// ------------------------------------------Métodos de cuentas bancarias------------------------------------------ //
 
 // Método para solicitar el informe de préstamos
 void Cliente::solicitarInformePrestamos(int fecha[], vector <string>& transacciones){
@@ -479,54 +509,4 @@ void Cliente::pagarPrestamo(int fecha[], vector <string>& transacciones, map <in
         // Se detiene la ejecución del programa
         return;
     }
-}
-
-// Método para generar información del cliente
-vector <string> Cliente::generarInfo(){
-    // Se declara un vector string que contendrá la información
-    vector <string> informacion;
-    // Se guarda dentro los datos personales
-    informacion.push_back("datos personales");
-    informacion.push_back("nombre,id");
-    // Se agrega el nombre y el ID del cliente al vector de información
-    informacion.push_back(nombre + "," + to_string(id));
-
-    // Se guarda dentro la informacion de las cuentas
-    informacion.push_back("cuentas registradas");
-    informacion.push_back("numero de cuenta,tipo de moneda,dinero de ahorros,dinero CDP,plazo,interes,fecha creacion");
-    // Itera por las cuentas del cliente
-    for(auto& par : cuentas){
-        // Si el cliente tiene un depósito a plazo fijo
-        if(par.second.depositosPlazo.size() == 1){
-            // Agrega la información de la cuenta al vector de información            
-            informacion.push_back(to_string(par.second.numeroCuenta) + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroAhorros) 
-            + "," + par.second.depositosPlazo[0].informacion);
-        }
-        else{
-            // Si no hay depósito a plazo fijo, se registra con guiones (-)
-            informacion.push_back(to_string(par.second.numeroCuenta) + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroAhorros) + ",-,-,-,-");
-        }
-    }
-    /* Si el cliente tiene solo una cuenta, pero ninguna cuenta a plazo fijo,
-    se agrega un guion (-) al vector de información */
-    if(cuentas.size() == 1){
-        informacion.push_back("-");
-    }
-    /* Si el cliente no tiene ninguna cuenta,
-    se agrega un guion (-) al vector de información */
-    if(cuentas.size() == 0){
-        informacion.push_back("-");
-        informacion.push_back("-");
-    }
-    // Se agrega la información de los préstamos registrados
-    informacion.push_back("prestamos registrados");
-    informacion.push_back("numero de prestamo,tipo de moneda,monto total,cantidad cuotas,tasa interes,cuotas pagadas");
-    // Itera por los préstamos del cliente
-    for(auto& par : prestamos){
-        // Agrega la información del préstamo al vector de información
-        informacion.push_back(to_string(par.second.numeroPrestamo) + "," + par.second.tipoMoneda + "," + to_string(par.second.montoTotal) 
-        + "," + to_string(par.second.cuotasTotal) + "," + to_string(par.second.tasaInteres) + "," + to_string(par.second.cuotasPagadas));
-    }
-    // Devuelve el vector que contiene la información del cliente
-    return informacion;
 }
