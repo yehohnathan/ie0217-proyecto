@@ -87,6 +87,41 @@ void Cliente::agregarCuenta(int fecha[], vector <string>& transacciones, map <in
     registrarTransaccion(fecha, transacciones, "agrego la cuenta numero " + to_string(cuenta.numeroCuenta) + " a su nombre");
 }
 
+// Método para retirar dinero de una de las cuentas
+void Cliente::retirarDinero(int fecha[], vector <string>& transacciones, map <int, CuentaBancaria>& cuentasBanco){
+    // Si el cliente no tiene cuentas asociadas
+    if(cantidadCuentas == 0){
+        // Se imprime un mensaje de que no hay cuentas registradas
+        cout << "No tiene cuentas registradas a su nombre." << endl;
+        // Se detiene la ejecución del método
+        return;
+    }
+    // Se imprimen todas las cuentas del usuario
+    cout << "\n---Estas son sus cuentas---" << endl;
+    mostrarCuentas(cuentasBanco);
+    int numeroCuenta;
+    // Se lee del usuario el número de la cuenta de la que desea retirar
+    leerEntero(numeroCuenta, "Ingrese el numero de la cuenta de la que desea retirar: ");
+     // Se encuentra esta cuenta en el contenedor de las cuentas
+    auto it_cuenta = cuentasBanco.find(numeroCuenta);
+    // Si no se encontró la cuenta
+    if(it_cuenta == cuentasBanco.end() || it_cuenta->second.idPropietario != id){
+        // Se imprime un mensaje que indica que la cuenta no se encontró
+        cout << "El numero de cuenta ingresado no esta registrado a su nombre." << endl;
+        // Se detiene la ejecución del método
+        return;
+    }
+    // Se obtiene el dinero de la cuenta antes del retiro 
+    double dineroAntes = it_cuenta->second.dineroAhorros;
+    // Se intenta retirar dinero de la cuenta con el método de la clase CuentaBancaria
+    it_cuenta->second.retirar();
+    // Se obtiene el dinero después del retiro
+    double dineroAhora = it_cuenta->second.dineroAhorros;   
+    if(dineroAntes > dineroAhora){
+        // Se registra la transacción con un mensaje adecuado
+        registrarTransaccion(fecha, transacciones, "retiro dinero de la cuenta propia numero " + to_string(numeroCuenta));
+    }
+}
 
 
 // Método para solicitar el informe de préstamos
