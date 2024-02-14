@@ -2,17 +2,19 @@
  * @file Cliente.hpp
  * @author David Madrigal, Danny Solórzano, Yehohnathan Miranda
  * @version 0.1
- * @date 2024-02-07
+ * @date 2024-02-14
  * @copyright Copyright (c) 2024
  * @brief Archivo que incluye los atributos y métodos de la clase Cliente.
  */
 
+
 #ifndef CLIENTE_HPP
 #define CLIENTE_HPP
 
-#include <bits/stdc++.h>
 #include "CuentaBancaria.hpp"
 #include "Prestamo.hpp"
+#include "CDP.hpp"
+
 
 /**
 * @brief Clase que permite gestionar los datos y acciones de los clientes.
@@ -23,23 +25,15 @@
 */
 class Cliente {
     public:
-        string nombre; // Nombre del cliente
-        int id; // ID del cliente
-        map <int, CuentaBancaria> cuentas; // Contenedor con las cuentas bancarias del cliente
-        map <int, Prestamo> prestamos; // Contenedor con los préstamos del cliente
+        // Datos del cliente
+        string nombre;          // Nombre del cliente
+        int id;                 // ID del cliente
+        int cantidadCuentas;    // Cantidad de cuentas
+        int cantidadPrestamos;  // Cantidad de prestamos
+        int cantidadCDP;        // Cantidad de CDP
         
-        /**
-        * @brief Agrega una transacción al registro de transacciones.
-        *
-        * @param fecha Array que representa la fecha (ddmmaa) de la transacción.
-        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
-        * @param nombre Nombre del cliente que realiza la transacción.
-        * @param id ID del cliente que realiza la transacción.
-        * @param descripcion Descripción de la acción realizada por el usuario.
-        * 
-        */
-        void registrarTransaccion(int fecha[], vector <string>& transacciones, string nombre, int id, string descripcion);
-
+        /*----- Métodos para setear datos, registrar transacciones y generar información -----*/
+        
         /**
         * @brief Establece los datos del cliente.
         *
@@ -47,86 +41,119 @@ class Cliente {
         * @param id ID del cliente.
         * 
         */
-        void setDatos(string nombre_p, int id_p);
+        void setDatos(int id_p, string nombre_p);
+
+        /**
+        * @brief Agrega una transacción al registro de transacciones.
+        *
+        * @param fecha Array que representa la fecha (ddmmaa) de la transacción.
+        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param descripcion Descripción de la acción realizada por el usuario.
+        * 
+        */
+        void registrarTransaccion(int fecha[], vector <string>& transacciones, string descripcion);
+        
+        /**
+        * @brief Permite generar la información del cliente en un vector.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
+        * @param prestamosBanco Referencia al diccionario contenedor de las prestamos bancarios.
+        * @param certificadosBanco Referencia al diccionario contenedor de las certificados
+        * @return Devuelve un vector de strings con toda la información del cliente: datos, cuentas, préstamos y CDP.
+        * 
+        */
+        vector <string> generarInfo(map <int, CuentaBancaria>& cuentasBanco, map <int, Prestamo>& prestamosBanco, map <int, CDP>& certificadosBanco);
+
+        /*--------- Métodos de cuentas bancarias ---------*/
 
         /**
         * @brief Agrega una cuenta asociada al cliente.
         *
         * @param fecha Array que representa la fecha (ddmmaa).
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
         * 
         */
-        void agregarCuenta(int fecha[], vector <string>& transacciones);
-
-        /**
-        * @brief Agrega un préstamo asociado al cliente.
-        *
-        * @param fecha Array que representa la fecha (ddmmaa).
-        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
-        * 
-        */
-        void agregarPrestamo(int fecha[], vector <string>& transacciones);
+        void agregarCuenta(int fecha[], vector <string>& transacciones, map <int, CuentaBancaria>& cuentasBanco);
 
         /**
         * @brief Permite retirar dinero de una cuenta bancaria.
         *
         * @param fecha Array que representa la fecha (ddmmaa).
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
         * 
         */
-        void retirarDinero(int fecha[], vector <string>& transacciones);
+        void retirarDinero(int fecha[], vector <string>& transacciones, map <int, CuentaBancaria>& cuentasBanco);
 
-        /**
+         /**
         * @brief Permite depositar dinero de una cuenta bancaria.
         *
         * @param fecha Array que representa la fecha (ddmmaa).
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
         * @param clientes Contenedor con todos los clientes registrados.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
         * 
         */
-        void depositarDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes);
-
+        void depositarDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes, map <int, CuentaBancaria>& cuentasBanco);
+        
         /**
         * @brief Permite transferir dinero de una cuenta bancaria a otra.
         *
         * @param fecha Array que representa la fecha (ddmmaa).
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
         * @param clientes Contenedor con todos los clientes registrados.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
         * 
         */
-        void transferirDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes);
+        void transferirDinero(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes, map <int, CuentaBancaria>& cuentasBanco);
+        
+        /**
+        * @brief Imprime las cuentas bancarias asociadas al cliente.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
+        *
+        */
+        void mostrarCuentas(map <int, CuentaBancaria>& cuentasBanco);
+        
+        /**
+        * @brief Permite solicitar un informe de las cuentas bancarias asociadas al cliente.
+        *
+        * @param fecha Array que representa la fecha (ddmmaa).
+        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param cuentasBanco Referencia al diccionario contenedor de las cuentas bancarias.
+        * 
+        */
+        void solicitarInformeCuentas(int fecha[], vector <string>& transacciones, map <int, CuentaBancaria>& cuentasBanco);
+
+        /*--------- Métodos de prestamos ---------*/
 
         /**
-        * @brief Permite pagar una cuota de un préstamo.
+        * @brief Agrega la información necesaria para un prestamo
+        *
+        * @param fecha Array que representa la fecha (ddmmaa).
+        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param prestamosBanco Referencia al diccionario contenedor de los prestamos Bancarios.
+        * 
+        */
+        void agregarPrestamo(int fecha[], vector <string>& transacciones, map <int, Prestamo>& prestamosBanco);
+        
+        /**
+        * @brief Pagar la información relacionada a un prestamo
         *
         * @param fecha Array que representa la fecha (ddmmaa).
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
         * @param clientes Contenedor con todos los clientes registrados.
+        * @param prestamosBanco Referencia al diccionario contenedor de los prestamos Bancarios.
         * 
         */
-        void pagarPrestamo(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes);
-
+        void pagarPrestamo(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes, map <int, Prestamo>& prestamosBanco);
+        
         /**
-        * @brief Imprime las cuentas bancarias asociadas al cliente.
-        *
-        */
-        void mostrarCuentas();
-
-        /**
-        * @brief Imprime las cuentas bancarias asociadas al cliente.
-        *
-        */
-        void mostrarPrestamos();
-
-        /**
-        * @brief Permite solicitar un informe de los préstamos asociados al cliente.
-        *
-        * @param fecha Array que representa la fecha (ddmmaa).
-        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @brief Muestra la información relacionada con el prestamo
+        * @param prestamosBanco Referencia al diccionario contenedor de los prestamos Bancarios.
         * 
         */
-        void solicitarInformePrestamos(int fecha[], vector <string>& transacciones);
-
+        void mostrarPrestamos(map <int, Prestamo>& prestamosBanco);
+        
         /**
         * @brief Permite solicitar un informe de las cuentas bancarias asociadas al cliente.
         *
@@ -134,7 +161,9 @@ class Cliente {
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
         * 
         */
-        void solicitarInformeCuentas(int fecha[], vector <string>& transacciones);
+        void solicitarInformePrestamos(int fecha[], vector <string>& transacciones, map <int, Prestamo>& prestamosBanco);
+
+        /*--------- Métodos de certificados ---------*/
 
         /**
         * @brief Agrega un certificado de depósito a plazo asociado al cliente.
@@ -143,14 +172,17 @@ class Cliente {
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
         * 
         */
-        void solicitarCDP(int fechaCreacion[], vector <string>& transacciones);
+        void agregarCDP(int fecha[], vector <string>& transacciones, map <int, CDP>& certificadosBanco);
 
         /**
-        * @brief Permite generar la información del cliente en un vector.
-        * @return Devuelve un vector de strings con toda la información del cliente: datos, cuentas, préstamos y CDP.
+        * @brief Agrega la información necesaria para un prestamo
+        *
+        * @param fecha Array que representa la fecha (ddmmaa).
+        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param certificadosBanco Referencia al diccionario contenedor de los certificados bancarios.
         * 
         */
-        vector <string> generarInfo();
+        void solicitarInformeCDP(int fecha[], vector <string>& transacciones, map <int, CDP>& certificadosBanco);
 };
 
 #endif // CLIENTE_HPP
