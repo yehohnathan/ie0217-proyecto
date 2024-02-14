@@ -13,7 +13,6 @@ void Cliente::setDatos(int id_p, string nombre_p){
     cantidadCDP = 0;        //< Cantidad de CDP
 }
 
-
 // Método para registrar una transacción
 void Cliente::registrarTransaccion(int fecha[], vector <string>& transacciones, string nombre, int id, string descripcion){
     // Se crea un string con la información de la fecha de la transacción y el nombre y id del cliente que la realizó
@@ -298,80 +297,102 @@ void Cliente::solicitarInformeCuentas(int fecha[], vector <string>& transaccione
 
 // ------------------------------------------Métodos de préstamos------------------------------------------ //
 
+// Método que agrega un prestamo bancario
 void Cliente::agregarPrestamo(int fecha[], vector <string>& transacciones, map <int, Prestamo>& prestamosBanco){
-    int cuotasTotal;
-    double tasaInteres;
-    string tipo;
-    int opcion = 0;
+    int cuotasTotal;        //< Se establece el número de cuotas
+    double tasaInteres;     //< Se establece la tasa de interés
+    string tipo;            //< Se establece el tipo
+    int opcion = 0;         //< Se establece la opción
+    // Ciclo intedeterminado con las opciones
     while(1){
         cout << "\n---Opciones de prestamos---" << endl;
         cout << "1. Prestamo personal" << endl;
         cout << "2. Prestamo prendario." << endl;
         cout << "3. Prestamo hipotecario." << endl;
         cout << "4. Regresar." << endl;
+        // Válida el valor ingresado por el usuario
         leerEntero(opcion, "Ingrese un opcion: ");
+        // Si corresponde a la primera opción, utiliza la información de prestamo personal
         if(opcion == 1){
             cout << "\n---Prestamo personal---" << endl;
             cout << "Cantidad total de cuotas: " << CUOTASPERSONAL << endl;
             cout << "Tasa de interes: " << INTERESPERSONAL << endl;
             tipo = "personal";
+            // Asigna las cuotas pertinentes
             cuotasTotal = CUOTASPERSONAL;
+            // Asigna la tasa de interes pertinente
             tasaInteres = INTERESPERSONAL;
+            // Rompe el ciclo
             break;
         }
+        // Si corresponde a la segunda opción, utiliza la información de prestamo prendario
         else if(opcion == 2){
             cout << "\n---Prestamo prendario---" << endl;
             cout << "Cantidad total de cuotas: " << CUOTASPRENDARIO << endl;
             cout << "Tasa de interes: " << INTERESPRENDARIO << endl;
             tipo = "prendario";
+            // Asigna las cuotas pertinentes
             cuotasTotal = CUOTASPRENDARIO;
+            // Asigna la tasa de interes pertinente
             tasaInteres = INTERESPRENDARIO;
+            // Rompe el ciclo
             break;
         }
+        // Si corresponde a la tercera opción, utiliza la información de prestamo hipotecario
         else if(opcion == 3){
             cout << "\n---Prestamo hipotecario---" << endl;
             cout << "Cantidad total de cuotas: " << CUOTASHIPOTECARIO << endl;
             cout << "Tasa de interes: " << INTERESHIPOTECARIO << endl;
             tipo = "hipotecario";
+            // Asigna las cuotas pertinentes
             cuotasTotal = CUOTASHIPOTECARIO;
+            // Asigna la tasa de interes pertinente
             tasaInteres = INTERESHIPOTECARIO;
+            // Rompe el ciclo
             break;
         }
+        // Si corresponde a la cuarta opción, regresa al menú anterior
         else if(opcion == 4){
             cout << "\nRegresando..." << endl;
             return;
         }
+        // En caso de ingresar un valor inválido lo indica
         else{
             cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
         }
     }
-
-    string tipoMoneda;
-    leerMoneda(tipoMoneda);
-    double montoTotal;
+    // Se guarda la información general del prestamo
+    string tipoMoneda;              //< Se inicializa el tipoMoneda
+    leerMoneda(tipoMoneda);         //< Se establece el tipo de moneda
+    double montoTotal;              //< Se inicializa el monto
+    // Solicita el monto
     leerDouble(montoTotal, "Ingrese el monto total del prestamo: ");
-    Prestamo prestamo;
+    Prestamo prestamo;              //< Se declara un prestamo
+    // Declara el ID junto con la cantidad de prestamos
     int numeroPrestamo = stoi(to_string(id) + to_string(cantidadPrestamos + 1));
+    // Establece los datos
     prestamo.setDatos(id, numeroPrestamo, tipoMoneda, montoTotal, cuotasTotal, tasaInteres, 0,tipo);
+    // Guarda el prestamos dentro del contenedor
     prestamosBanco[numeroPrestamo] = prestamo;
+    // Aumenta la cantidad de prestamos
     cantidadPrestamos += 1;
+    // Guarda información declara en esta función para tener registro de la misma
     registrarTransaccion(fecha, transacciones, "agrego el prestamo numero " + to_string(prestamo.numeroPrestamo) + " a su nombre");
 }
 
 // Método para pagar una cuota de un préstamo
-void Cliente::pagarPrestamo(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes){
+void Cliente::pagarPrestamo(int fecha[], vector <string>& transacciones, map <int, Cliente>& clientes, map <int, Prestamo>& prestamosBanco){
     // Se pregunta si el pago es para sí mismo o para otra persona
-    cout << "Hacia quien va dirigido el pago del prestamo?: " << endl;
-    cout << "1. A mi persona." << endl;
-    cout << "2. A otra persona." << endl;
+    cout << "\n--- Opciones de pago del prestamo---" << endl;
+    cout << "1. A un prestamo propio." << endl;
+    cout << "2. A un prestamo de otra persona." << endl;
     // Se lee la opción del usuario
     int opcion;
-    cout << "Ingrese una opcion: ";
-    cin >> opcion;
+    leerEntero(opcion, "Ingrese una opcion: ");
     // Si el pago es para sí mismo
     if(opcion == 1){
         // Si el cliente no tiene préstamos asociados
-        if(prestamos.size() == 0){
+        if(cantidadPrestamos == 0){
             // Se imprime un mensaje de error
             cout << "No tiene prestamos registrados a su nombre." << endl;
             // Se detiene la ejecución del método
@@ -379,67 +400,42 @@ void Cliente::pagarPrestamo(int fecha[], vector <string>& transacciones, map <in
         }
         // Se imprimen los préstamos del cliente
         cout << "\n---Estos son sus prestamos---" << endl;
-        mostrarPrestamos();
+        mostrarPrestamos(prestamosBanco);
         // Se lee el número del préstamo del que se va a pagar la cuota
         int numeroPrestamoDestino;
-        cout << "Ingrese el numero del prestamo que desea pagar: ";
-        cin >> numeroPrestamoDestino;
+        leerEntero(numeroPrestamoDestino, "Ingrese el numero del prestamo que desea pagar: ");
         // Se busca el préstamo en el contenedor con los préstamos
-        auto it_prestamoDestino = prestamos.find(numeroPrestamoDestino);
+        auto it_prestamoDestino = prestamosBanco.find(numeroPrestamoDestino);
         // Si no se encuentra
-        if(it_prestamoDestino == prestamos.end()){
+        if(it_prestamoDestino == prestamosBanco.end() || it_prestamoDestino->second.idPropietario != id){
             // Se imprime un mensaje de error
-            cout << "El numero de prestamo ingresado no es valido." << endl;
+            cout << "El numero de prestamo ingresado no esta registrado a su nombre." << endl;
             // Se detiene la ejecución del método
             return;
         }
         // Se paga la cuota con el método de la clase Prestamo
         it_prestamoDestino->second.pagarCuota();
         // Se registra la transacción con la descripción adecuada
-        registrarTransaccion(fecha, transacciones, nombre, id, "pago una cuota de un prestamo propio");
+        registrarTransaccion(fecha, transacciones, "pago una cuota del prestamo propio numero " + to_string(numeroPrestamoDestino));
     }
     // Si el pago es para otra persona
     else if(opcion == 2){
         // Se lee el id de la persona a la que va dirigida el pago
-        int idDestino;
-        cout << "Ingrese el id de la persona a la que desea pagar el prestamo: ";
-        cin >> idDestino;
-        // Se busca el cliente en el contenedor con los clientes
-        auto it_clienteDestino = clientes.find(idDestino);
-        // Si no se encuentra
-        if(it_clienteDestino == clientes.end()){
-            // Se muestra un mensaje de error
-            cout << "El id ingresado no existe en el registro." << endl;
-            // Se detiene la ejecución del método
-            return;
-        }
-        // Si el cliente destino no tiene préstamos asociados
-        if(it_clienteDestino->second.prestamos.size() == 0){
-            // Se imprime un mensaje de error
-            cout << "El usuario ingresado no tiene prestamos registrados." << endl;
-            // Se detiene la ejecución del método
-            return;
-        }
-        // Se imprimen los préstamos del cliente destino
-        cout << "\n---Prestamos del cliente destino---" << endl;
-        it_clienteDestino->second.mostrarPrestamos();
-        // Se lee el número del préstamo que se desea pagar la cuota
         int numeroPrestamoDestino;
-        cout << "Ingrese el numero del prestamo que desea pagar: ";
-        cin >> numeroPrestamoDestino;
-        // Se busca en el contenedor con los préstamos
-        auto it_prestamoDestino = it_clienteDestino->second.prestamos.find(numeroPrestamoDestino);
+        leerEntero(numeroPrestamoDestino, "Ingrese el numero del prestamo que desea pagar: ");
+        // Se busca el cliente en el contenedor con los clientes
+        auto it_prestamoDestino = prestamosBanco.find(numeroPrestamoDestino);
         // Si no se encuentra
-        if(it_prestamoDestino == it_clienteDestino->second.prestamos.end()){
-            // Se imprime un mensaje de error
-            cout << "El numero de prestamo ingresado no es valido." << endl;
+        if(it_prestamoDestino == prestamosBanco.end()){
+            // Se muestra un mensaje de error
+            cout << "El numero de prestamo ingresado no esta registrado." << endl;
             // Se detiene la ejecución del método
             return;
         }
-        // Se paga la cuota con el método de la clase Prestamo
+        // Se hace un llamado a la función para pagar la cuota
         it_prestamoDestino->second.pagarCuota();
         // Se registra la transacción con la descripción correcta
-        registrarTransaccion(fecha, transacciones, nombre, id, "pago una cuota de un prestamo de otra persona");
+        registrarTransaccion(fecha, transacciones, "pago una cuota del prestamo numero " + to_string(numeroPrestamoDestino));
     }
     // Si se ingresó una opción no válida
     else{
@@ -450,9 +446,15 @@ void Cliente::pagarPrestamo(int fecha[], vector <string>& transacciones, map <in
     }
 }
 
-void Cliente::mostrarPrestamos(){
-    for(auto& par : prestamos){
-        par.second.imprimirInfo();
+// Método que muestra información de un prestamo
+void Cliente::mostrarPrestamos(map <int, Prestamo>& prestamosBanco){
+    // Itera dentro del contenedor en busca del prestamo
+    for(auto& par : prestamosBanco){
+        // Si el id coincide
+        if(par.second.idPropietario == id){
+            // Imprime la información
+            par.second.imprimirInfo();
+        }
     }
 }
 
@@ -510,80 +512,108 @@ void Cliente::solicitarInformePrestamos(int fecha[], vector <string>& transaccio
 
 // ------------------------------------------Métodos de certificados a plazo------------------------------------------ //
 
-void Cliente::agregarCDP(int fecha[], vector <string>& transacciones, map <int, CDP>& certificadosBanco){
-    int plazoMeses;
-    double tasaInteres;
-    string tipo;
-    int opcion = 0;
-    while(1){
+// Método para agregar un Certificado de Depósito a Plazo (CDP) al cliente.
+void Cliente::agregarCDP(int fecha[], vector<string>& transacciones, map<int, CDP>& certificadosBanco) {
+    // Declaración de variables locales para almacenar información sobre el CDP.
+    int plazoMeses;         //< Se inicializa el plazo de meses
+    double tasaInteres;     //< Se inicializa la tasa de interés
+    string tipo;            //< Se inicializa el tipo
+    int opcion = 0;         //< Se inicializa la opción 
+
+    // Bucle para permitir al cliente seleccionar el tipo de CDP que desea crear.
+    while (true) {
+        // Mostrar las opciones de CDP disponibles.
         cout << "\n---Opciones de Certificados de Deposito a Plazo---" << endl;
         cout << "1. Certificado a corto plazo." << endl;
         cout << "2. Certificado a mediano plazo." << endl;
         cout << "3. Certificado a largo plazo." << endl;
         cout << "4. Regresar." << endl;
-        leerEntero(opcion, "Ingrese un opcion: ");
-        if(opcion == 1){
-            cout << "\n---Certificado a corto plazo---" << endl;
-            cout << "Plazo en meses: " << PLAZOCORTO << endl;
-            cout << "Tasa de interes: " << INTERESCORTO << endl;
+        // Leer la opción del usuario.
+        leerEntero(opcion, "Ingrese una opcion: ");
+
+        // Procesar la opción del usuario.
+        if (opcion == 1) {
+            // Configurar un CDP de plazo corto.
             tipo = "corto";
             plazoMeses = PLAZOCORTO;
             tasaInteres = INTERESCORTO;
             break;
-        }
-        else if(opcion == 2){
-            cout << "\n---Certificado a mediano plazo---" << endl;
-            cout << "Plazo en meses: " << PLAZOMEDIANO << endl;
-            cout << "Tasa de interes: " << INTERESMEDIANO << endl;
+        } else if (opcion == 2) {
+            // Configurar un CDP de plazo mediano.
             tipo = "mediano";
             plazoMeses = PLAZOMEDIANO;
             tasaInteres = INTERESMEDIANO;
             break;
-        }
-        else if(opcion == 3){
-            cout << "\n---Certificado a largo plazo---" << endl;
-            cout << "Plazo en meses: " << PLAZOSLARGO << endl;
-            cout << "Tasa de interes: " << INTERESLARGO << endl;
+        } else if (opcion == 3) {
+            // Configurar un CDP de plazo largo.
             tipo = "largo";
             plazoMeses = PLAZOSLARGO;
             tasaInteres = INTERESLARGO;
             break;
-        }
-        else if(opcion == 4){
+        } else if (opcion == 4) {
+            // El usuario desea regresar al menú principal.
             cout << "\nRegresando..." << endl; 
             return;
-        }
-        else{
+        } else {
+            // La opción ingresada no es válida.
             cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
         }
     }
+
+    // Leer la moneda del CDP.
     string tipoMoneda;
     leerMoneda(tipoMoneda);
+
+    // Leer la cantidad de dinero a invertir en el CDP.
     double dineroCDP;
     leerDouble(dineroCDP, "Ingrese el dinero que desea invertir en el certificado: ");
+
+    // Crear un nuevo objeto CDP.
     CDP certificadoPlazo;
+
+    // Generar un número único para el CDP combinando el ID del cliente y un contador.
     int numeroCDP = stoi(to_string(id) + to_string(cantidadCDP + 1));
-    certificadoPlazo.setDatos(id, numeroCDP, tipoMoneda, dineroCDP, fecha, plazoMeses, tasaInteres,tipo);
+
+    // Establecer los datos del CDP.
+    certificadoPlazo.setDatos(id, numeroCDP, tipoMoneda, dineroCDP, fecha, plazoMeses, tasaInteres, tipo);
+
+    // Almacenar el CDP en el mapa de certificados del banco.
     certificadosBanco[numeroCDP] = certificadoPlazo;
-    cantidadCDP +=1;
+
+    // Incrementar el contador de CDP del cliente.
+    cantidadCDP += 1;
+
+    // Registrar la transacción del cliente.
     registrarTransaccion(fecha, transacciones, "agrego el certificado a plazo numero " + to_string(certificadoPlazo.numeroCDP) + " a su nombre");
 }
 
-void Cliente::solicitarInformeCDP(int fecha[], vector <string>& transacciones, map <int, CDP>& certificadosBanco){
-    if(cantidadCDP == 0){
+
+// Método para solicitar un informe de Certificados de Depósito a Plazo (CDP) del cliente.
+void Cliente::solicitarInformeCDP(int fecha[], vector<string>& transacciones, map<int, CDP>& certificadosBanco) {
+    // Verificar si el cliente tiene certificados de depósito a plazo registrados.
+    if (cantidadCDP == 0) {
         cout << "No tiene certificados a plazo registrados a su nombre." << endl;
         return;
     }
+    
+    // Nombre del archivo para el informe.
     string nombreArchivo = "informe_certificados_plazo.txt";
+    
+    // Crear y abrir un archivo de texto para escribir el informe.
     ofstream archivo(nombreArchivo, ios::out | ios::trunc);
+    
+    // Escribir el encabezado del informe.
     archivo << "Informe de certificados a plazo solicitado por el cliente" << endl;
     archivo << endl;
     archivo << "----------------------------Datos del cliente----------------------------" << endl;
     archivo << "id,nombre" << endl;
     archivo << to_string(id) + "," + nombre << endl;
     archivo << "----------------------------Certificados registrados----------------------------" << endl;
-    for(auto& par : certificadosBanco){
-        if(par.second.idPropietario == id){
+
+    // Iterar a través de los certificados de depósito a plazo del cliente.
+    for (auto& par : certificadosBanco) {
+        if (par.second.idPropietario == id) {  // Verificar si el certificado pertenece al cliente.
+            // Escribir información del certificado en el archivo.
             archivo << "----------------------------Certificados numero " + to_string(par.second.numeroCDP) + "----------------------------" << endl;
             archivo << "numero de certificado,tipo,tipo de moneda,dinero invertido,dinero generado,dinero total,plazo en meses,tasa interes,fecha de creacion,fecha expiracion,estado" << endl;
             archivo << to_string(par.second.numeroCDP) + "," + par.second.tipo + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroCDP)
@@ -595,7 +625,13 @@ void Cliente::solicitarInformeCDP(int fecha[], vector <string>& transacciones, m
         }
         archivo << endl;
     }
+    
+    // Cerrar el archivo después de escribir el informe.
     archivo.close();
+    
+    // Informar al usuario que se ha generado el archivo.
     cout << "\nSe genero el archivo: " << nombreArchivo << endl;
+    
+    // Registrar la transacción del cliente.
     registrarTransaccion(fecha, transacciones, "solicito un informe de sus certificados a plazo");
 }
