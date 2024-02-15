@@ -120,16 +120,46 @@ module <iosteam>    // Funciones básicas de la STL
 La clase banco es para crear un objeto que sea capaz de almacenar la información de todos los posibles clientes y que a traves de ella se puedan realizar las operaciones esperadas en un banco como la gestión de prestamos, cuentas, certificados de plazo, etc. Por lo que se puede afirmar que esta clase sirve para tratar de emitar la estructura real de un banco y por ello la necesidad de su creación, ya que permite gestionar a cada cliente de una forma más sencilla y óptima.
 
 #### Atributos:
-- `clientes`: contener que almacena la información de los clientes, en este caso objetos de una clase llamada **Cliente**. Para ello se debería utilizar map para acceder a cada cliente de forma sencilla.
-- `transacciones`: almacena las transacciones realizadas por cada cliente, asignandole un identificador a cada una. Se trabajaría con strings y se debería usar un vector para guarda la información de cada transacción, con el fin de se pueda generar al final un reporte de las transacciones.
-- `ventanilla`: ventanilla sería un objeto de la clase **AtencionCliente** que serviría para agarrar información de uno o dos clientes y realizar gestiones en cuentas o prestamos.
-- `fecha`: almacena una fecha que servirá como referencia para solicitar reportes de tramites y requiran un lapso temporal.
+- *`map <int, Cliente>`* `clientes`: contenedor que almacena la información de los clientes, en este caso objetos de una clase llamada **Cliente**.
+
+- *`map <int, CuentaBancaria>`* `cuentasBanco`: contenedor que almacena la información de todas las cuentas bancarias de todos los clientes del banco, en este caso objetos de una clase llamada **CuentaBancaria**.
+
+- *`map <int, Prestamo>`* `prestamosBanco`: contenedor que almacena la información de todas los prestamos de todos los clientes del banco, en este caso objetos de una clase llamada **Prestamo**.
+
+- *`vector <string>`* `transacciones`: almacena las transacciones realizadas por cada cliente, asignandole un identificador a cada una.
+
+- *`AtencionCliente`* `ventanilla`: es un objeto de la clase **AtencionCliente** que sirve para gestionar los tramites del cliente. Muestra un menu para cada tipo de transacción utilizando los métodos de la clase **Cliente**.
+
+- *`Informacion`* `informante`: es un objeto de la clase **Informacion** enfocado en mostrar los tipos de préstamos ofrecidos por el banco: personal, prendario, hipotecario y personalizado. Además, se encarga de gestionar las opciones y cálculos del préstamo personalizado para presentarlos al solicitante.
+
+
+- *`int`* `fecha[3]`: almacena una fecha que servirá como referencia para solicitar reportes de tramites y requiran un lapso temporal. Es un array que almacena el día, mes y año en cada posición correspondiente.
 
 #### Métodos:
-- `mostrarMenu()`: le muestra las opciones que una persona puede hacer al ir al banco, como registrarse, consultar prestamos o realizar diversas transacciones.
-- `crearCliente()`: para crear un nuevo objeto de la clase Cliente, cuya información será guardada en el atributo clientes.
-- `atenderCliente()`: registra la información de uno o dos clientes y utiliza los métodos del objeto ventanilla para realizar distintos trámites.
-- `setFecha()`: para ingresar registrar la fecha.
+- *`void`* `setFecha()`: solicita al usuario ingresar una fecha y almacena el contenido en **fecha[3]**. Este proceso incluye la verificación para asegurar que la entrada del usuario sea la esperada; en caso contrario, solicita nuevamente la fecha.
+
+
+- *`void`* `mostrarMenu()`: presenta diversas opciones disponibles para los clientes al visitar el banco, que incluyen registrarse, consultar préstamos o solicitar atención al cliente para llevar a cabo varias transacciones. Si el usuario solicita registrarse, se invoca al método **crearCliente()**. En caso de consultar préstamos, se muestra el método **mostrarMenu()** del objeto **informante**. Si se requiere atención al cliente, se accede al método **atenderCliente()**.
+
+
+- *`void`* `crearCliente()`: solicita al cliente ingresar su nombre en una variable de tipo string, la cual es procesada mediante el método **leerNombre** de la clase instanciada en el header llamada **LecturaDatos**. A continuación, se solicita al usuario ingresar su id en una variable entera, la cual es procesada por el método **leerEntero** de la misma clase instanciada en el header llamado **LecturaDatos**. Una vez obtenido un nombre y una id válidos, se verifica que la id ingresada no coincida con la de ninguna otra persona. En caso afirmativo, se procede a crear un objeto cliente con los datos proporcionados por la persona y se registra esta transacción en el vector de transacciones.
+
+
+- *`void`* `atenderCliente()`: solicita al usuario ingresar su identificación en una variable entera, la cual es procesada por el método **leerEntero** de la misma clase instanciada en el header llamado **LecturaDatos**. A continuación, se busca dentro del mapa de clientes un id similar. Si no se encuentra, se le informa al usuario que el id ingresado es válido y se vuelve al menú principal. En caso de que el id coincida con uno de los clientes registrados, se procede a mostrar el método **mostrarMenu()** del objeto "ventanilla" para gestionar los trámites del cliente.
+
+- *`vector <string>`* `dividir()`: método enfocado en dividir un string en un contenedor de strings separando por un dicador, eso para colocar comas. 
+
+- *`void`* `leerInfoClientes()`: abre el archivo "info_clientes.txt" en modo lectura. Luego, omite las dos primeras líneas del archivo que contienen encabezados. Después, lee cada línea del archivo y la procesa para obtener información sobre clientes, cuentas bancarias, préstamos y certificados a plazo. Dependiendo del tipo de información en cada línea, se crea un objeto correspondiente (Cliente, CuentaBancaria, Prestamo, CDP), utiliza el método **setDatos** dependiendo del objeto y se almacena en los maps (`clientes`, `cuentasBanco`, `prestamosBanco`, `certificadosBanco`). Además, se actualizan las cantidades de cuentas, préstamos y certificados del cliente correspondiente en el map `clientes`. Finalmente, se cierra el archivo.
+
+- *`void`* `actualizarInfoClientes()`: abre el archivo "info_clientes.txt" en modo de escritura, truncando el archivo si ya existe o creándolo si no existe. Luego, escribe un encabezado en el archivo. Después, para cada cliente en el map `clientes`, genera información sobre el cliente utilizando el método `generarInfo` de la clase `Cliente`. La información generada incluye detalles sobre las cuentas bancarias, préstamos y certificados a plazo asociados con el cliente. Cada línea de información se escribe en el archivo. Finalmente, se cierra el archivo y se imprime un mensaje de confirmación.
+
+- *`void`* `leerTransacciones()`: abre el archivo "registro_transacciones.txt" en modo lectura. Luego, omite las primeras tres líneas del archivo que contienen encabezados. Después, lee cada línea restante del archivo y la agrega al vector transacciones. Finalmente, cierra el archivo.
+
+- *`void`* `actualizarTransacciones()`: abre el archivo "registro_transacciones.txt" en modo de escritura, truncando el archivo si ya existe o creándolo si no existe. Luego, escribe un encabezado y un título para cada columna en el archivo, que incluye "fecha", "id", "nombre" y "descripcion". Después, itera sobre cada transacción en el vector `transacciones` y escribe cada transacción en una línea separada en el archivo. Finalmente, cierra el archivo y muestra un mensaje indicando que se ha actualizado o generado el archivo correctamente.
+
+- *`void`* `actualizarCertificados()`: actualiza los certificados de plazo (CDP) para todos los clientes del banco. Itera sobre cada certificado en el map `certificadosBanco` y utiliza el método `actualizarCDP` de la clase `CDP` para actualizar el estado del certificado basado en la fecha actual (`fecha`). Esto le da una funcionalidad adiconal al atributo **fecha[3]** indicandole al usuario si el CDP sigue vigente o se ha vencido.
+
+
 
 ### class AtencionCliente
 Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco en especifico y no guardan información de nigun tipo porque solo sirve para que los clientes puedan cambiar el estado actual de su economía (prestamos, cuentas o CDP).
