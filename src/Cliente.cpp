@@ -251,49 +251,45 @@ void Cliente::mostrarCuentas(map <int, CuentaBancaria>& cuentasBanco){
     }
 }
 
-// Método para solicitar un informe de cuentas
-void Cliente::solicitarInformeCuentas(int fecha[], vector <string>& transacciones){
-    // Si el cliente no tiene cuentas asociadas a su nombre
-    if(cuentas.size() == 0){
-        // Se imprime un mensaje que indica que no hay cuentas para mostrar
+// Método para que un cliente solicite un informe de sus cuentas bancarias
+void Cliente::solicitarInformeCuentas(int fecha[], vector<string>& transacciones, map<int, CuentaBancaria>& cuentasBanco){
+    // Verificar si el cliente no tiene cuentas registradas
+    if(cantidadCuentas == 0){
         cout << "No tiene cuentas registradas a su nombre." << endl;
-        // Se detiene la ejecución del método
         return;
     }
-    // Se define el nombre del archivo
+    // Nombre del archivo donde se almacenará el informe
     string nombreArchivo = "informe_cuentas.txt";
-    // Se abre el archivo, si no existe lo crea
+    // Abrir el archivo en modo de escritura, truncando si ya existe
     ofstream archivo(nombreArchivo, ios::out | ios::trunc);
-    // Se escribe un encabezado para el archivo
-    archivo << "informe de cuentas solicitado por el usuario" << endl;
+    // Escribir la introducción del informe en el archivo
+    archivo << "Informe de cuentas solicitado por el cliente" << endl;
     archivo << endl;
-    // Se agregan los datos del cliente
-    archivo << "datos del cliente" << endl;
-    archivo << "nombre,id" << endl;
-    archivo << nombre + "," + to_string(id) << endl;
-    // Se agrega un encabezado para las cuentas
-    archivo << "cuentas registradas" << endl;
-    // Se recorre el contenedor con las cuentas
-    for(auto& par : cuentas){
-        // Se agrega un encabezado para indicar el significado de los datos del reporte
-        archivo << "numero de cuenta,tipo de moneda,dinero de ahorros,dinero CDP,plazo,interes,fecha creacion,fecha vencimiento" << endl;
-        // Si hay un depósito a plazo se imprime la información de la cuenta junto con la del depósito a plazo
-        if(par.second.depositosPlazo.size() == 1){
-            archivo << to_string(par.second.numeroCuenta) + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroAhorros) 
-            + "," + par.second.depositosPlazo[0].informacion << endl;
+    archivo << "----------------------------Datos del cliente----------------------------" << endl;
+    archivo << "id,nombre" << endl;
+    archivo << to_string(id) + "," + nombre << endl;
+    archivo << "----------------------------Cuentas registradas----------------------------" << endl;
+    // Iterar a través de las cuentas bancarias asociadas al cliente
+    for(auto& par : cuentasBanco){
+        // Verificar si la cuenta pertenece al cliente actual
+        if(par.second.idPropietario == id){
+            // Escribir los detalles de la cuenta en el archivo
+            archivo << "----------------------------Cuenta numero " + to_string(par.second.numeroCuenta) + "----------------------------" << endl;
+            archivo << "numero de cuenta,tipo de moneda,dinero de ahorros" << endl;
+            archivo << to_string(par.second.numeroCuenta) + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroAhorros) << endl;
         }
-        // Si no hay depósitos a plazo se imprime solo la informacion de la cuenta seguida de guiones en la parte de los depósito a plazo
-        else{
-            archivo << to_string(par.second.numeroCuenta) + "," + par.second.tipoMoneda + "," + to_string(par.second.dineroAhorros) + ",-,-,-,-,-"<< endl;
-        }
+        // Salto de línea para separar cada cuenta
+        archivo << endl;
     }
-    // Se cierra el archivo
+    
+    // Cerrar el archivo después de escribir en él
     archivo.close();
-    // Se imprime un mensaje de que se generó el archivo correctamente
-    cout << "Se genero el archivo: " << nombreArchivo << endl;
-    // Se registra la transacción con la descripción adecuada
-    registrarTransaccion(fecha, transacciones, nombre, id, "solicito un informe de sus cuentas"); 
+    // Mostrar mensaje de éxito con el nombre del archivo generado
+    cout << "\nSe genero el archivo: " << nombreArchivo << endl;
+    // Registrar la transacción de solicitud de informe de cuentas
+    registrarTransaccion(fecha, transacciones, "solicito un informe de sus cuentas"); 
 }
+
 
 // ------------------------------------------Métodos de préstamos------------------------------------------ //
 
