@@ -119,6 +119,14 @@ module <iosteam>    // Funciones básicas de la STL
 ### class Banco
 La clase banco es para crear un objeto que sea capaz de almacenar la información de todos los posibles clientes y que a traves de ella se puedan realizar las operaciones esperadas en un banco como la gestión de prestamos, cuentas, certificados de plazo, etc. Por lo que se puede afirmar que esta clase sirve para tratar de emitar la estructura real de un banco y por ello la necesidad de su creación, ya que permite gestionar a cada cliente de una forma más sencilla y óptima.
 
+#### Intancias:
+- `AtencionCliente.hpp` > `Cliente.hpp`
+- `Informacion.hpp` > `Prestamo.hpp`
+- `Cliente.hpp` > `CuentaBancaria.hpp` `Prestamo.hpp` `CDP.hpp` 
+- `Prestamo.hpp` > `LecturaDatos.hpp`
+- `CuentaBancaria.hpp` > `LecturaDatos.hpp`
+- `CDP.hpp` > `LecturaDatos.hpp`
+
 #### Atributos:
 - *`map <int, Cliente>`* `clientes`: contenedor que almacena la información de los clientes, en este caso objetos de una clase llamada **Cliente**.
 
@@ -138,12 +146,9 @@ La clase banco es para crear un objeto que sea capaz de almacenar la informació
 #### Métodos:
 - *`void`* `setFecha()`: solicita al usuario ingresar una fecha y almacena el contenido en **fecha[3]**. Este proceso incluye la verificación para asegurar que la entrada del usuario sea la esperada; en caso contrario, solicita nuevamente la fecha.
 
-
 - *`void`* `mostrarMenu()`: presenta diversas opciones disponibles para los clientes al visitar el banco, que incluyen registrarse, consultar préstamos o solicitar atención al cliente para llevar a cabo varias transacciones. Si el usuario solicita registrarse, se invoca al método **crearCliente()**. En caso de consultar préstamos, se muestra el método **mostrarMenu()** del objeto **informante**. Si se requiere atención al cliente, se accede al método **atenderCliente()**.
 
-
 - *`void`* `crearCliente()`: solicita al cliente ingresar su nombre en una variable de tipo string, la cual es procesada mediante el método **leerNombre** de la clase instanciada en el header llamada **LecturaDatos**. A continuación, se solicita al usuario ingresar su id en una variable entera, la cual es procesada por el método **leerEntero** de la misma clase instanciada en el header llamado **LecturaDatos**. Una vez obtenido un nombre y una id válidos, se verifica que la id ingresada no coincida con la de ninguna otra persona. En caso afirmativo, se procede a crear un objeto cliente con los datos proporcionados por la persona y se registra esta transacción en el vector de transacciones.
-
 
 - *`void`* `atenderCliente()`: solicita al usuario ingresar su identificación en una variable entera, la cual es procesada por el método **leerEntero** de la misma clase instanciada en el header llamado **LecturaDatos**. A continuación, se busca dentro del mapa de clientes un id similar. Si no se encuentra, se le informa al usuario que el id ingresado es válido y se vuelve al menú principal. En caso de que el id coincida con uno de los clientes registrados, se procede a mostrar el método **mostrarMenu()** del objeto "ventanilla" para gestionar los trámites del cliente.
 
@@ -162,6 +167,13 @@ La clase banco es para crear un objeto que sea capaz de almacenar la informació
 ### class AtencionCliente
 Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco en especifico y no guardan información de nigun tipo porque solo sirve para que los clientes puedan cambiar el estado actual de su economía (prestamos, cuentas o CDP).
 
+#### Intancias:
+- `Cliente.hpp` > `CuentaBancaria.hpp` `Prestamo.hpp` `CDP.hpp` 
+- `Prestamo.hpp` > `LecturaDatos.hpp`
+- `CuentaBancaria.hpp` > `LecturaDatos.hpp`
+- `CDP.hpp` > `LecturaDatos.hpp` 
+- `Contantes.hpp`
+
 #### Métodos:
 - *`void`* `mostrarMenu()`: muestra un menú de opciones para el cliente en la sección de Atención al Cliente. Saluda al cliente y muestra las opciones disponibles, como tramitar cuentas bancarias, préstamos o certificados de depósito a plazo. Luego, solicita al cliente que ingrese una opción y realiza la acción correspondiente según la opción seleccionada. Dependiendo de la opción se accede a al método **gestionarCuentas**, **gestionarPrestamos** o **gestionarCuertificados** o se regresa al menú principal.
 
@@ -174,20 +186,49 @@ Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco
 ### class Cliente
 Si una persona desea registrarse o realizar alguna transacción en un banco, necesita de una serie de características que lo identifiquen ante el banco. Esto permite un manejo de los prestamos, dinero, cuentas de ahorros, transacciones y demás tramites seguros, claros y eficientes.
 
+#### Intancias:
+- `Prestamo.hpp` > `LecturaDatos.hpp`
+- `CuentaBancaria.hpp` > `LecturaDatos.hpp`
+- `CDP.hpp` > `LecturaDatos.hpp`
+
 #### Atributos:
-- `nombre`:  variable tipo string que contiene el nombre del cliente.
-- `id`: variable tipo entero que representaría la "cédula" del cliente.
-- `cuentas`: variable que almacena la cuenta en dolares y colones del cliente.  Esta variable debería ser un map, debido que para facilitar el proceso se debería crear una clase llamada **CuentaBancaria** que contiene las carácteristicas esperadas de una cuenta (monto, moneda) y métodos (retiro de dinero, deposito de dinero, etc).
-- `prestamos`: variable que almacena los prestamos del cliente. Esta variale también debería ser un map porque sería necesario crear una clase llamada **Prestamos** que contenga atributos (tipo de prestamo, moneda, taza de interes, etc) y métodos (pagar prestamo, reporte de cuotas, etc).
+- *`string`* `nombre`:  variable tipo string que contiene el nombre del cliente.
+- *`int`* `id`: variable tipo entero que representaría la identificación del cliente.
+- *`int`* `cantidadCuentas`: variable tipo entera que contiene la cantidad de cuentas del cliente. Necesario para asignar un id a cada cuenta y ser accedidas al contenedor que se encuentra en la clase Banco.
+
+- *`int`* `cantidadPrestamos`: variable tipo entera que contiene la cantidad de prestamos del cliente. Necesario para asignar un id a cada prestamo y ser accedidas al contenedor que se encuentra en la clase Banco.
+- *`int`* `cantidadCDP`: variable tipo entera que contiene la cantidad de CDP del cliente. Necesario para asignar un id a cada CDP y ser accedidas al contenedor que se encuentra en la clase Banco.
 
 #### Métodos:
-- `agregarCuenta`: el cliente debe ser capaz de agregar una cuenta en dolares o colones.
-- `mostrarCuentas`: se deben poner mostrar las cuentas actuales del cliente.
-- `agregarPrestamo`: el cliente debe ser capaz de endeudarse.
-- `mostrarPrestamos`: se deben mostrar los prestamos actuales del cliente.
-- `solicitarInformePrestanos`, `solicitarInformeCuentas`: el cliente debe ser capaz de poder el estado actual de su situación financiera.
-- `solicitarCDP`: el cliente debería poder observar cuanta es la posible ganancia futura de mantener su dinero en las cuentas (todas las cuentas son de ahorro).
-- `retirarDinero`, `depositarDinero`, `transferirDinero`, `pagarPrestamo`: el cliente debería ser capaz de realizar las operaciones bancarias esperadas sobre sus cuentas y prestamos.
+- *`void`* `setDatos()`: establece los datos de un cliente, como su ID, nombre, e inicializa la cantidad cuentas, préstamos y certificados de depósito (CDP) en 0.
+
+- *`void`* `registrarTransaccion():` registra una transacción para el cliente, agregando la información de la transacción al vector `transacciones`, que contiene todas las transacciones registradas. Siempre se colocará la fecha de la transacción, el nombre del cliente y la descripción del cliente (agrego la cuenta numero..., retiro dinero de la propia cuenta..., etc).
+
+- *`void`* `generarInfo():` genera información del cliente, incluyendo sus datos personales, cuentas bancarias, préstamos y certificados de depósito, pero por separado mediante condicionales para escoger el tipo de información a guardar. Estos datos son guardados e iterador en un vector creado llamando informacion.
+
+- *`void`* `agregarCuenta()`: permite al cliente agregar una nueva cuenta bancaria a su perfil. Antes de proceder, verifica si el cliente ya ha alcanzado el límite máximo de cuentas permitidas, lo cual se determina a través del atributo **cantidadCuentas**. En caso de que el cliente tenga el máximo de cuentas permitidas, se muestra un mensaje indicando que no es posible agregar más cuentas.
+
+    Si el cliente puede crear otra cuenta, el método solicita al usuario el tipo de moneda utilizando el método **leerMoneda()** de la clase **LecturaDatos**. Luego, se asigna un número de cuenta basado en el id del cliente. A continuación, se instancia un objeto de la clase **CuentaBancaria** para representar la nueva cuenta y se almacena la información correspondiente. La nueva cuenta se agrega al map **cuentasBanco** dentro de la clase **Banco** para su gestión. Finalmente, se registra la transacción asociada a la creación de la cuenta utilizando el método **registrarTransaccion()**, asegurando que la acción quede registrada en el sistema bancario."
+
+- *`void`* `retirarDinero()`: permite al cliente retirar dinero de una de sus cuentas bancarias. Verifica si el cliente tiene cuentas asociadas con **cantidadCuentas()**, muestra las cuentas disponibles con **mostrarCuentas()**, solicita el número de cuenta verificando con **leerEntero()** de la clase **LecturaDatos**, si el número es correcto accede al map **cuentasBanco** buscando por el id y modifica la cantidad de dinero con el método **retirar()** de la clase **CuentaBancaria**. Finalmente registrar la transacción con el método **registrarTransaccion()**.
+
+- *`void`* `depositarDinero()`:permite al cliente depositar dinero en una cuenta propia o en la cuenta de otro cliente. Si el cliente desea depositarse a sí mismo, verifica si tiene cuentas. Si tiene cuentas, muestra sus cuentas, de lo contrario, solicita al cliente el número de cuenta a la que desea depositar. Continúa el proceso similar al método **retirarDinero()**, pero utilizando el método **depositar()** en vez de **retirar()** de la clase **CuentaBancaria**. Finalmente, registra la transacción utilizando **registrarTransaccion()**.
+
+- *`void`* `transferirDinero()`: permite al cliente transferir dinero entre cuentas bancarias. Primero, verifica si el cliente tiene cuentas asociadas utilizando el atributo **cantidadCuentas**. Si no tiene cuentas, muestra un mensaje de error. Luego, muestra las cuentas del cliente utilizando el método **mostrarCuentas()**. Después, solicita al cliente el número de cuenta desde la cual desea transferir dinero y verifica su validez. A continuación, solicita al cliente el número de cuenta a la que desea transferir el dinero y verifica su validez. Posteriormente, realiza la transferencia utilizando el método **transferir()** de la clase **CuentaBancaria**. Finalmente, registra la transacción asociada a la transferencia utilizando el método **registrarTransaccion()**.
+
+- *`void`* `mostrarCuentas()`: muestra la información de las cuentas bancarias asociadas al cliente. Itera a través del map **cuentasBanco** y, para cada cuenta, verifica si pertenece al cliente actual utilizando el atributo **idPropietario** de la clase **CuentaBancaria**. Si la cuenta pertenece al cliente, imprime la información de la cuenta utilizando el método **imprimirInfo()** de la clase **CuentaBancaria**.
+
+- *`void`* `solicitarInformeCuentas()`: permite que un cliente solicite un informe de sus cuentas bancarias. Primero, verifica si el cliente tiene cuentas registradas utilizando el atributo **cantidadCuentas**. Si el cliente no tiene cuentas, muestra un mensaje de error. Luego, crea un archivo llamado "informe_cuentas.txt" y escribe en él encabezado del informe y los detalles de cada cuenta asociada al cliente. Finalmente, muestra un mensaje indicando que se genero un txt y mostrando su nombre, luego registra la transacción asociada a la solicitud del informe utilizando el método **registrarTransaccion()**.
+
+- *`void`* `agregarPrestamo()`: permite al cliente agregar un préstamo bancario. Primero, ofrece al cliente opciones de préstamos como personal, prendario o hipotecario. El cliente elige una opción y se establecen los parámetros del préstamo, como el número de cuotas, la tasa de interés y el tipo de préstamo. Luego, solicita al cliente el tipo de moneda y el monto total del préstamo verificando con los métodos **leerMoneda()** y **leerDouble()** de la clase **LecturaDatos**. Después tener toda la información, crea un objeto de la clase **Prestamo**, establece los datos del préstamo y lo guarda en el map **prestamosBanco**. Finalmente, registra la transacción asociada a la adición del préstamo utilizando el método **registrarTransaccion()**.
+
+- *`void`* `pagarPrestamo()`: permite al cliente pagar una cuota de un préstamo. Primero, pregunta al cliente si el pago es para su propio préstamo o para el préstamo de otra persona. Si es para su propio préstamo, muestra los préstamos del cliente y solicita al cliente el número del préstamo que desea pagar. Verifica la existencia del préstamo y procede a pagar la cuota utilizando el método **pagarCuota()** de la clase **Prestamo**. Luego, registra la transacción asociada al pago de la cuota. Si el pago es para otro cliente, solicita al cliente el número del préstamo a pagar, verifica su existencia y procede de manera similar. Los números de cuenta son solicitados y verificados con el método **leerEntero()** de la clase **LecturaDatos**. Finalmente, registra la transacción asociada a la adición del préstamo utilizando el método **registrarTransaccion()**.
+
+- *`void`* `mostrarPrestamos()`: muestra información sobre los préstamos asociados al cliente. Itera a través del map **prestamosBanco** y verifica si el id del propietario del préstamo coincide con el ID del cliente actual. Si hay coincidencia, imprime la información del préstamo utilizando el método **imprimirInfo()** de la **clase Prestamo**.
+
+- *`void`* `solicitarInformePrestamos()`: permite al cliente solicitar un informe de sus préstamos. Primero, verifica si el cliente tiene préstamos asociados mediante al atributo **cantidadPrestamos**. Si no tiene préstamos, imprime un mensaje indicando que no hay préstamos registrados a su nombre. Procedea crear un archivo llamado "informe_prestamos.txt" y escribe en él los detalles de cada préstamo del cliente, incluyendo el número de préstamo, tipo, tipo de moneda, monto total, cantidad de cuotas, tasa de interés, cuotas pagadas, intereses pagados y deuda pagada. Además, obtiene un informe detallado de cuotas utilizando el método **generarInfoCuotas()** de la clase **Prestamo** y lo escribe en el archivo. Finalmente, cierra el archivo y registra la transacción con el **registrarTransaccion()**.
+
+- *`void`* `agregarCDP()`: permite al cliente agregar un Certificado de Depósito a Plazo (CDP). Primero, presenta al cliente las opciones disponibles para los CDP, como corto, mediano o largo plazo. Luego, el cliente selecciona el tipo de CDP y proporciona la moneda y la cantidad de dinero a invertir en el certificado. El método crea un nuevo objeto CDP (certificadoPlazo), asigna un número único al CDP combinando el ID del cliente y un contador, establece los datos del CDP y lo almacena en el map **certificadosBanco**. Finalmente, registra la transacción del cliente y actualiza el contador de CDP del cliente.
 
 
 ### class CuentaBancaria
