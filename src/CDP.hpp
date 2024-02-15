@@ -16,7 +16,7 @@
 using namespace std;
 
 // Cuando la clase que permite leer datos y verificar que cumple con lo solicitado, este lista, se instanciará
-// #include "LecturaDatos.hpp"
+#include "LecturaDatos.hpp"
 
 /**
 * @brief Clase que permite gestionar los CDP del usuario.
