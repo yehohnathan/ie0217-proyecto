@@ -58,3 +58,25 @@ void Banco::leerTransacciones(){
     archivo.close();
 }
 
+// Método para actualizar el archivo .txt con las transacciones de los clientes. 
+void Banco::actualizarTransacciones(){
+    // Se crea si no existe y se abre un archivo .txt de registro de transacciones. 
+    string nombreArchivo = "registro_transacciones.txt";
+    ofstream archivo(nombreArchivo, ios::out | ios::trunc);
+    // Se agrega un encabezado al archivo. 
+    archivo << "Registro de transacciones realizadas por los usuarios" << endl;
+    archivo << endl;
+    // Se agrega un encabezado de la información de las transacciones con los títulos de cada columna. 
+    archivo << "fecha,id,nombre,descripcion" << endl;
+    // Pata cada línea del vector con todas las transacciones. 
+    for (auto& transaccion : transacciones) {
+        // Se escribe la línea en el archivo .txt. 
+        archivo << transaccion << endl;
+    }
+    // Se cierra el archivo. 
+    archivo.close();
+    // Se imprime un mensaje que indica que se pudo generar o actualizar el archivo correctamente. 
+    cout << "\nSe actualizo el archivo: " << nombreArchivo << endl;
+    cout << endl;
+}
+
