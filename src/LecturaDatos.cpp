@@ -119,3 +119,28 @@ void leerMoneda(string& tipoMoneda){
         }
     }
 }
+
+// Función para leer el nombre del usuario. 
+void leerNombre(string& nombre){
+    // Se crea una variable para realizar la lectura. 
+    string lectura;
+    // Se define un regex para verificar que el usuario haya escrito un nombre. 
+    regex regex_nombre("^[A-Z][a-z]*(?: [A-Z][a-z]*)*$");
+    // Se ignora la primera entrada del usuario
+    getline(cin, lectura);
+    
+    while(1){
+        // Se lee el nombre del usuario
+        cout << "Ingrese su nombre: ";
+        getline(cin, lectura);
+        // Si coincide con el regex es porque un nombre valido. 
+        if(regex_match(lectura, regex_nombre)){
+            // Se asigna el valor de la lectura al nombre. 
+            nombre = lectura;
+            // Se sale del bucle. Si no continuará leyendo hasta que se ingrese una entrada válida. 
+            break;
+        }
+        // Se imprime un mensaje de error. 
+        cout << "El nombre ingresado no es valido. Intente de nuevo." << endl;
+    }
+}
