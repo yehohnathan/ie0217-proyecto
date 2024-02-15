@@ -240,13 +240,13 @@ Para reutilizar código es factible utilizar una clase que contenga todo lo espe
 - `LecturaDatos.hpp`
 
 #### Atributos:
-- *`int`* `numeroCuenta`: identificador de la cuenta bancaria, este puede ser un dato tipo entero de la misma forma que el id del cliente.
+- *`int`* `numeroCuenta`: identificador de la cuenta bancaria.
 
 - *`int`* `idPropietario`: id del cliente.
 
-- *`string`* `tipoMoneda`: almacena si la cuenta es en dolares o colones, por lo que debería ser un string.
+- *`string`* `tipoMoneda`: almacena si la cuenta es en dolares o colones.
 
-- *`double`* `dineroAhorros`: almacena la cantidad de dinero que tenga el cliente en esta cuenta, inicialmente comienza con el dinero que quiera ingresar el cliente
+- *`double`* `dineroAhorros`: almacena la cantidad de dinero que tenga el cliente en esta cuenta.
 
 #### Métodos:
 - *`void`* `setDatos()`: se utiliza para inicializar los datos de la cuenta bancaria a crear. Recibe el ID del propietario, el número de cuenta, el tipo de moneda y el saldo inicial de ahorros. Establece estos valores en los atributos **idPropietario**, **numeroCuenta**, **tipoMoneda** y **dineroAhorros** respectivamente. El numeroCuenta es decidido dentro de objeto un objeto de la clase cliente, siendo simplemente una extensión del id del cliente.
@@ -264,39 +264,91 @@ Los prestamos pueden variar en personales, prendarios e hipotecarios, pero todos
 
 El único inconveniente es que si bien los 3 prestamos mencionados, que son los que solicita el enunciado, comparten dichas características la forma de solicitarlos es distanta ya que un banco va a solicitar distintos tramites como solicitar un mueble o inmueble a cambio. Aunque en la reunicón con se nos comentó que no es necesario tener en cuenta esto y basta con el cambio de los interes dependiendo del tipo de prestamo.
 
+#### Intancias a otras clases:
+- `LecturaDatos.hpp`
+
 #### Atributos
-- `idPrestamo`: para que el prestamo pueda tener una identificación, esto es util cuando un tercero desea paghar una cuota. Lo que se podría utilizar como id es el id del cliente segundo de un **n** que representa el número de prestamo solicitado por el cliente.
-- `tipoMoneda`: indicador para saber si el prestamo es en dolares o colones.
-- `montoTotal`: indica el monto máximo
-- `cuotasTotal`: indica la cantidad de cuotas totales que debe pagar el cliente, estas pueden ir disminuyendo conforme se paguen las cuotas.
-- `tasaInteres`: taza de interes del prestamo, variable que varia dependiendo del tipo de prestamo que haya solicitado el cliente.
-- `costoCuota`: número de cuotas pagadas por el cliente/
-- `cuotasPagadas`: expresa la cantidad de cuotas pagadas por el cliente.
-- `interesesPagados`: monto monetario que representa la cantidad de interes que ha ido pagando el cliente, esto es aparte al pago de la deuda como tal.
-- `deudaPagada`: valor real del prestamo pagado por el cliente.
-- `infoCuotas`: en un contener de toda la información de las cuotas pagadas por el cliente, inclutendo el pago de la deuda, el pago de lso intereses y número de cuota. Este podría ser un contener, ya que es necesario almacenar varios tipos de informació y en diferentes meses.
+- *`int`* `numeroPrestamo`: identificador del prestamo.
+
+- *`int`* `idPropietario`: id del cliente.
+
+- *`string`* `tipoMoneda`: almacena si el prestamo es en dolares o colones.
+
+- *`string`* `tipo`: almacena si el prestamo es personal, prendario o hipotecario.
+
+- *`double`* `montoTotal`: indica el monto total de la deuda.
+
+- *`int`* `cuotasTotal`: cantidad total de cuotas de la deuda.
+
+- *`double`* `tasaInteres`: taza de interes del prestamo.
+
+- *`double`* `costoCuota`: costo mensual de la cuota.
+
+- *`int`* `cuotasPagadas`: cantidad de cuotas pagadas por el cliente.
+
+- *`double`* `interesesPagados`: cantidad de intereses pagados, mensualmente.
+
+- *`double`*  `deudaPagada`: valor real del prestamo pagado por el cliente.
+
+- *`vector<string>`*  `infoCuotas`: contiene la información de las cuotas.
 
 #### Métodos:
-- `setDatos()`: para colocar los datos de la deuda como los intereses, monto total, tipo de moneda, etc.
-- `imprimirInfo()`: para poder imprimir información de la deuda al cliente, en este caso la cantidad de cuotas que tendrá que pagar, el montó solicitado, valor de los intereses, etc.
-- `pagarCuota()`: para pagar la cuota, rebajando el numero de cuotas totales, aumentando las cuotas pagadas y cambiando los montos de deuda pagada, etc.
-- `generarReporteCuotas()`: genera un archivo .txt con información relevante de las cuotas (pagos) del prestamo.
+- *`void`*  `setDatos()`: se utiliza para establecer los datos de un préstamo. Recibe el id del propietario, el número de préstamo, el tipo de moneda, el monto total del préstamo, el número total de cuotas, la tasa de interés y el tipo de préstamo. Calcula el costo de cuota inicial, aporte de intereses, aporte de la deuda y guarda esta información en **infoCuotas**.
+
+
+- *`void`* `imprimirInfo()`:  imprime toda la información relacionada con el préstamo, incluyendo el monto total del préstamo, la cantidad total de cuotas, la tasa de interés, el costo de cada cuota, las cuotas pagadas, los intereses pagados y la deuda pagada. Información recolectada de los atributos.
+
+- *`void`* `pagarCuota()`: se utiliza para pagar una cuota del préstamo. Incrementa en uno la cantidad de **cuotasPagadas**, calcula el aporte de intereses y de deuda de la cuota a pagar y actualiza la cantidad de intereses pagados (**interesesPagados**) y de deuda pagada (**deudaPagada**).
+
+
+- *`vector <string>`* `generarInfoCuotas()`: genera un reporte de todas las cuotas del préstamo. Muestra primero un encabezado con la información a motrar. Luego la información de cuotas pagadas y cuotas restantes es obtenida mediante el vector **infoCuotas**, dicha información será guarda en un vector llamado **reporte** que retornaría con todo el reporte del prestamo.
 
 ### class CDP
 Esto se puede considerar como el inverso de los prestamos (ahorro), en donde el cliente puede darle dinero al banco a cambio de recibir un interes (dinero) a su favor. El ciente tiene la posibilidad de solicitar varios certificados de plazo, que varian de corto, mediano a largo plazo y cada uno con un montó a ingresar por el cliente mensualmente y un beneficio.
 
+#### Intancias a otras clases:
+- `LecturaDatos.hpp`
+
 #### Atributos:
-- `tipoMoneda`: ingresar el tipo de moneda.
-- `dineroCDP`: cantidad que se va a ingresar al banco mensualmente.
-- `fechaCreacion`: para ingresar la fecha de creación del CDP, la cual esta relacionada con la fecha que solicita el banco antes de realizar cualquier transacción.
-- `fechaExpira`: fecha de expiración del certificado, variable dependiendo del plazo del mismo.
-- `plazoMeses`: cantidad de meses que depende del plazo del certificado.
-- `tasaInteres`: taza de interes, que varia dependiendo del CDP, y son de benefició al cliente.
-- `informacion`: muestra la información sobre la fecha de creación y expiración del CDP, además de sus intereses.
+- *`int`* `numeroCDP`: id del CDP.
+
+- *`int`* `idPropietario`: id del cliente.
+
+- *`string`* `tipo`: almacena si el CDP es corto, mediano o largo.
+
+- *`string`* `tipoMoneda`: almacena si el CDP es en dolares o colones.
+
+- *`double`* `dineroCDP`: cantidad que se va a ingresar al banco mensualmente.
+
+- *`double`* `dineroGenerado`: dinero generado por el CDP.
+
+- *`double`* `dineroTotal`: cantidad total de dinero que ha logrado generar el cliente.
+
+- *`int`* `fechaCreacion[3]`: para ingresar la fecha de creación del CDP.
+
+- *`int`* `fechaExpira[3]`: fecha de expiración del certificado.
+
+- *`int`* `plazoMeses`: cantidad de meses del CDP.
+
+- *`double`* `tasaInteres`: taza de interes generado por el CDP.
+
+- *`string`* `estado`: define si el CDP sigue vigente o ya vencio.
 
 #### Métodos: 
-- `setDatos()`: para ingresar los datos del CDP.
-- `mostrarDatosCDP()`: para mostrar información de las posibles ganancias a causa de los interes del CDP que va a tener el cliente.
+- *`void`* `setDatos()`: se utiliza para establecer los datos de un Certificado del CDP. Tiene como entradas el id del propietario, el número del CDP, el tipo de moneda, la cantidad de dinero invertida, la fecha de creación, el plazo en meses, la tasa de interés y el tipo de CDP. Calcula la fecha de expiración basándose en la fecha de creación y el plazo en meses. También inicializa el estado del CDP como "vigente", el dinero generado como cero y el dinero total como la cantidad de dinero inicial.
+
+- *`void`* `actualizarCDP()`: actualiza el estado del CDP para determinar si ha llegado a su vencimiento. Toma la fecha actual como entrada y calcula la diferencia temporal en meses entre la fecha de creación del CDP y la fecha actual. Luego, compara esta diferencia con el plazo en meses del CDP. Si la diferencia supera el plazo, actualiza el estado del CDP a "vencido" y calcula el dinero generado por el CDP hasta la fecha actual y actualiza el dinero total del CDP.
+
+### class Informacion
+
+### class LecturaDatos
+
+### Contantes: contenedor de contantes
+Es un header que contiene las contantes que definen la cantidad de cuotas e intereses de los prestamos, así como el plazo mensual de los intereses de los CDP.
+
+
+
+
 
 
 ## Cronograma de actividades:
