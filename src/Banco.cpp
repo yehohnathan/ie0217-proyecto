@@ -257,3 +257,34 @@ void Banco::actualizarInfoClientes(){
     cout << "\nSe actualizo el archivo: " << nombreArchivo << endl;
 }
 
+// Método para crear un cliente 
+void Banco::crearCliente(){
+    // Se crea una variable para el nombre del cliente. 
+    string nombre;
+    // Se lee el nombre del cliente. 
+    leerNombre(nombre);
+    // Se crea y se lee una variable para el ID del cliente. 
+    int id;
+    leerEntero(id, "Ingrese su id: ");
+    // Se busca el ID ingresado en el contenedor con los clientes. 
+    if(clientes.find(id) != clientes.end()){
+        // Si se encuentra es porque ya existe ese ID así que se imprime un mensaje de error. 
+        cout << "El id ingresado ya existe en el registro." << endl;
+        // Se termina la ejecución del método. 
+        return;
+    }
+    // Se crea un objeto de la clase Cliente. 
+    Cliente cliente;
+    // Se setean los datos ingresados. 
+    cliente.setDatos(id,nombre);
+    // Se añade el cliente al contenedor con todos los clientes del banco. 
+    clientes[id] = cliente;
+    // Se imprime un mensaje de que se ha registrado exitosamente. 
+    cout << "\nSe ha registrado correctamente!" << endl;
+    // Se añade una transacción al contenedor con las transacciones que indica que se registro un cliente nuevo. 
+    string transaccion =  to_string(fecha[0]) + "/" + to_string(fecha[1]) + "/" + to_string(fecha[2]) + ","
+    + to_string(id)+ "," + nombre + "," + "se registro en el sistema";
+    // Se agrega a las transacciones. 
+    transacciones.push_back(transaccion);
+}
+
