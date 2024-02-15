@@ -340,8 +340,33 @@ Esto se puede considerar como el inverso de los prestamos (ahorro), en donde el 
 - *`void`* `actualizarCDP()`: actualiza el estado del CDP para determinar si ha llegado a su vencimiento. Toma la fecha actual como entrada y calcula la diferencia temporal en meses entre la fecha de creación del CDP y la fecha actual. Luego, compara esta diferencia con el plazo en meses del CDP. Si la diferencia supera el plazo, actualiza el estado del CDP a "vencido" y calcula el dinero generado por el CDP hasta la fecha actual y actualiza el dinero total del CDP.
 
 ### class Informacion
+Esta clase se centra en presentar al cliente las opciones de préstamos disponibles a las que puede acceder sin necesidad de solicitar un préstamo de inmediato. Además, permite mostrar la información detallada de un préstamo personalizado, incluyendo sus tasas de interés, cuotas y tipo de moneda, los cuales son seleccionados por el cliente.
+
+Proporcionar esta información es una manera eficiente de mantener el código organizado, ya que separa la funcionalidad de presentación de opciones de préstamo de la lógica principal de la clase **Prestamo**. Esto evita la complejidad añadida que surgiría al utilizar la clase **Prestamo** directamente para mostrar información debido a sus múltiples dependencias y métodos.
+
+#### Intancias a otras clases:
+- `Prestamo.hpp`
+- `Constantes.hpp`
+
+#### Métodos:
+- *`void`* `mostrarMenu()`: muestra un menú interactivo que permite al usuario seleccionar entre diferentes opciones de préstamos y obtener su información. Las opciones son: como préstamo personal, prendario, hipotecario y personalizado. Dependiendo de la elección del usuario, se utilizan los métodos `generarInformePredeterminado()` para personal, prendario y hipotecario o `generarInformePersonalizado()` para personalizado para generar el informe correspondiente. El ciclo continúa hasta que el usuario decide regresar al menú principal.
+
+- *`void`* `generarInformePredeterminado()`: genera un informe de cuotas para uno de los préstamos predeterminados del banco. Le muestra al cliente la cantidad de cuotas e intereses y luego ofrece la opción de generar una tabla de cuotas en un .txt. Si el usuario elige generar el informe, se solicitan información adicional como el tipo de moneda y el monto total del préstamo, utilizando métodos de lectura como **leerMoneda()** y **leerDouble()** de la clase **LecturaDatos**. Una vez dada la información, se instancia un objeto de la clase **Prestamo**, se establecen los datos del préstamo y se guarda en un archivo de texto. Finalmente, se registra la transacción asociada a la generación del informe utilizando el método **registrarTransaccion()**.
+
+- *`void`* `generarInformePersonalizado()`: parecido al método anterior pero comienza solicitando al usuario información sobre el préstamo: tipo de moneda, el monto total, la cantidad de cuotas y la tasa de interés. Luego, ofrece la opción de generar una tabla detallada de cuotas en un archivo de texto. Si el usuario elige generar el informe, se recopila la información del préstamo, se crea un archivo de texto con los detalles del préstamo y se registra la transacción asociada.
+
 
 ### class LecturaDatos
+Esta clase está diseñada para optimizar la estructura de los métodos que requieren interacción con el cliente, al ofrecer la generación automática de menús según la solicitud y realizar la validación de los datos ingresados mediante el uso de bloques de excepción. Su propósito principal es reducir la complejidad y el espacio ocupado por cada método que necesita recopilar datos del cliente.
+
+#### Métodos: 
+- *`void`* `leerDouble()`: recibe como entradas el valor qeu ingreso el usuario y el mensaje que indica el tipo de solicitud que se va realizar. Luego solicita al cliente un número con decimales, que lo hace reiteradamente con un ciclo while que si la entrada no es un número esperado, se lanza una excepción indicando que se debe ingresar un número. En caso de que la entrada sea válida, el valor se asigna a la variable original.
+
+- *`void`* `leerEntero()`: tiene el mismo procesamiento que el método  **leerDouble()**, pero con números enteros y una excepción más evitar números 1000000000. Recordando que debido al ciclo while se solicitará el número hasta que sea correcto.
+
+- *`void`* `leerMoneda()`: solicita al cliente que elija entre dos opciones de tipo de moneda: colones o dólares mediante un menú con las opciones disponibles y se lee la entrada del cliente. Si la opción es 1, se asigna el tipo de moneda como colones; si es 2, se asigna como dólares. Si no se selecciona ninguna de las opciones, se solicita al cliente que ingrese una opción válida.
+
+- *`void`* `leernombre()`: solicita al cliente que ingrese su nombre y verifica que el nombre ingresado cumpla con un patrón regex que consiste en una o más palabras, cada una comenzando con mayúscula, seguida de letras minúsculas. Si la entrada del cliente no cumple con este patrón, se solicita que ingrese un nombre válido.
 
 ### Contantes: contenedor de contantes
 Es un header que contiene las contantes que definen la cantidad de cuotas e intereses de los prestamos, así como el plazo mensual de los intereses de los CDP.
