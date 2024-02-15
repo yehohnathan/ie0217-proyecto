@@ -233,3 +233,27 @@ void Banco::leerInfoClientes(){
     archivo.close();
 }
 
+// Método para actualizar la información de los clientes.
+void Banco::actualizarInfoClientes(){
+    // Se abre el archivo en modo de escritura. Si no existe lo crea. 
+    string nombreArchivo = "info_clientes.txt";
+    ofstream archivo(nombreArchivo, ios::out | ios::trunc);
+    // Se agrega un encabezado para el archivo.
+    archivo << "Informacion de los clientes" << endl;
+    archivo << endl;
+    // Para cada cliente en el contenedor con los clientes. 
+    for (auto& par : clientes) {
+        // Se genera la información del cliente con el método de la clase Cliente. 
+        for(auto& linea : par.second.generarInfo(cuentasBanco, prestamosBanco, certificadosBanco)){
+            // Se escribe cada línea en el archivo .txt. 
+            archivo << linea << endl;
+        }
+        // Se escribe una linea en blanco. 
+        archivo << endl;
+    }
+    // Se cierra el archivo. 
+    archivo.close();
+    // Se imprime un mensaje que indica que se actualizo o genero el archivo correctamente. 
+    cout << "\nSe actualizo el archivo: " << nombreArchivo << endl;
+}
+
