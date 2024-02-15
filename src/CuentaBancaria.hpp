@@ -16,8 +16,7 @@
 using namespace std;
 
 // Librería fundamental que permite la verificación de todos los datos ingresados por el usuario
-// Se espera el git push que la instancie por Danny
-// #include "LecturaDatos.hpp"
+#include "LecturaDatos.hpp"
 
 /**
 * @brief Clase encargada de gestionar las cuentas de ahorros del cliente.
