@@ -306,3 +306,12 @@ void Banco::atenderCliente(){
     ventanilla.mostrarMenu(fecha, it_cliente->second, clientes, transacciones, cuentasBanco, prestamosBanco, certificadosBanco);
 }
 
+// Método para actualizar los certificados de todos los clientes del banco. 
+void Banco::actualizarCertificados(){
+    // Para cada certificado en el contenedor con todos los certificados de todos los clientes. 
+    for(auto& par : certificadosBanco){
+        // Se usa el método de la clase CDP para actualizar el estado del CDP. 
+        par.second.actualizarCDP(fecha);
+    }
+}
+
