@@ -25,7 +25,7 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS)
 	$(TARGET)
 
-	del .\src\main.exe .\src\Banco.exe .\src\AtencionCliente.exe .\src\Informacion.exe .\src\Cliente.exe .\src\CuentaBancaria.exe .\src\Prestamo.exe .\src\CDP.exe .\src\LecturaDatos.exe gestion_banco.exe
+	@del gestion_banco.exe
 
 # Regla para limpiar los archivos
 .PHONY: clean
