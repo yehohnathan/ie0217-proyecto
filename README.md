@@ -114,7 +114,7 @@ module <stdexcept>  // Para hacer uso de las excepciones
 module <limits>     // Para borrar el contenido de "cin"
 module <iosteam>    // Funciones básicas de la STL
 ```
-## Definición y justificación de las clases:
+## Diseño y resumen de las clases:
 
 ### class Banco
 La clase banco es para crear un objeto que sea capaz de almacenar la información de todos los posibles clientes y que a traves de ella se puedan realizar las operaciones esperadas en un banco como la gestión de prestamos, cuentas, certificados de plazo, etc. Por lo que se puede afirmar que esta clase sirve para tratar de emitar la estructura real de un banco y por ello la necesidad de su creación, ya que permite gestionar a cada cliente de una forma más sencilla y óptima.
@@ -159,17 +159,18 @@ La clase banco es para crear un objeto que sea capaz de almacenar la informació
 
 - *`void`* `actualizarCertificados()`: actualiza los certificados de plazo (CDP) para todos los clientes del banco. Itera sobre cada certificado en el map `certificadosBanco` y utiliza el método `actualizarCDP` de la clase `CDP` para actualizar el estado del certificado basado en la fecha actual (`fecha`). Esto le da una funcionalidad adiconal al atributo **fecha[3]** indicandole al usuario si el CDP sigue vigente o se ha vencido.
 
-
-
 ### class AtencionCliente
 Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco en especifico y no guardan información de nigun tipo porque solo sirve para que los clientes puedan cambiar el estado actual de su economía (prestamos, cuentas o CDP).
 
 #### Métodos:
-- `mostrarMenu()`: muestra el menú de atención al cliente, para gestionar cuentas o prestamos.
-- `gestionarCuentas()`: gestiona lo que quiere hacer un cliente con una cuenta. Se podrá crear una cuenta, depositar o retirnar dinero, etc.
-- `gestionarPrestamos()`: gestiona lo que quiere hacer un cliente con un prestamo, en donde se podrán crear un nuevo prestamo, pagar una cuota, etc.
-- `gestionarCDP()`: gestiona lo que quiere hacer un cliente con un certificado de plazo, solicitando su plazo de duración y monto inicial.
-  
+- *`void`* `mostrarMenu()`: muestra un menú de opciones para el cliente en la sección de Atención al Cliente. Saluda al cliente y muestra las opciones disponibles, como tramitar cuentas bancarias, préstamos o certificados de depósito a plazo. Luego, solicita al cliente que ingrese una opción y realiza la acción correspondiente según la opción seleccionada. Dependiendo de la opción se accede a al método **gestionarCuentas**, **gestionarPrestamos** o **gestionarCuertificados** o se regresa al menú principal.
+
+- *`void`* `gestionarCuentas()`: muestra un menú de opciones que incluye agregar una cuenta, retirar dinero, depositar dinero, transferir dinero y solicitar un informe de sus cuentas actuales. Según la opción seleccionada por el cliente, se llama al método **agregarCuenta**, **retirarDinero**, **depositarDinero**, **solicitarInformeCuentas** o **solicitarInformeCuentas** correspondiente de la clase Cliente para realizar la acción deseada.
+
+- *`void`* `gestionarPrestamos()`: muestra un menú de opciones que incluye solicitar un préstamo, pagar una cuota y solicitar un informe de sus préstamos actuales. Según la opción seleccionada por el cliente, se llama al método **agregarPrestamo**, **pagarPrestamo** o **solicitarInformePrestamos** correspondiente de la clase Cliente para realizar la acción deseada.
+
+- *`void`* `gestionarCertificados()`: muestra un menú de opciones que incluye solicitar un certificado y solicitar un informe de sus certificados actuales. Según la opción seleccionada por el cliente, se llama al método **agregarCDP** o **solicitarInformeCDP** correspondiente de la clase Cliente para realizar la acción deseada.
+
 ### class Cliente
 Si una persona desea registrarse o realizar alguna transacción en un banco, necesita de una serie de características que lo identifiquen ante el banco. Esto permite un manejo de los prestamos, dinero, cuentas de ahorros, transacciones y demás tramites seguros, claros y eficientes.
 
