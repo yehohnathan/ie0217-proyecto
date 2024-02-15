@@ -167,7 +167,7 @@ La clase banco es para crear un objeto que sea capaz de almacenar la informació
 ### class AtencionCliente
 Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco en especifico y no guardan información de nigun tipo porque solo sirve para que los clientes puedan cambiar el estado actual de su economía (prestamos, cuentas o CDP).
 
-#### Intancias:
+#### Intancias a otras clases:
 - `Cliente.hpp` > `CuentaBancaria.hpp` `Prestamo.hpp` `CDP.hpp` 
 - `Prestamo.hpp` > `LecturaDatos.hpp`
 - `CuentaBancaria.hpp` > `LecturaDatos.hpp`
@@ -186,7 +186,7 @@ Esta clase sirve para crear objetos, que funcionan como ventallas, para un banco
 ### class Cliente
 Si una persona desea registrarse o realizar alguna transacción en un banco, necesita de una serie de características que lo identifiquen ante el banco. Esto permite un manejo de los prestamos, dinero, cuentas de ahorros, transacciones y demás tramites seguros, claros y eficientes.
 
-#### Intancias:
+#### Intancias a otras clases:
 - `Prestamo.hpp` > `LecturaDatos.hpp`
 - `CuentaBancaria.hpp` > `LecturaDatos.hpp`
 - `CDP.hpp` > `LecturaDatos.hpp`
@@ -235,6 +235,9 @@ Si una persona desea registrarse o realizar alguna transacción en un banco, nec
 Al estar registrado un cliente a un banco, este debe tener la posibilidad de crear cuentas para poder almacenar su dinero. Esto es necesario si este ya recibe un salario, beca o simplemente desea mantener su dinero seguro con una identidad bancaria. En el enunciado se menciona que el cliente tiene la posibilidad de crear cuentas de ahorros, una en colones y otra en dolares.
 
 Para reutilizar código es factible utilizar una clase que contenga todo lo esperado de una cuenta para sus atributos y los métodos para realizar acciones sobre la cuenta. De esta forma no importa si la cuenta esta en dolares o colones, debido a que las operaciones son similares (contando el tipo de cambio de la moneda si se hace una transferencia de colones a dolares o viseversa.)
+
+#### Intancias a otras clases:
+- `LecturaDatos.hpp`
 
 #### Atributos:
 - `numeroCuenta`: identificador de la cuenta bancaria, este puede ser un dato tipo entero de la misma forma que el id del cliente.
