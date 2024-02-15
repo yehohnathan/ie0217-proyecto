@@ -52,10 +52,19 @@ class AtencionCliente {
         * @param cliente Referencia al cliente que se está atendiendo en ese momento.
         * @param clientes Referencia al contenedor con todos los clientes de la entidad bancaria.
         * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
-        * @param prestamosBanco
+        * @param prestamosBanco Referencia al contenedor de los prestamos
         */
         void gestionarPrestamos(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones, map <int, Prestamo>& prestamosBanco);
 
+        /**
+        * @brief Permite gestionar las acciones relacionadas con los Certificados.
+        *
+        * @param fecha Array que representa la fecha (ddmmaa).
+        * @param cliente Referencia al cliente que se está atendiendo en ese momento.
+        * @param clientes Referencia al contenedor con todos los clientes de la entidad bancaria.
+        * @param transacciones Referencia al contenedor de las transacciones de todos los clientes.
+        * @param prestamosBanco Referencia al contenedor de los certtificados
+        */
         void gestionarCertificados(int fecha[], Cliente& cliente, map <int, Cliente>& clientes, vector <string>& transacciones, map <int, CDP>& certificadosBanco);
 };
 
