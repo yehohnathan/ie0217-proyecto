@@ -80,3 +80,26 @@ void Banco::actualizarTransacciones(){
     cout << endl;
 }
 
+// Método para dividir un string en un contenedor de strings separando con un separador indicado. 
+vector <string> Banco::dividir(string linea, string separador){
+    // Se crea un vector de strings para los elementos de la separación. 
+    vector<string> valores;
+    // Se establece la posición inicial a cero en el recorrido por el string.
+    size_t pos = 0;
+    // Se define una variable para guardar el elemento actual. 
+    string valor;
+    // Mientas no se encuentre el separador
+    while ((pos = linea.find(separador)) != string::npos) {
+        // Se leen los caracteres que generan el elemento actual hasta que se encuentra el separador. 
+        valor = linea.substr(0, pos);
+        // Se agrega el elemento al vector con todos los elementos. 
+        valores.push_back(valor);
+        // Se elimina el elemento y el separador que le sigue del string inicial. 
+        linea.erase(0, pos + 1);
+    }
+    // Cuando llega al final se agrega todo lo que queda de la línea. 
+    valores.push_back(linea);
+    // Se agrega el valor al contenedor con todos los elementos. 
+    return valores;
+}
+
