@@ -39,4 +39,22 @@ void Banco::setFecha(){
     }
 }
 
+// Método para leer el archivo .txt con las transacciones de los usuarios. 
+void Banco::leerTransacciones(){
+    // Se abre el archivo en modo de lectura. 
+    string nombreArchivo = "registro_transacciones.txt";
+    ifstream archivo(nombreArchivo);
+    string linea;
+    // Se ignoran las primeras 3 líneas que son el encabezado. 
+    getline(archivo,linea);
+    getline(archivo,linea);
+    getline(archivo,linea);
+    // Para cada una de las líneas en el archivo. 
+    while(getline(archivo,linea)){
+        // Se agrega la línea al contenedor con todas las transacciones de los clientes. 
+        transacciones.push_back(linea);
+    }
+    // Se cierra el archivo.
+    archivo.close();
+}
 
