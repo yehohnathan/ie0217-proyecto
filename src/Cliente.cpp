@@ -14,16 +14,15 @@ void Cliente::setDatos(int id_p, string nombre_p){
 }
 
 // Método para registrar una transacción
-void Cliente::registrarTransaccion(int fecha[], vector <string>& transacciones, string nombre, int id, string descripcion){
+void Cliente::registrarTransaccion(int fecha[], vector <string>& transacciones, string descripcion){
     // Se crea un string con la información de la fecha de la transacción y el nombre y id del cliente que la realizó
     // También se agrega una descripción de la transacción
-    string transaccion =  to_string(fecha[0]) + "/" + to_string(fecha[1])
-    + "/" + to_string(fecha[2]) +"," + to_string(id) + "," + nombre + ","
-    + descripcion;
+    string transaccion =  to_string(fecha[0]) + "/" + to_string(fecha[1]) + "/" + to_string(fecha[2]) + "," + to_string(id) + "," + nombre + "," + descripcion;
+
     // Se agrega el string al vector con todas las transacciones
     transacciones.push_back(transaccion);
     // Se imprime un mensaje de que la transacción fue existosa
-    cout << "Transaccion exitosa!" << endl;
+    cout << "\nTransaccion exitosa!" << endl;
 }
 
 // Método para generar información del cliente
