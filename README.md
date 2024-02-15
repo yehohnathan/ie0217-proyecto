@@ -240,14 +240,24 @@ Para reutilizar código es factible utilizar una clase que contenga todo lo espe
 - `LecturaDatos.hpp`
 
 #### Atributos:
-- `numeroCuenta`: identificador de la cuenta bancaria, este puede ser un dato tipo entero de la misma forma que el id del cliente.
-- `tipoMoneda`: para asignar si la cuenta es en dolares o colones, por lo que debería ser un string.
-- `monto`: aquí se debe almacenar la cantidad de dinero que tenga el cliente en esta cuenta, inicialmente debería comenzar en cero cuando es creada y debería ser un double debido a que el dinero puede tener decimales.
+- *`int`* `numeroCuenta`: identificador de la cuenta bancaria, este puede ser un dato tipo entero de la misma forma que el id del cliente.
+
+- *`int`* `idPropietario`: id del cliente.
+
+- *`string`* `tipoMoneda`: almacena si la cuenta es en dolares o colones, por lo que debería ser un string.
+
+- *`double`* `dineroAhorros`: almacena la cantidad de dinero que tenga el cliente en esta cuenta, inicialmente comienza con el dinero que quiera ingresar el cliente
 
 #### Métodos:
-- `setTipoMoneda`: para que cuando se creé la cuenta, el usuario pueda decidir si es en dolares o colones.
-- `imprimirInfo`: aquí se mostraría el tipo de moneda, monto y su número de cuenta.
-- `depositar`, `retirar`, `transferir`: para poder ingresar, retirar o transferir dinero, modificando el atributo monto.
+- *`void`* `setDatos()`: se utiliza para inicializar los datos de la cuenta bancaria a crear. Recibe el ID del propietario, el número de cuenta, el tipo de moneda y el saldo inicial de ahorros. Establece estos valores en los atributos **idPropietario**, **numeroCuenta**, **tipoMoneda** y **dineroAhorros** respectivamente. El numeroCuenta es decidido dentro de objeto un objeto de la clase cliente, siendo simplemente una extensión del id del cliente.
+
+- *`void`* `imprimirInfo()`: imprime la información de la cuenta bancaria: número de cuenta, el tipo de moneda y el saldo disponible en la cuenta.
+
+- *`void`* `depositar()`: permite depositar dinero en la cuenta bancaria. Solicita al cliente el monto a depositar mediante el método **leerDouble()** de la clase **LecturaDatos** y lo agrega al atributo **dineroAhorros**.
+
+- *`void`* `retirar()`: permite retirar dinero de la cuenta. Solicita al cliente el monto a retirar mediante el método **leerDouble()** de la clase **LecturaDatos**, verifica si hay suficientes fondos en la cuenta y, si es así, retira el monto especificado del saldo de ahorros, .
+
+- *`void`* `transferir()`: permite transferir dinero desde la cuenta actual a otra cuenta bancaria (objeto cuentaDestino). Solicita al usuario el monto a transferir mediante el método **leerDouble()** de la clase **LecturaDatos**, verifica si hay suficientes fondos en la cuenta de origen y, si es así, realiza la transferencia restando el monto de la cuenta actual y sumándolo a la cuenta de destino (cuentaDestino.dineroAhorros).
 
 ### class Prestamo
 Los prestamos pueden variar en personales, prendarios e hipotecarios, pero todos comparten carácterísticas como el tipo de moneda, cantidad de cuotas, intereses, pagos, etc. Para poder facilitar esto se crea un clase que permita la creación de un objeto que representa el tipo de prestamo y la información del mismo para el cliente.
