@@ -86,3 +86,36 @@ void leerEntero(int& variableEntero, string mensaje){
     // Cuando todo está bien se asigna el valor de la lectura a la variable. 
     variableEntero = int(lectura);
 }
+
+// Función para leer el tipo de Moneda: colones o dólares 
+void leerMoneda(string& tipoMoneda){
+    // Se crea una variable para la opción. 
+    int opcionMoneda = 0;
+    while(1){
+        // Se muestran las opciones disponibles. 
+        cout << "\n---Opciones de tipo de moneda---" << endl;
+        cout << "1. Colones." << endl;
+        cout << "2. Dolares." << endl;
+        // Se lee la opción ingresada por el usuario. 
+        leerEntero(opcionMoneda, "Ingrese el tipo de moneda: ");
+        // Si la opción es la 1 de colones
+        if(opcionMoneda == 1){
+            // Se asigna el tipo como colones
+            tipoMoneda = "colones";
+            // Se sale del bucle. 
+            break;
+        }
+        // Si la opción es la 2 de dólares 
+        else if(opcionMoneda == 2){
+            // Se asigna el tipo como dólares
+            tipoMoneda = "dolares";
+            // Se sale del bucle
+            break;
+        }
+        // Si no ingresó ninguna de las opciones
+        else{
+            // Se imprime un mensaje de error. 
+            cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
+        }
+    }
+}
