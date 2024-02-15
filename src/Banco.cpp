@@ -103,3 +103,133 @@ vector <string> Banco::dividir(string linea, string separador){
     return valores;
 }
 
+// Método para leer el archivo .txt con la información de los clientes. 
+void Banco::leerInfoClientes(){
+    // Se abre el archivo .txt en modo de lectura. 
+    string nombreArchivo = "info_clientes.txt";
+    ifstream archivo(nombreArchivo);
+    string linea;
+    // Se ignoran las primeras dos líneas que son el encabezado del archivo. 
+    getline(archivo,linea);
+    getline(archivo,linea);
+
+    // Se lee cada línea del archivo hasta que ya no hayan líneas. 
+    while(getline(archivo,linea)){
+        // Si la línea esta vacía
+        if(linea.empty()){
+            // Se continua con la siguiente línea. 
+            continue;
+        }
+        // Se divide la línea en los elementos que contiene separados por comas. 
+        vector <string> elementosLinea = dividir(linea, ",");
+        // Si el primer elemento es la palabra datos se refiere a los datos de un cliente. 
+        if(elementosLinea[0] == "datos"){
+            // Se crea un objeto de la clase Cliente. 
+            Cliente cliente;
+            // Se convierte a un int el segundo elemento que representa el ID del cliente. 
+            int id = stoi(elementosLinea[1]);
+            // Se asigna el tercer elemento como el nombre del cliente. 
+            string nombre = elementosLinea[2];
+            // Se setean los datos del cliente: el ID y el nombre. 
+            cliente.setDatos(id,nombre);
+            // Se agrega el cliente al contenedor con todos los clientes registrados en el Banco. 
+            clientes[id] = cliente;
+        }
+        // Si el segundo elemento es la palabra cuenta se refiere a los datos de una cuenta bancaria. 
+        else if(elementosLinea[0] == "cuenta"){
+            // Se crea un objeto de la clase CuentaBancaria. 
+            CuentaBancaria cuenta;
+            // Se convierte a un int el segundo elemento de la línea que representa el ID del propietario. 
+            int id = stoi(elementosLinea[1]);
+            // Se convierte a un int el tercer elemento de la línea que representa el número de cuenta. 
+            int numeroCuenta = stoi(elementosLinea[2]);
+            // Se asigna el cuarto elemento de la línea como el tipo de moneda. 
+            string tipoMoneda = elementosLinea[3];
+            // Se convierte a un double el quinto elemento que representa el dinero en la cuenta. 
+            double dineroAhorros = stod(elementosLinea[4]);
+            // Se setean los datos con el ID del cliente, número de cuenta, tipo de moneda y dinero de ahorros correspondiente. 
+            cuenta.setDatos(id,numeroCuenta,tipoMoneda,dineroAhorros);
+            // Se agrega la cuenta al contenedor con todas las cuentas de los clientes del banco. 
+            cuentasBanco[numeroCuenta] = cuenta;
+            // Se busca el cliente por su ID en el contenedor de los clientes. 
+            auto it_cliente = clientes.find(id);
+            // Se agrega 1 a la cantidad de cuentas que tiene el cliente. 
+            it_cliente->second.cantidadCuentas += 1;
+        }
+        // Si el primero elemento de la línea es la palabra prestamo se refiere a un prestamo de un cliente. 
+        else if(elementosLinea[0] == "prestamo"){
+            // Se crea un objeto de la clase Prestamo. 
+            Prestamo prestamo;
+            // Se convierte a int el segundo elemento que representa el ID del propietario del préstamo. 
+            int id = stoi(elementosLinea[1]);
+            // Se convierte a int el tercer elemento de la línea que representa el número del préstamo. 
+            int numeroPrestamo = stoi(elementosLinea[2]);
+            // Se asigna el cuarto elemento de la línea como el tipo de préstamo. 
+            string tipo = elementosLinea[3];
+            // Se asigna el quinto elemento de la línea como el tipo de moneda. 
+            string tipoMoneda = elementosLinea[4];
+            // Se convierte a double el sexto elemento que representa el monto total del préstamo. 
+            double montoTotal = stod(elementosLinea[5]);
+            // Se convierte a int el séptimo elemento de la línea que representa la cantidad total de cuotas. 
+            int cuotasTotal = stoi(elementosLinea[6]);
+            // Se convierte a double el octavo elemento de la línea que representa la tasa de interés. 
+            double tasaInteres = stod(elementosLinea[7]);
+            // Se convierte a int el noveno elemento que representa la cantidad de cuotas pagadas. 
+            int cuotasPagadas = stoi(elementosLinea[8]);
+            // Se setean los datos del préstamo: el ID del propietario, número, tipo moneda, monto, cuotas, interés, etc. 
+            prestamo.setDatos(id,numeroPrestamo,tipoMoneda,montoTotal,cuotasTotal,tasaInteres,cuotasPagadas,tipo);
+            // Se agrega el objeto prestamo al contenedor con los préstamos de todos los clientes. 
+            prestamosBanco[numeroPrestamo] = prestamo;
+            // Se busca el cliente por medio de su ID en el contenedor con todos los clientes. 
+            auto it_cliente = clientes.find(id);
+            // Se agrega 1 a la cantidad de préstamos que tiene el usuario. 
+            it_cliente->second.cantidadPrestamos += 1;
+        }
+        // Si el primer elemento de la línea es la abreviatura cdp. 
+        else if(elementosLinea[0] == "cdp"){
+            // Se crea un objeto de la clase CDP. 
+            CDP certificadoPlazo;
+            // Se convierte a int el segundo elemento de la línea que representa el ID del propietario. 
+            int id = stoi(elementosLinea[1]);
+            // Se convierte a int el tercer elemento que representa el número de cdp. 
+            int numeroCDP = stoi(elementosLinea[2]);
+            // Se asigna el cuarto elemento de la línea como tipo de cdp. 
+            string tipo = elementosLinea[3];
+            // Se asigna el quinto elemento de la línea como el tipo de moneda del cdp. 
+            string tipoMoneda = elementosLinea[4];
+            // Se convierte a double el sexto elemento que representa el dinero invertido en el CDP. 
+            double dineroCDP = stod(elementosLinea[5]);
+            // Se crea un array que representa la fecha de la ejecución del programa. 
+            int fechaCreacion[3];
+            // Se divide el séptimo elemento que representa la fecha por medio de los símbolos /
+            vector <string> fecha_string = dividir(elementosLinea[6], "/");
+            // El primer elemento se convierte a int y se define como el día
+            fechaCreacion[0] = stoi(fecha_string[0]);
+            // El segundo elemento se convierte a int y se define como el mes
+            fechaCreacion[1] = stoi(fecha_string[1]);
+            // El tercer elemento se convierte a int y se define como el año
+            fechaCreacion[2] = stoi(fecha_string[2]);
+
+            // Se convierte a int el octavo elemento que representa el plazo en meses.
+            int plazoMeses = stoi(elementosLinea[7]);
+            // Se convierte a double el noveno elemento que representa la tasa de interés. 
+            double tasaInteres = stod(elementosLinea[8]);
+
+            // Se setean los datos de ID, número, tipo de moneda, etc en el objeto de la clase CDP. 
+            certificadoPlazo.setDatos(id,numeroCDP,tipoMoneda,dineroCDP,fechaCreacion,plazoMeses,tasaInteres,tipo);
+            // Se agrega el certificado al contenedor con los certificados a plazo de todos los clientes del banco. 
+            certificadosBanco[numeroCDP] = certificadoPlazo;
+            // Se busca el cliente por su ID en el contenedor de los clientes.
+            auto it_cliente = clientes.find(id);
+            // Se agrega 1 a la cantidad de certificados que tiene el cliente. 
+            it_cliente->second.cantidadCDP += 1;
+        }
+        else{
+            // Si el primer elemento de la línea no dice nada de lo anterior se considera defectuosa y se continua con la siguiente. 
+            continue;
+        }
+    }
+    // Se cierra el archivo. 
+    archivo.close();
+}
+
