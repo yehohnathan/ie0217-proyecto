@@ -133,3 +133,54 @@ void Informacion::generarInformePersonalizado(){
             cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
         }
 }
+
+// Método para mostrar el menú con las opciones de informacion de préstamos. 
+void Informacion::mostrarMenu(){
+    // Se imprime un saludo al usuario. 
+    cout << "\nHola. Estas en la seccion de Informacion de Prestamos." << endl;
+    int opcion = 0;
+    while(opcion != 5){
+        // Se imprimen las opciones de información que puede consultar el usuario. 
+        cout << "\n---Tenemos las siguientes opciones de prestamos---" << endl;
+        cout << "1. Prestamo personal." << endl;
+        cout << "2. Prestamo prendario." << endl;
+        cout << "3. Prestamo hipotecario." << endl;
+        cout << "4. Prestamo personalizado." << endl;
+        cout << "5. Regresar al menu principal." << endl;
+        // Se lee la opción ingresada por el usuario. 
+        leerEntero(opcion, "Ingrese una opcion: ");
+        switch (opcion){
+            case 1:
+                // Si elige la opción 1 se utiliza el método para generar un informe predeterminado de tipo personal. 
+                generarInformePredeterminado("personal", CUOTASPERSONAL, INTERESPERSONAL);
+                // Se sale del bloque switch. 
+                break;
+            case 2:
+                // Si elige la opción 2 se utiliza el método para generar un informe predeterminado de tipo prendario. 
+                generarInformePredeterminado("prendario", CUOTASPRENDARIO, INTERESPRENDARIO);
+                // Se sale del bloque switch. 
+                break;
+            case 3:
+                // Si elige la opción 3 se utiliza el método para generar un informe predeterminado de tipo hipotecario. 
+                generarInformePredeterminado("hipotecario", CUOTASHIPOTECARIO, INTERESHIPOTECARIO);
+                // Se sale del bloque switch. 
+                break;
+            case 4:
+                // Si elige la opción 4 se utiliza el método para generar un informe personalizado con datos que ingresa el usuario. 
+                generarInformePersonalizado();
+                // Se sale del bloque switch. 
+                break;
+            case 5:
+                // Si elige la opción 5 se sale del bloque while y deja de mostrar el menú de opciones. 
+                cout << "\nRegresando al menu principal..." << endl;
+                // Termina el bloque while. 
+                break;
+            default:
+                // Si se ingresa algo que no está entre las opciones brindadas. 
+                // Se imprime un mensaje de opción inválida. 
+                cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
+                // Se sale del bloque while. 
+                break;
+        }
+    }
+}
