@@ -315,3 +315,53 @@ void Banco::actualizarCertificados(){
     }
 }
 
+// Método para mostrar el menú principal de opciones. 
+void Banco::mostrarMenu(){
+    // Se establece la fecha de la ejecución del programa. 
+    setFecha();
+    // Se actualizan los certificados de todos los clientes. 
+    actualizarCertificados();
+    int opcion = 0;
+    while(opcion != 4){
+        // Se muestran las opciones de las secciones de información y atención a clientes. 
+        cout << "\n---Menu de opciones---" << endl;
+        cout << "1. Atencion al Cliente." << endl;
+        cout << "2. Informacion de Prestamos." << endl;
+        cout << "3. Registrarse." << endl;
+        cout << "4. Salir." << endl;
+        // Se lee la opción ingresada por el usuario. 
+        leerEntero(opcion, "Ingrese una opcion: ");
+        switch (opcion){
+            // Si elige la opción de atencion al cliente. 
+            case 1:
+                // Se usa el método para atender al cliente. 
+                atenderCliente();
+                // Se sale del bloque switch
+                break;
+            // Si elige la opción de solicitar información de préstamos. 
+            case 2:
+                // Se utiliza el objeto de la clase Informacion y su método para mostrar las opciones de información.
+                informante.mostrarMenu();
+                // Se sale del bloque switch 
+                break;
+            // Si elige la opción de registrarse 
+            case 3:
+                // Se usa el método para crear un nuevo cliente. 
+                crearCliente();
+                // Se sale del bloque switch
+                break;
+            // Si selecciona la opción para salir 
+            case 4:
+                // Se imprime un mensaje de despedida
+                cout << "\nGracias por utilizar nuestro Banco." << endl;
+                // Se sale del bloque switch. 
+                break;
+            // Si no selecciona ninguna de las opciones brindadas. 
+            default:
+                // Se imprime un mensaje de error de opción no válida 
+                cout << "La opcion ingresada no es valida. Intente de nuevo." << endl;
+                // Se sale del bloque switch. 
+                break;
+        }
+    }
+}
