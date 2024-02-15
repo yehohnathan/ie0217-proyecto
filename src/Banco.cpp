@@ -288,3 +288,21 @@ void Banco::crearCliente(){
     transacciones.push_back(transaccion);
 }
 
+// Método para atender un cliente
+void Banco::atenderCliente(){
+    // Se lee el ID del cliente que se va a atender 
+    int idCliente;
+    leerEntero(idCliente, "Ingrese su id: ");
+    // Se busca en la lista de clientes del banco. 
+    auto it_cliente = clientes.find(idCliente);
+    // Si no se encuentra 
+    if(it_cliente == clientes.end()){
+        // Se imprime un mensaje de error que indica que el ID ingresado no está registrado. 
+        cout << "El id ingresado no existe en el registro." << endl;
+        // Se termina la ejecución del método. 
+        return;
+    }
+    // Se utiliza el objeto ventanilla de la clase AtencionCliente y se usa el método mostrar menú para desplegar las opciones y atender al cliente. 
+    ventanilla.mostrarMenu(fecha, it_cliente->second, clientes, transacciones, cuentasBanco, prestamosBanco, certificadosBanco);
+}
+
