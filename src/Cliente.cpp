@@ -213,6 +213,13 @@ void Cliente::transferirDinero(int fecha[], vector <string>& transacciones, map 
         // Se detiene la ejecución del método
         return;
     }
+    // Si se intenta acceder a una cuenta que no le pertene al cliente
+    if(it_cuentaSalida->second.idPropietario != id){
+        // Se imprime un mensaje de error
+        cout << "Se intento acceder a una cuenta que no le pertenece." << endl;
+        // Se detiene la ejecución del método
+        return;
+    }
     // Se lee el id del cliente que tiene la cuenta que recibe el dinero
     int numeroCuentaDestino;
     leerEntero(numeroCuentaDestino, "Ingrese el numero de cuenta a la cuenta que desea transferir: ");
