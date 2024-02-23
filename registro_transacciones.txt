@@ -1,0 +1,21 @@
+Registro de transacciones realizadas por los usuarios
+
+fecha,id,nombre,descripcion
+22/2/2024,3030,Danny Solorzano,se registro en el sistema
+22/2/2024,4040,Yehohnathan Miranda,se registro en el sistema
+22/2/2024,5050,David Madrigal,se registro en el sistema
+22/2/2024,3030,Danny Solorzano,agrego la cuenta numero 30301 a su nombre
+22/2/2024,3030,Danny Solorzano,agrego la cuenta numero 30302 a su nombre
+22/2/2024,6060,Carlos Ramires,se registro en el sistema
+22/2/2024,4040,Yehohnathan Miranda,agrego la cuenta numero 40401 a su nombre
+22/2/2024,4040,Yehohnathan Miranda,agrego la cuenta numero 40402 a su nombre
+22/2/2024,5050,David Madrigal,agrego la cuenta numero 50501 a su nombre
+22/2/2024,5050,David Madrigal,agrego la cuenta numero 50502 a su nombre
+22/2/2024,5050,David Madrigal,agrego el certificado a plazo numero 50501 a su nombre
+22/2/2024,5050,David Madrigal,agrego el prestamo numero 50501 a su nombre
+22/2/2024,5050,David Madrigal,pago una cuota del prestamo propio numero 50501
+22/2/2024,4040,Yehohnathan Miranda,agrego el prestamo numero 40401 a su nombre
+22/2/2024,4040,Yehohnathan Miranda,agrego el prestamo numero 40402 a su nombre
+22/2/2024,4040,Yehohnathan Miranda,agrego el prestamo numero 40403 a su nombre
+22/2/2024,3030,Danny Solorzano,agrego el certificado a plazo numero 30301 a su nombre
+22/2/2024,3030,Danny Solorzano,agrego el certificado a plazo numero 30302 a su nombre

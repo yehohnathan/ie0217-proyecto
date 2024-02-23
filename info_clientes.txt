@@ -1,0 +1,23 @@
+Informacion de los clientes
+
+datos,3030,Danny Solorzano
+cuenta,3030,30301,colones,0.000000
+cuenta,3030,30302,dolares,0.000000
+cdp,3030,30301,largo,dolares,50.000000,22/2/2024,18,0.500000
+cdp,3030,30302,mediano,colones,50000.000000,22/2/2024,6,0.400000
+
+datos,4040,Yehohnathan Miranda
+cuenta,4040,40401,colones,0.000000
+cuenta,4040,40402,colones,0.000000
+prestamo,4040,40401,personal,colones,500000.000000,12,0.020000,0
+prestamo,4040,40402,prendario,dolares,2000.000000,24,0.600000,0
+prestamo,4040,40403,hipotecario,colones,1300000.000000,36,0.300000,0
+
+datos,5050,David Madrigal
+cuenta,5050,50501,colones,0.000000
+cuenta,5050,50502,dolares,0.000000
+prestamo,5050,50501,prendario,colones,4000000.000000,24,0.600000,1
+cdp,5050,50501,mediano,dolares,100.000000,22/2/2024,6,0.400000
+
+datos,6060,Carlos Ramires
+
