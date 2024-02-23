@@ -57,7 +57,7 @@ void AtencionCliente::gestionarCuentas(int fecha[], Cliente& cliente, map <int, 
         cout << "1. Agregar una cuenta a su nombre." << endl;
         cout << "2. Retirar dinero de ahorros de una de sus cuentas." << endl;
         cout << "3. Depositar dinero a una cuenta." << endl;
-        cout << "4. Transferior dinero a una cuenta." << endl;
+        cout << "4. Transferir dinero a una cuenta." << endl;
         cout << "5. Solicitar informe de sus cuentas actuales." << endl;
         cout << "6. Regresar." << endl;
         // El usuario ingresa un número y válida sí es permitido
