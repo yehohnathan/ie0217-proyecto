@@ -30,4 +30,4 @@ $(TARGET): $(OBJECTS)
 # Regla para limpiar los archivos
 .PHONY: clean
 clean:
-	del $(TARGET) $(OBJECTS) informe_cuentas.txt informe_prestamos.txt informe_certificados_plazo.txt consulta_prestamo_predeterminado.txt consulta_prestamo_personalizado.txt registro_transacciones.txt info_clientes.txt
+	del .\src\main.exe .\src\Banco.exe .\src\AtencionCliente.exe .\src\Informacion.exe .\src\Cliente.exe .\src\CuentaBancaria.exe .\src\Prestamo.exe .\src\CDP.exe .\src\LecturaDatos.exe informe_cuentas.txt informe_prestamos.txt informe_certificados_plazo.txt consulta_prestamo_predeterminado.txt consulta_prestamo_personalizado.txt registro_transacciones.txt info_clientes.txt
