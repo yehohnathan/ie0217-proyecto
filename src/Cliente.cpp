@@ -232,6 +232,12 @@ void Cliente::transferirDinero(int fecha[], vector <string>& transacciones, map 
         // Se detiene la ejecución del método 
         return;
     }
+    // Comprueba si ambas cuentas tienen le mismo tipo de moneda
+    if(it_cuentaSalida->second.tipoMoneda != it_cuentaDestino->second.tipoMoneda){
+        cout << "No se puede transfererir de una cuenta en " << it_cuentaSalida->second.tipoMoneda
+        << " a una cuenta en " << it_cuentaDestino->second.tipoMoneda << "." << endl;
+        return;
+    }
     // Se obtiene el dinero antes de la transferencia
     double dineroAntes = it_cuentaSalida->second.dineroAhorros;
     // Se realiza la trasnferencia con el método de la clase CuentaBancaria
